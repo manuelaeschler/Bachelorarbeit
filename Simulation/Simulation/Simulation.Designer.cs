@@ -881,7 +881,7 @@
             this.betaTextBox.Location = new System.Drawing.Point(509, 283);
             this.betaTextBox.Name = "betaTextBox";
             this.betaTextBox.ReadOnly = true;
-            this.betaTextBox.Size = new System.Drawing.Size(45, 24);
+            this.betaTextBox.Size = new System.Drawing.Size(50, 24);
             this.betaTextBox.TabIndex = 88;
             this.betaTextBox.Text = "0";
             // 

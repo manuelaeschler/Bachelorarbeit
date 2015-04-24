@@ -76,7 +76,7 @@ namespace Simulation
             run = false;
             random = false;
             serial.BackColor = Color.LightSkyBlue;
-            beta = 0.3f;
+            beta = (float)temperaturBar.Value/100;
 
             velocity = velocityBar.Value;
             fillField(field);
@@ -467,7 +467,7 @@ namespace Simulation
                     float posX = (float)((float)i + 0.5)*brickSizeX;
                     float posY = (float)((float)j + 0.5)*brickSizeY;
 
-                    field[i, j].draw(posX, posY, brickSizeX, brickSizeY,pen , e, 1f, 3f);
+                    field[i, j].draw(posX, posY, brickSizeX, brickSizeY,pen , e, 1f);
                 }
             }
             changePanel.Invalidate();
@@ -487,7 +487,7 @@ namespace Simulation
                     float posX = (float)((float)i + 0.5) * brickSizeX;
                     float posY = (float)((float)j + 0.5) * brickSizeY;
 
-                    change[i, j].draw(posX, posY, brickSizeX, brickSizeY, pen, e, 0f, 1f);
+                    change[i, j].draw(posX, posY, brickSizeX, brickSizeY, pen, e, 0.5f);
                 }
             } 
         }

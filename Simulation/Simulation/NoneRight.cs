@@ -15,20 +15,14 @@ namespace Simulation
 
         }
 
-        public void draw(float x, float y, float brickSizeX, float brickSizeY, System.Drawing.Pen pen, System.Windows.Forms.PaintEventArgs e, float sizeSmall, float sizeBig)
+        public void draw(float x, float y, float brickSizeX, float brickSizeY, System.Drawing.Pen pen, System.Windows.Forms.PaintEventArgs e, float size)
         {
-            pen.Width = sizeBig;
+            pen.Width = size;
 
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y - brickSizeY / 2));
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x - brickSizeX / 2), (int)y);
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y + brickSizeY / 2)); 
 
-            if (sizeSmall != 0)
-            {
-                pen.Width = sizeSmall;
-
-                e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);   
-            }
         }
 
         public Brick getOpposite(int inCase)

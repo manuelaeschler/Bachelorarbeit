@@ -26,17 +26,10 @@ namespace Simulation
 
         public float Probability { get { return probability; } set { probability = value; } }
 
-        public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float sizeSmall, float sizeBig)
+        public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
-            if (sizeSmall != 0)
-            {
-                pen.Width = sizeSmall;
-
-                e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y + brickSizeY / 2));
-                e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y); 
-            }
-
-            pen.Width = sizeBig;
+            
+            pen.Width = size;
 
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y - brickSizeY / 2));
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x - brickSizeX / 2), (int)y);

@@ -10,7 +10,7 @@ namespace Simulation
 {
     interface Brick
     {
-        void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float sizeSmall, float sizeBig);
+        void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size);
         Brick getOpposite(int inCase);
         Brick subtract(Brick brick);
         float Probability { get;  set; }
