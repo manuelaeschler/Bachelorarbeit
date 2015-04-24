@@ -1,0 +1,9 @@
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\bin\Debug\PI.exe.config
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\bin\Debug\PI.exe
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\bin\Debug\PI.pdb
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\obj\Debug\PI.csprojResolveAssemblyReference.cache
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\obj\Debug\PI.Form1.resources
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\obj\Debug\PI.Properties.Resources.resources
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\obj\Debug\PI.csproj.GenerateResource.Cache
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\obj\Debug\PI.exe
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\PI\PI\obj\Debug\PI.pdb

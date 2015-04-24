@@ -1,0 +1,9 @@
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\bin\Release\Simulation.exe.config
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\bin\Release\Simulation.exe
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\bin\Release\Simulation.pdb
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Release\Simulation.simulation.resources
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Release\Simulation.Properties.Resources.resources
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Release\Simulation.csproj.GenerateResource.Cache
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Release\Simulation.exe
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Release\Simulation.pdb
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Release\Simulation.csprojResolveAssemblyReference.cache

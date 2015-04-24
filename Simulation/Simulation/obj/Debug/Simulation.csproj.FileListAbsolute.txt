@@ -1,0 +1,9 @@
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\bin\Debug\Simulation.exe.config
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Debug\Simulation.csprojResolveAssemblyReference.cache
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Debug\Simulation.simulation.resources
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Debug\Simulation.Properties.Resources.resources
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Debug\Simulation.csproj.GenerateResource.Cache
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\bin\Debug\Simulation.exe
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\bin\Debug\Simulation.pdb
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Debug\Simulation.exe
+C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Simulation\Simulation\obj\Debug\Simulation.pdb
