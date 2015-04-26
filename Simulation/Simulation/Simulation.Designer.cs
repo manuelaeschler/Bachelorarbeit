@@ -70,16 +70,7 @@
             this.upperLeftProbabilityGiven = new System.Windows.Forms.TextBox();
             this.horizontalProbabilityGiven = new System.Windows.Forms.TextBox();
             this.verticalProbabilityGiven = new System.Windows.Forms.TextBox();
-            this.noneProbabilitySimulate = new System.Windows.Forms.TextBox();
-            this.fullProbabilitySimulate = new System.Windows.Forms.TextBox();
-            this.verticalProbabilitySimulate = new System.Windows.Forms.TextBox();
-            this.horizontalProbabilitySimulate = new System.Windows.Forms.TextBox();
-            this.upperLeftProbabilitySimulate = new System.Windows.Forms.TextBox();
-            this.upperRightProbabilitySimulate = new System.Windows.Forms.TextBox();
-            this.downLeftProbabilitySimulate = new System.Windows.Forms.TextBox();
-            this.downRightProbabilitySimulate = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -550,86 +541,6 @@
             this.verticalProbabilityGiven.TabIndex = 53;
             this.verticalProbabilityGiven.Text = "0";
             // 
-            // noneProbabilitySimulate
-            // 
-            this.noneProbabilitySimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noneProbabilitySimulate.Location = new System.Drawing.Point(436, 292);
-            this.noneProbabilitySimulate.Name = "noneProbabilitySimulate";
-            this.noneProbabilitySimulate.ReadOnly = true;
-            this.noneProbabilitySimulate.Size = new System.Drawing.Size(50, 24);
-            this.noneProbabilitySimulate.TabIndex = 54;
-            this.noneProbabilitySimulate.Text = "1";
-            // 
-            // fullProbabilitySimulate
-            // 
-            this.fullProbabilitySimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fullProbabilitySimulate.Location = new System.Drawing.Point(436, 331);
-            this.fullProbabilitySimulate.Name = "fullProbabilitySimulate";
-            this.fullProbabilitySimulate.ReadOnly = true;
-            this.fullProbabilitySimulate.Size = new System.Drawing.Size(50, 24);
-            this.fullProbabilitySimulate.TabIndex = 55;
-            this.fullProbabilitySimulate.Text = "0";
-            // 
-            // verticalProbabilitySimulate
-            // 
-            this.verticalProbabilitySimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.verticalProbabilitySimulate.Location = new System.Drawing.Point(436, 365);
-            this.verticalProbabilitySimulate.Name = "verticalProbabilitySimulate";
-            this.verticalProbabilitySimulate.ReadOnly = true;
-            this.verticalProbabilitySimulate.Size = new System.Drawing.Size(50, 24);
-            this.verticalProbabilitySimulate.TabIndex = 56;
-            this.verticalProbabilitySimulate.Text = "0";
-            // 
-            // horizontalProbabilitySimulate
-            // 
-            this.horizontalProbabilitySimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.horizontalProbabilitySimulate.Location = new System.Drawing.Point(436, 407);
-            this.horizontalProbabilitySimulate.Name = "horizontalProbabilitySimulate";
-            this.horizontalProbabilitySimulate.ReadOnly = true;
-            this.horizontalProbabilitySimulate.Size = new System.Drawing.Size(50, 24);
-            this.horizontalProbabilitySimulate.TabIndex = 57;
-            this.horizontalProbabilitySimulate.Text = "0";
-            // 
-            // upperLeftProbabilitySimulate
-            // 
-            this.upperLeftProbabilitySimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.upperLeftProbabilitySimulate.Location = new System.Drawing.Point(436, 449);
-            this.upperLeftProbabilitySimulate.Name = "upperLeftProbabilitySimulate";
-            this.upperLeftProbabilitySimulate.ReadOnly = true;
-            this.upperLeftProbabilitySimulate.Size = new System.Drawing.Size(50, 24);
-            this.upperLeftProbabilitySimulate.TabIndex = 58;
-            this.upperLeftProbabilitySimulate.Text = "0";
-            // 
-            // upperRightProbabilitySimulate
-            // 
-            this.upperRightProbabilitySimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.upperRightProbabilitySimulate.Location = new System.Drawing.Point(436, 490);
-            this.upperRightProbabilitySimulate.Name = "upperRightProbabilitySimulate";
-            this.upperRightProbabilitySimulate.ReadOnly = true;
-            this.upperRightProbabilitySimulate.Size = new System.Drawing.Size(50, 24);
-            this.upperRightProbabilitySimulate.TabIndex = 59;
-            this.upperRightProbabilitySimulate.Text = "0";
-            // 
-            // downLeftProbabilitySimulate
-            // 
-            this.downLeftProbabilitySimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downLeftProbabilitySimulate.Location = new System.Drawing.Point(436, 531);
-            this.downLeftProbabilitySimulate.Name = "downLeftProbabilitySimulate";
-            this.downLeftProbabilitySimulate.ReadOnly = true;
-            this.downLeftProbabilitySimulate.Size = new System.Drawing.Size(50, 24);
-            this.downLeftProbabilitySimulate.TabIndex = 60;
-            this.downLeftProbabilitySimulate.Text = "0";
-            // 
-            // downRightProbabilitySimulate
-            // 
-            this.downRightProbabilitySimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downRightProbabilitySimulate.Location = new System.Drawing.Point(436, 571);
-            this.downRightProbabilitySimulate.Name = "downRightProbabilitySimulate";
-            this.downRightProbabilitySimulate.ReadOnly = true;
-            this.downRightProbabilitySimulate.Size = new System.Drawing.Size(50, 24);
-            this.downRightProbabilitySimulate.TabIndex = 61;
-            this.downRightProbabilitySimulate.Text = "0";
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -638,15 +549,6 @@
             this.label8.Size = new System.Drawing.Size(38, 13);
             this.label8.TabIndex = 62;
             this.label8.Text = "Given:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(433, 258);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(50, 13);
-            this.label9.TabIndex = 63;
-            this.label9.Text = "Simulate:";
             // 
             // label10
             // 
@@ -956,16 +858,7 @@
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.downRightProbabilitySimulate);
-            this.Controls.Add(this.downLeftProbabilitySimulate);
-            this.Controls.Add(this.upperRightProbabilitySimulate);
-            this.Controls.Add(this.upperLeftProbabilitySimulate);
-            this.Controls.Add(this.horizontalProbabilitySimulate);
-            this.Controls.Add(this.verticalProbabilitySimulate);
-            this.Controls.Add(this.fullProbabilitySimulate);
-            this.Controls.Add(this.noneProbabilitySimulate);
             this.Controls.Add(this.verticalProbabilityGiven);
             this.Controls.Add(this.horizontalProbabilityGiven);
             this.Controls.Add(this.upperLeftProbabilityGiven);
@@ -1080,16 +973,7 @@
         private System.Windows.Forms.TextBox upperLeftProbabilityGiven;
         private System.Windows.Forms.TextBox horizontalProbabilityGiven;
         private System.Windows.Forms.TextBox verticalProbabilityGiven;
-        private System.Windows.Forms.TextBox noneProbabilitySimulate;
-        private System.Windows.Forms.TextBox fullProbabilitySimulate;
-        private System.Windows.Forms.TextBox verticalProbabilitySimulate;
-        private System.Windows.Forms.TextBox horizontalProbabilitySimulate;
-        private System.Windows.Forms.TextBox upperLeftProbabilitySimulate;
-        private System.Windows.Forms.TextBox upperRightProbabilitySimulate;
-        private System.Windows.Forms.TextBox downLeftProbabilitySimulate;
-        private System.Windows.Forms.TextBox downRightProbabilitySimulate;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;

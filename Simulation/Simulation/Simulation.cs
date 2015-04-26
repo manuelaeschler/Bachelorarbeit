@@ -27,7 +27,6 @@ namespace Simulation
         Boolean run;
         Boolean random;
         Boolean didchange;
-        float given;
         float beta;
         string currentModel;
 
@@ -279,69 +278,6 @@ namespace Simulation
         }
 
 
-        //calculate the distribution of the eight vertices
-        private void calculateProbabilities()
-        {
-            float noneCount = 0;
-            float fullCount = 0;
-            float verticalCount = 0;
-            float horizontalCount = 0;
-            float upperLeftCount = 0;
-            float upperRightCount = 0;
-            float downLeftCount = 0;
-            float downRightCount = 0;
-            float total = 0;
-
-            Brick brick;
-
-            for (int i = 0; i < field.GetLength(0); i++)
-            {
-                for (int j = 0; j < field.GetLength(1); j++)
-                {
-                    brick = field[i, j];
-
-                    if(brick is None)
-                        noneCount++;
-
-                    if(brick is Full)
-                        fullCount++;
-
-                    if(brick is Vertical)
-                        verticalCount++;
-
-                    if(brick is Horizontal)
-                        horizontalCount++;
-
-                    if(brick is UpperLeft)
-                        upperLeftCount++;
-
-                    if(brick is UpperRight)
-                        upperRightCount++;
-
-                    if(brick is DownLeft)
-                        downLeftCount++;
-
-                    if(brick is DownRight)
-                        downRightCount++;
-
-                    }
-                }
-
-            total = noneCount + fullCount + verticalCount + horizontalCount + upperLeftCount + upperRightCount + downLeftCount + downRightCount;
-            given = none.Probability + full.Probability + vertical.Probability + horizontal.Probability + upperLeft.Probability + upperRight.Probability + downLeft.Probability + downLeft.Probability;
-
-            noneProbabilitySimulate.Text = (given * noneCount / total).ToString();
-            fullProbabilitySimulate.Text = (given * fullCount / total).ToString();
-            verticalProbabilitySimulate.Text = (given * verticalCount / total).ToString();
-            horizontalProbabilitySimulate.Text = (given * horizontalCount / total).ToString();
-            upperLeftProbabilitySimulate.Text = (given * upperLeftCount / total).ToString();
-            upperRightProbabilitySimulate.Text = (given * upperRightCount / total).ToString();
-            downLeftProbabilitySimulate.Text = (given * downLeftCount / total).ToString();
-            downRightProbabilitySimulate.Text = (given * downRightCount / total).ToString();
-                
-            }
-
-
         //start, stop, pause
         private void start_Click(object sender, EventArgs e)
         { 
@@ -425,15 +361,18 @@ namespace Simulation
 
         private void stop_Click(object sender, EventArgs e)
         {
-            sizeOfLattice.ReadOnly = false;
-            run = false;
-            startthread.Join();
-            fillField(field);
-            fillField(change);
-            fillField(currentField);
+            if (run) 
+            {
+                sizeOfLattice.ReadOnly = false;
+                run = false;
+                startthread.Join();
+                fillField(field);
+                fillField(change);
+                fillField(currentField);
 
-            x = 0;
-            y = 0;
+                x = 0;
+                y = 0;
+            }
 
         }
 
@@ -454,7 +393,6 @@ namespace Simulation
         //painting
         private void picture_Paint(object sender, PaintEventArgs e)
         {
-            calculateProbabilities();
             Pen pen = new Pen(Brushes.Black);
 
             for (int i = 0; i < field.GetLength(0); i++ )
@@ -598,6 +536,22 @@ namespace Simulation
         {
             none.Probability = (float)noneBar.Value/1000f;
             noneProbabilityGiven.Text = ((float)noneBar.Value / 1000).ToString();
+
+            if(currentModel == "fermionFree")
+            {
+                if (noneBar.Value >= 500)
+                {
+                    temperaturBar.Value = (noneBar.Value - 500) / 10;
+                }
+                betaTextBox.Text = ((float)(noneBar.Value) / 1000 - 2f).ToString();
+            }
+
+            if (currentModel == "fermionBound")
+            {
+                if(noneBar.Value >= 500)
+                    temperaturBar.Value = (int)Math.Sqrt((float)(noneBar.Value) - 500f);
+                betaTextBox.Text = ((float)Math.Sqrt((float)(noneBar.Value) - 500f)/1000f).ToString();
+            }
         }
 
         private void fullBar_Scroll(object sender, EventArgs e)
@@ -666,7 +620,6 @@ namespace Simulation
                     al.Field = field;
                 }
                 
-                graphicsPanel.Invalidate();
             }
 
         }
@@ -708,7 +661,7 @@ namespace Simulation
 
                 case "fermionFree":
                     {
-                        betaTextBox.Text = (beta-1.5f).ToString();
+                        betaTextBox.Text = (beta - 1.5f).ToString();
                         fermionFree_Click(new Object(), new EventArgs());
                         break;
                     }
@@ -722,7 +675,6 @@ namespace Simulation
 
                 default:
                     {
-                        Console.Write("Choose a model");
                         break;
                     }
             }   
