@@ -11,6 +11,7 @@ namespace Simulation
     class DownLeft : Brick
     {
         static private float probability;
+        static private Color backColor;
         Brick none;
         Brick full;
         Brick horizontal;
@@ -19,12 +20,14 @@ namespace Simulation
         Brick upperRight;
         Brick downRight;
 
-        public DownLeft()
+        public DownLeft(Color backColor)
         {
-            
+            this.BackColor = backColor;
         }
 
         public float Probability { get { return probability; } set { probability = value; } }
+
+        public Color BackColor { get { return backColor; } set { backColor = value; } }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
@@ -93,5 +96,6 @@ namespace Simulation
             upperRight = bricks[5];
             downRight = bricks[7];
         }
+
     }
 }

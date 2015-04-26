@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Simulation
 {
     class NoneLeft : Brick
     {
         private float probability;
+        private Color backColor;
 
         public NoneLeft()
         {
@@ -42,5 +44,7 @@ namespace Simulation
         {
             throw new NotImplementedException();
         }
+
+        public Color BackColor { get { return backColor; } set { backColor = value; } }
     }
 }

@@ -22,6 +22,7 @@ namespace Simulation
         Brick[,] change;
         Brick[] bricks = new Brick[8];
         float[,] probabilities = new float[8,8];
+        Dictionary<Color, Brick> coupling = new Dictionary<Color, Brick>();
         
 
         Boolean run;
@@ -30,14 +31,14 @@ namespace Simulation
         float beta;
         string currentModel;
 
-        Brick none = new None();
-        Brick full = new Full();
-        Brick vertical = new Vertical();
-        Brick horizontal = new Horizontal();
-        Brick upperLeft = new UpperLeft();
-        Brick upperRight = new UpperRight();
-        Brick downLeft = new DownLeft();
-        Brick downRight = new DownRight();
+        Brick none = new None(Color.Red);
+        Brick full = new Full(Color.Orange);
+        Brick vertical = new Vertical(Color.Yellow);
+        Brick horizontal = new Horizontal(Color.Green);
+        Brick upperLeft = new UpperLeft(Color.LightBlue);
+        Brick upperRight = new UpperRight(Color.Blue);
+        Brick downLeft = new DownLeft(Color.Violet);
+        Brick downRight = new DownRight(Color.White);
 
         int x = 0;
         int y = 0;
@@ -58,6 +59,15 @@ namespace Simulation
             bricks[5] = upperRight;
             bricks[6] = downLeft;
             bricks[7] = downRight;
+
+            coupling.Add(Color.Red, none);
+            coupling.Add(Color.Orange, full);
+            coupling.Add(Color.Yellow, horizontal);
+            coupling.Add(Color.Green, vertical);
+            coupling.Add(Color.LightBlue, upperLeft);
+            coupling.Add(Color.Blue, upperRight);
+            coupling.Add(Color.Violet, downLeft);
+            coupling.Add(Color.White, downRight);
 
             none.setBricks(bricks);
             full.setBricks(bricks);
@@ -93,6 +103,32 @@ namespace Simulation
             pictureDownLeft.Invalidate();
             pictureDownRight.Invalidate();
 
+        }
+
+        private Color nextColor(Color color)
+        {
+            if (color == Color.Red)
+                return Color.Orange;
+
+            if (color == Color.Orange)
+                return Color.Yellow;
+
+            if (color == Color.Yellow)
+                return Color.Green;
+
+            if (color == Color.Green)
+                return Color.LightBlue;
+
+            if (color == Color.LightBlue)
+                return Color.Blue;
+
+            if (color == Color.Blue)
+                return Color.Violet;
+
+            if (color == Color.Violet)
+                return Color.White;
+
+            return Color.Red;
         }
 
         private void fillField(Brick[,] fields)
