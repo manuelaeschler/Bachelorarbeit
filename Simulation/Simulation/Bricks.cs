@@ -13,9 +13,10 @@ namespace Simulation
         void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size);
         Brick getOpposite(int inCase);
         Brick subtract(Brick brick);
-        Color BackColor { get; set; }
+        PictureBox Picture { get; set; }
+        TrackBar Bar { get; set; }
         float Probability { get;  set; }
-        Color BackColor { get; set; }
+        Color CouplingColor { get; set; }
         void setBricks(Brick[] bricks);
 
     }

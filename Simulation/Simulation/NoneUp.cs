@@ -46,6 +46,31 @@ namespace Simulation
             throw new NotImplementedException();
         }
 
-        public Color BackColor { get { return backColor; } set { backColor = value; } }
+        public Color CouplingColor { get { return backColor; } set { backColor = value; } }
+
+
+        public System.Windows.Forms.PictureBox Picture
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public System.Windows.Forms.TrackBar Bar
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

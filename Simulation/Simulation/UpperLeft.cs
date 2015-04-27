@@ -11,7 +11,9 @@ namespace Simulation
     class UpperLeft : Brick
     {
         static private float probability;
-        static private Color backColor;
+        static private Color couplingColor;
+        private PictureBox picture;
+        private TrackBar bar;
         Brick none;
         Brick full;
         Brick horizontal;
@@ -20,14 +22,20 @@ namespace Simulation
         Brick downLeft;
         Brick downRight;
 
-        public UpperLeft(Color backColor)
+        public UpperLeft(Color color, PictureBox picture, TrackBar bar)
         {
-            this.BackColor = backColor;
+            this.CouplingColor = color;
+            this.Bar = bar;
+            this.Picture = picture;
         }
 
         public float Probability { get { return probability; } set { probability = value; } }
 
-        public Color BackColor { get { return backColor; } set { backColor = value; } }
+        public Color CouplingColor { get { return couplingColor; } set { couplingColor = value; } }
+
+        public PictureBox Picture { get { return picture; } set { picture = value; } }
+
+        public TrackBar Bar { get { return bar; } set { bar = value; } }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {

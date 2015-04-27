@@ -22,7 +22,7 @@ namespace Simulation
         Brick[,] change;
         Brick[] bricks = new Brick[8];
         float[,] probabilities = new float[8,8];
-        Dictionary<Color, Brick> coupling = new Dictionary<Color, Brick>();
+        ListDictionary<Color, Brick> coupling = new ListDictionary<Color, Brick>();
         
 
         Boolean run;
@@ -31,14 +31,14 @@ namespace Simulation
         float beta;
         string currentModel;
 
-        Brick none = new None(Color.Red);
-        Brick full = new Full(Color.Orange);
-        Brick vertical = new Vertical(Color.Yellow);
-        Brick horizontal = new Horizontal(Color.Green);
-        Brick upperLeft = new UpperLeft(Color.LightBlue);
-        Brick upperRight = new UpperRight(Color.Blue);
-        Brick downLeft = new DownLeft(Color.Violet);
-        Brick downRight = new DownRight(Color.White);
+        Brick none;
+        Brick full;
+        Brick vertical;
+        Brick horizontal;
+        Brick upperLeft;
+        Brick upperRight;
+        Brick downLeft;
+        Brick downRight;
 
         int x = 0;
         int y = 0;
@@ -48,6 +48,15 @@ namespace Simulation
         public simulation()
         {
             InitializeComponent();
+
+            none = new None(Color.Red, pictureNone, noneBar);
+            full = new Full(Color.Orange, pictureFull, fullBar);
+            vertical = new Vertical(Color.Yellow, pictureVertical, verticalBar);
+            horizontal = new Horizontal(Color.Green, pictureHorizontal, horizontalBar);
+            upperLeft = new UpperLeft(Color.LightBlue, pictureUpperLeft, upperLeftBar);
+            upperRight = new UpperRight(Color.Blue, pictureUpperRight, upperRightBar);
+            downLeft = new DownLeft(Color.Violet, pictureDownLeft, downLeftBar);
+            downRight = new DownRight(Color.White, pictureDownRight, downRightBar);
 
             size = 10;
 
@@ -65,7 +74,7 @@ namespace Simulation
             coupling.Add(Color.Yellow, horizontal);
             coupling.Add(Color.Green, vertical);
             coupling.Add(Color.LightBlue, upperLeft);
-            coupling.Add(Color.Blue, upperRight);
+            coupling.Add(Color.RoyalBlue, upperRight);
             coupling.Add(Color.Violet, downLeft);
             coupling.Add(Color.White, downRight);
 
@@ -94,7 +103,7 @@ namespace Simulation
 
             sizeOfLattice.Text = size.ToString();
 
-            pictureNone.Invalidate();
+            pictureNone.Refresh();
             pictureFull.Invalidate();
             pictureVertical.Invalidate();
             pictureHorizontal.Invalidate();
@@ -120,9 +129,9 @@ namespace Simulation
                 return Color.LightBlue;
 
             if (color == Color.LightBlue)
-                return Color.Blue;
+                return Color.RoyalBlue;
 
-            if (color == Color.Blue)
+            if (color == Color.RoyalBlue)
                 return Color.Violet;
 
             if (color == Color.Violet)
@@ -470,11 +479,7 @@ namespace Simulation
         //illustration of the vertices
         private void pictureNone_Paint(object sender, PaintEventArgs e)
         {
-            Pen pen = new Pen(Brushes.Black);
-            pen.Width = 1f;
 
-            e.Graphics.DrawLine(pen, 0, 15, 31, 15);
-            e.Graphics.DrawLine(pen, 15, 0, 15, 31);
         }
 
         private void pictureFull_Paint(object sender, PaintEventArgs e)
@@ -489,9 +494,6 @@ namespace Simulation
         private void pictureVertical_Paint(object sender, PaintEventArgs e)
         {
             Pen pen = new Pen(Brushes.Black);
-            pen.Width = 1f;
-
-            e.Graphics.DrawLine(pen, 0, 15, 31, 15);
 
             pen.Width = 3f;
 
@@ -504,10 +506,7 @@ namespace Simulation
             pen.Width = 3f;
 
             e.Graphics.DrawLine(pen, 0, 15, 31, 15);
-
-            pen.Width = 1f;
-
-            e.Graphics.DrawLine(pen, 15, 0, 15, 31);
+;
         }
 
         private void pictureUpperLeft_Paint(object sender, PaintEventArgs e)
@@ -518,10 +517,7 @@ namespace Simulation
             e.Graphics.DrawLine(pen, 0, 15, 16, 15);
             e.Graphics.DrawLine(pen, 15, 0, 15, 16);
 
-            pen.Width = 1f;
 
-            e.Graphics.DrawLine(pen, 17, 15, 31, 15);
-            e.Graphics.DrawLine(pen, 15, 17, 15, 31);
         }
 
         private void pictureUpperRight_Paint(object sender, PaintEventArgs e)
@@ -532,19 +528,11 @@ namespace Simulation
             e.Graphics.DrawLine(pen, 14, 15, 31, 15);
             e.Graphics.DrawLine(pen, 15, 0, 15, 16);
 
-            pen.Width = 1f;
-
-            e.Graphics.DrawLine(pen, 0, 15, 16, 15);
-            e.Graphics.DrawLine(pen, 15, 17, 15, 31);
         }
 
         private void pictureDownLeft_Paint(object sender, PaintEventArgs e)
         {
             Pen pen = new Pen(Brushes.Black);
-            pen.Width = 1f;
-
-            e.Graphics.DrawLine(pen, 17, 15, 31, 15);
-            e.Graphics.DrawLine(pen, 15, 0, 15, 16);
 
             pen.Width = 3f;
 
@@ -555,10 +543,6 @@ namespace Simulation
         private void pictureDownRight_Paint(object sender, PaintEventArgs e)
         {
             Pen pen = new Pen(Brushes.Black);
-            pen.Width = 1f;
-
-            e.Graphics.DrawLine(pen, 0, 15, 16, 15);
-            e.Graphics.DrawLine(pen, 15, 0, 15, 16);
 
             pen.Width = 3f;
 
@@ -572,6 +556,16 @@ namespace Simulation
         {
             none.Probability = (float)noneBar.Value/1000f;
             noneProbabilityGiven.Text = ((float)noneBar.Value / 1000).ToString();
+
+            List<Brick> bri = coupling[none.CouplingColor];
+            foreach (Brick brick in bri)
+            {
+                if (!(brick is None))
+                {
+                    brick.Bar.Value = noneBar.Value;
+                    brick.Bar.Invalidate();
+                }
+            }
 
             if(currentModel == "fermionFree")
             {
@@ -594,42 +588,94 @@ namespace Simulation
         {
             full.Probability = (float)fullBar.Value/1000f;
             fullProbabilityGiven.Text = ((float)fullBar.Value / 1000).ToString();
+
+            List<Brick> bri = coupling[full.CouplingColor];
+            foreach (Brick brick in bri)
+            {
+                if (!(brick is Full))
+                {
+                    brick.Bar.Value = noneBar.Value;
+                    brick.Bar.Invalidate();
+                }
+            }
         }
 
         private void verticalBar_Scroll(object sender, EventArgs e)
         {
             vertical.Probability = (float)verticalBar.Value/1000f;
             verticalProbabilityGiven.Text = ((float)verticalBar.Value / 1000).ToString();
+
+            List<Brick> bri = coupling[vertical.CouplingColor];
+            foreach (Brick brick in bri)
+            {
+                if (!(brick is Vertical))
+                    brick.Bar.Value = noneBar.Value;
+            }
         }
 
         private void horizontalBar_Scroll(object sender, EventArgs e)
         {
             horizontal.Probability = (float)horizontalBar.Value / 1000f;
             horizontalProbabilityGiven.Text = ((float)horizontalBar.Value / 1000).ToString();
+
+            List<Brick> bri = coupling[horizontal.CouplingColor];
+            foreach (Brick brick in bri)
+            {
+                if (!(brick is Horizontal))
+                    brick.Bar.Value = noneBar.Value;
+            }
         }
 
         private void upperLeftBar_Scroll(object sender, EventArgs e)
         {
             upperLeft.Probability = (float)upperLeftBar.Value / 1000f;
             upperLeftProbabilityGiven.Text = ((float)upperLeftBar.Value / 1000).ToString();
+
+            List<Brick> bri = coupling[upperLeft.CouplingColor];
+            foreach (Brick brick in bri)
+            {
+                if (!(brick is UpperLeft))
+                    brick.Bar.Value = noneBar.Value;
+            }
         }
 
         private void upperRightBar_Scroll(object sender, EventArgs e)
         {
             upperRight.Probability = (float)upperRightBar.Value / 1000f;
             upperRightProbabilityGiven.Text = ((float)upperRightBar.Value / 1000).ToString();
+
+            List<Brick> bri = coupling[upperRight.CouplingColor];
+            foreach (Brick brick in bri)
+            {
+                if (!(brick is UpperRight))
+                    brick.Bar.Value = noneBar.Value;
+            }
         }
 
         private void downLeftBar_Scroll(object sender, EventArgs e)
         {
             downLeft.Probability = (float)downLeftBar.Value / 1000f;
             downLeftProbabilityGiven.Text = ((float)downLeftBar.Value / 1000).ToString();
+
+            List<Brick> bri = coupling[downLeft.CouplingColor];
+            foreach (Brick brick in bri)
+            {
+                if (!(brick is DownLeft))
+                    brick.Bar.Value = noneBar.Value;
+            }
         }
 
         private void downRightBar_Scroll(object sender, EventArgs e)
         {
             downRight.Probability = (float)downRightBar.Value / 1000f;
             downRightProbabilityGiven.Text = ((float)downRightBar.Value / 1000).ToString();
+
+            List<Brick> bri = coupling[downRight.CouplingColor];
+            foreach (Brick brick in bri)
+            {
+                if (!(brick is DownRight))
+                    brick.Bar.Value = noneBar.Value;
+            }
         }
 
 
@@ -715,6 +761,65 @@ namespace Simulation
                     }
             }   
  
+        }
+
+
+        //click the vertices and change back color
+        private void pictureNone_Click(object sender, EventArgs e)
+        {
+            coupling.remove(pictureNone.BackColor, none);
+            pictureNone.BackColor = nextColor(pictureNone.BackColor);
+            coupling.Add(pictureNone.BackColor, none);
+
+        }
+
+        private void pictureFull_Click(object sender, EventArgs e)
+        {
+            coupling.remove(pictureFull.BackColor, full);
+            pictureFull.BackColor = nextColor(pictureFull.BackColor);
+            coupling.Add(pictureFull.BackColor, full);
+        }
+
+        private void pictureVertical_Click(object sender, EventArgs e)
+        {
+            coupling.remove(pictureVertical.BackColor, vertical);
+            pictureVertical.BackColor = nextColor(pictureVertical.BackColor);
+            coupling.Add(pictureVertical.BackColor, vertical);
+        }
+
+        private void pictureHorizontal_Click(object sender, EventArgs e)
+        {
+            coupling.remove(pictureHorizontal.BackColor, horizontal);
+            pictureHorizontal.BackColor = nextColor(pictureHorizontal.BackColor);
+            coupling.Add(pictureHorizontal.BackColor, horizontal);
+        }
+
+        private void pictureUpperLeft_Click(object sender, EventArgs e)
+        {
+            coupling.remove(pictureUpperLeft.BackColor, upperLeft);
+            pictureUpperLeft.BackColor = nextColor(pictureUpperLeft.BackColor);
+            coupling.Add(pictureUpperLeft.BackColor, upperLeft);
+        }
+
+        private void pictureUpperRight_Click(object sender, EventArgs e)
+        {
+            coupling.remove(pictureUpperRight.BackColor, upperRight);
+            pictureUpperRight.BackColor = nextColor(pictureUpperRight.BackColor);
+            coupling.Add(pictureUpperRight.BackColor, upperRight);
+        }
+
+        private void pictureDownLeft_Click(object sender, EventArgs e)
+        {
+            coupling.remove(pictureDownLeft.BackColor, downLeft);
+            pictureDownLeft.BackColor = nextColor(pictureDownLeft.BackColor);
+            coupling.Add(pictureDownLeft.BackColor, downLeft);
+        }
+
+        private void pictureDownRight_Click(object sender, EventArgs e)
+        {
+            coupling.remove(pictureDownRight.BackColor, downRight);
+            pictureDownRight.BackColor = nextColor(pictureDownRight.BackColor);
+            coupling.Add(pictureDownRight.BackColor, downRight);
         }
 
  

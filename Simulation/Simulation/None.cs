@@ -11,8 +11,9 @@ namespace Simulation
     class None : Brick
     {
         static private float probability;
-        static private Color backColor;
-        Brick none;
+        static private Color couplingColor;
+        private PictureBox picture;
+        private TrackBar bar;
         Brick full;
         Brick horizontal;
         Brick vertical;
@@ -21,14 +22,20 @@ namespace Simulation
         Brick downLeft;
         Brick downRight;
 
-        public None(Color backColor)
+        public None(Color color, PictureBox picture, TrackBar bar)
         {
-            this.BackColor = backColor;
+            this.CouplingColor = color;
+            this.Bar = bar;
+            this.Picture = picture;
         }
 
-        public float Probability { get { return probability;} set { probability = value; } }
+        public float Probability { get { return probability; } set { probability = value; } }
 
-        public Color BackColor { get { return backColor; } set { backColor = value; } }
+        public Color CouplingColor { get { return couplingColor; } set { couplingColor = value; } }
+
+        public PictureBox Picture { get { return picture; } set { picture = value; } }
+
+        public TrackBar Bar { get { return bar; } set { bar = value; } }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
@@ -61,7 +68,6 @@ namespace Simulation
 
         public void setBricks(Brick[] bricks)
         {
-            none = bricks[0];
             full = bricks[1];
             horizontal = bricks[2];
             vertical = bricks[3];

@@ -215,72 +215,79 @@
             // 
             // pictureNone
             // 
-            this.pictureNone.BackColor = System.Drawing.Color.White;
+            this.pictureNone.BackColor = System.Drawing.Color.Red;
             this.pictureNone.Location = new System.Drawing.Point(21, 283);
             this.pictureNone.Name = "pictureNone";
             this.pictureNone.Size = new System.Drawing.Size(31, 31);
             this.pictureNone.TabIndex = 20;
             this.pictureNone.TabStop = false;
+            this.pictureNone.Click += new System.EventHandler(this.pictureNone_Click);
             this.pictureNone.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureNone_Paint);
             // 
             // pictureFull
             // 
-            this.pictureFull.BackColor = System.Drawing.Color.White;
+            this.pictureFull.BackColor = System.Drawing.Color.Orange;
             this.pictureFull.Location = new System.Drawing.Point(21, 324);
             this.pictureFull.Name = "pictureFull";
             this.pictureFull.Size = new System.Drawing.Size(31, 31);
             this.pictureFull.TabIndex = 21;
             this.pictureFull.TabStop = false;
+            this.pictureFull.Click += new System.EventHandler(this.pictureFull_Click);
             this.pictureFull.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureFull_Paint);
             // 
             // pictureVertical
             // 
-            this.pictureVertical.BackColor = System.Drawing.Color.White;
+            this.pictureVertical.BackColor = System.Drawing.Color.Yellow;
             this.pictureVertical.Location = new System.Drawing.Point(21, 365);
             this.pictureVertical.Name = "pictureVertical";
             this.pictureVertical.Size = new System.Drawing.Size(31, 31);
             this.pictureVertical.TabIndex = 22;
             this.pictureVertical.TabStop = false;
+            this.pictureVertical.Click += new System.EventHandler(this.pictureVertical_Click);
             this.pictureVertical.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureVertical_Paint);
             // 
             // pictureHorizontal
             // 
-            this.pictureHorizontal.BackColor = System.Drawing.Color.White;
+            this.pictureHorizontal.BackColor = System.Drawing.Color.Green;
             this.pictureHorizontal.Location = new System.Drawing.Point(21, 407);
             this.pictureHorizontal.Name = "pictureHorizontal";
             this.pictureHorizontal.Size = new System.Drawing.Size(31, 31);
             this.pictureHorizontal.TabIndex = 23;
             this.pictureHorizontal.TabStop = false;
+            this.pictureHorizontal.Click += new System.EventHandler(this.pictureHorizontal_Click);
             this.pictureHorizontal.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureHorizontal_Paint);
             // 
             // pictureUpperLeft
             // 
-            this.pictureUpperLeft.BackColor = System.Drawing.Color.White;
+            this.pictureUpperLeft.BackColor = System.Drawing.Color.LightBlue;
             this.pictureUpperLeft.Location = new System.Drawing.Point(21, 449);
             this.pictureUpperLeft.Name = "pictureUpperLeft";
             this.pictureUpperLeft.Size = new System.Drawing.Size(31, 31);
             this.pictureUpperLeft.TabIndex = 24;
             this.pictureUpperLeft.TabStop = false;
+            this.pictureUpperLeft.Click += new System.EventHandler(this.pictureUpperLeft_Click);
             this.pictureUpperLeft.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureUpperLeft_Paint);
             // 
             // pictureUpperRight
             // 
-            this.pictureUpperRight.BackColor = System.Drawing.Color.White;
+            this.pictureUpperRight.BackColor = System.Drawing.Color.RoyalBlue;
             this.pictureUpperRight.Location = new System.Drawing.Point(21, 490);
             this.pictureUpperRight.Name = "pictureUpperRight";
             this.pictureUpperRight.Size = new System.Drawing.Size(31, 31);
             this.pictureUpperRight.TabIndex = 25;
             this.pictureUpperRight.TabStop = false;
+            this.pictureUpperRight.Click += new System.EventHandler(this.pictureUpperRight_Click);
             this.pictureUpperRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureUpperRight_Paint);
             // 
             // pictureDownLeft
             // 
-            this.pictureDownLeft.BackColor = System.Drawing.Color.White;
+            this.pictureDownLeft.BackColor = System.Drawing.Color.Violet;
             this.pictureDownLeft.Location = new System.Drawing.Point(21, 531);
             this.pictureDownLeft.Name = "pictureDownLeft";
             this.pictureDownLeft.Size = new System.Drawing.Size(31, 31);
             this.pictureDownLeft.TabIndex = 26;
             this.pictureDownLeft.TabStop = false;
+            this.pictureDownLeft.Click += new System.EventHandler(this.pictureDownLeft_Click);
             this.pictureDownLeft.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureDownLeft_Paint);
             // 
             // pictureDownRight
@@ -291,6 +298,7 @@
             this.pictureDownRight.Size = new System.Drawing.Size(31, 31);
             this.pictureDownRight.TabIndex = 27;
             this.pictureDownRight.TabStop = false;
+            this.pictureDownRight.Click += new System.EventHandler(this.pictureDownRight_Click);
             this.pictureDownRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureDownRight_Paint);
             // 
             // label2

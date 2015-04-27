@@ -50,6 +50,7 @@
     <Compile Include="DownLeft.cs" />
     <Compile Include="DownRight.cs" />
     <Compile Include="Flip.cs" />
+    <Compile Include="ListDictionary.cs" />
     <Compile Include="NoneDown.cs" />
     <Compile Include="NoneLeft.cs" />
     <Compile Include="NoneRight.cs" />
