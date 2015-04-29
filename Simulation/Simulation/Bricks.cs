@@ -17,6 +17,7 @@ namespace Simulation
         TrackBar Bar { get; set; }
         float Probability { get;  set; }
         Color CouplingColor { get; set; }
+        TextBox Display { set; }
         void setBricks(Brick[] bricks);
 
     }

@@ -15,6 +15,7 @@ namespace Simulation
         static private Color couplingColor;
         private PictureBox picture;
         private TrackBar bar;
+        private TextBox display;
         Brick none;
         Brick full;
         Brick vertical;
@@ -23,20 +24,31 @@ namespace Simulation
         Brick downLeft;
         Brick downRight;
 
-        public Horizontal(Color color, PictureBox picture, TrackBar bar)
+        public Horizontal(Color color, PictureBox picture, TrackBar bar, TextBox display)
         {
             this.CouplingColor = color;
             this.Bar = bar;
             this.Picture = picture;
+            this.Display = display;
         }
 
-        public float Probability { get { return probability; } set { probability = value; } }
+        public float Probability
+        {
+            get { return probability; }
+            set
+            {
+                probability = value;
+                display.Text = probability.ToString();
+            }
+        }
 
         public Color CouplingColor { get { return couplingColor; } set { couplingColor = value; } }
 
         public PictureBox Picture { get { return picture; } set { picture = value; } }
 
         public TrackBar Bar { get { return bar; } set { bar = value; } }
+
+        public TextBox Display { set { display = value; } }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {

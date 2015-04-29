@@ -28,6 +28,7 @@ namespace Simulation
         Boolean run;
         Boolean random;
         Boolean didchange;
+        Boolean thermalize;
         float beta;
         string currentModel;
 
@@ -49,14 +50,14 @@ namespace Simulation
         {
             InitializeComponent();
 
-            none = new None(Color.Red, pictureNone, noneBar);
-            full = new Full(Color.Orange, pictureFull, fullBar);
-            vertical = new Vertical(Color.Yellow, pictureVertical, verticalBar);
-            horizontal = new Horizontal(Color.Green, pictureHorizontal, horizontalBar);
-            upperLeft = new UpperLeft(Color.LightBlue, pictureUpperLeft, upperLeftBar);
-            upperRight = new UpperRight(Color.Blue, pictureUpperRight, upperRightBar);
-            downLeft = new DownLeft(Color.Violet, pictureDownLeft, downLeftBar);
-            downRight = new DownRight(Color.White, pictureDownRight, downRightBar);
+            none = new None(Color.Red, pictureNone, noneBar, noneWeight);
+            full = new Full(Color.Orange, pictureFull, fullBar, fullWeight);
+            vertical = new Vertical(Color.Yellow, pictureVertical, verticalBar, verticalWeight);
+            horizontal = new Horizontal(Color.Green, pictureHorizontal, horizontalBar, horizontalWeight);
+            upperLeft = new UpperLeft(Color.LightBlue, pictureUpperLeft, upperLeftBar, upperLeftWeight);
+            upperRight = new UpperRight(Color.RoyalBlue, pictureUpperRight, upperRightBar, upperRightWeight);
+            downLeft = new DownLeft(Color.Violet, pictureDownLeft, downLeftBar, downLeftWeight);
+            downRight = new DownRight(Color.White, pictureDownRight, downRightBar, downRightWeight);
 
             size = 10;
 
@@ -71,8 +72,8 @@ namespace Simulation
 
             coupling.Add(Color.Red, none);
             coupling.Add(Color.Orange, full);
-            coupling.Add(Color.Yellow, horizontal);
-            coupling.Add(Color.Green, vertical);
+            coupling.Add(Color.Yellow, vertical);
+            coupling.Add(Color.Green, horizontal);
             coupling.Add(Color.LightBlue, upperLeft);
             coupling.Add(Color.RoyalBlue, upperRight);
             coupling.Add(Color.Violet, downLeft);
@@ -93,6 +94,7 @@ namespace Simulation
             algorithm.Add(new Flip(field, probabilities));
             run = false;
             random = false;
+            thermalize = false;
             serial.BackColor = Color.LightSkyBlue;
             beta = (float)temperaturBar.Value/100;
 
@@ -296,14 +298,14 @@ namespace Simulation
         //set the values
         private void setProbabilityValues()
         {
-            noneProbabilityGiven.Text = none.Probability.ToString();
-            fullProbabilityGiven.Text = ((float)fullBar.Value/1000).ToString();
-            verticalProbabilityGiven.Text = ((float)verticalBar.Value/1000).ToString();
-            horizontalProbabilityGiven.Text = ((float)horizontalBar.Value/1000).ToString();
-            upperLeftProbabilityGiven.Text = ((float)upperLeftBar.Value/1000).ToString();
-            upperRightProbabilityGiven.Text = ((float)upperRightBar.Value/1000).ToString();
-            downLeftProbabilityGiven.Text = ((float)downLeftBar.Value/1000).ToString();
-            downRightProbabilityGiven.Text = ((float)downRightBar.Value/1000).ToString();
+            noneWeight.Text = none.Probability.ToString();
+            fullWeight.Text = ((float)fullBar.Value/1000).ToString();
+            verticalWeight.Text = ((float)verticalBar.Value/1000).ToString();
+            horizontalWeight.Text = ((float)horizontalBar.Value/1000).ToString();
+            upperLeftWeight.Text = ((float)upperLeftBar.Value/1000).ToString();
+            upperRightWeight.Text = ((float)upperRightBar.Value/1000).ToString();
+            downLeftWeight.Text = ((float)downLeftBar.Value/1000).ToString();
+            downRightWeight.Text = ((float)downRightBar.Value/1000).ToString();
         }
 
         private void setProbabilityBars()
@@ -376,10 +378,13 @@ namespace Simulation
                         y = j;
                         x = i;
                         
-                        if (didchange)
-                            Thread.Sleep(velocity);
-                        
-                        graphicsPanel.Invalidate();
+                        if (didchange && !thermalize)
+                        {
+                            graphicsPanel.Invalidate();
+                            if(velocity != 0)
+                                Thread.Sleep(velocity);
+                        }
+                           
                         
                         if (!run)
                             return;
@@ -555,7 +560,6 @@ namespace Simulation
         private void noneBar_Scroll(object sender, EventArgs e)
         {
             none.Probability = (float)noneBar.Value/1000f;
-            noneProbabilityGiven.Text = ((float)noneBar.Value / 1000).ToString();
 
             List<Brick> bri = coupling[none.CouplingColor];
             foreach (Brick brick in bri)
@@ -563,8 +567,9 @@ namespace Simulation
                 if (!(brick is None))
                 {
                     brick.Bar.Value = noneBar.Value;
-                    brick.Bar.Invalidate();
+                    brick.Probability = none.Probability;
                 }
+
             }
 
             if(currentModel == "fermionFree")
@@ -587,7 +592,6 @@ namespace Simulation
         private void fullBar_Scroll(object sender, EventArgs e)
         {
             full.Probability = (float)fullBar.Value/1000f;
-            fullProbabilityGiven.Text = ((float)fullBar.Value / 1000).ToString();
 
             List<Brick> bri = coupling[full.CouplingColor];
             foreach (Brick brick in bri)
@@ -595,7 +599,7 @@ namespace Simulation
                 if (!(brick is Full))
                 {
                     brick.Bar.Value = noneBar.Value;
-                    brick.Bar.Invalidate();
+                    brick.Probability = none.Probability;
                 }
             }
         }
@@ -603,78 +607,94 @@ namespace Simulation
         private void verticalBar_Scroll(object sender, EventArgs e)
         {
             vertical.Probability = (float)verticalBar.Value/1000f;
-            verticalProbabilityGiven.Text = ((float)verticalBar.Value / 1000).ToString();
 
             List<Brick> bri = coupling[vertical.CouplingColor];
             foreach (Brick brick in bri)
             {
                 if (!(brick is Vertical))
+                {
                     brick.Bar.Value = noneBar.Value;
+                    brick.Probability = none.Probability;
+                }
+
             }
         }
 
         private void horizontalBar_Scroll(object sender, EventArgs e)
         {
             horizontal.Probability = (float)horizontalBar.Value / 1000f;
-            horizontalProbabilityGiven.Text = ((float)horizontalBar.Value / 1000).ToString();
 
             List<Brick> bri = coupling[horizontal.CouplingColor];
             foreach (Brick brick in bri)
             {
                 if (!(brick is Horizontal))
+                {
                     brick.Bar.Value = noneBar.Value;
+                    brick.Probability = none.Probability;
+                }
             }
         }
 
         private void upperLeftBar_Scroll(object sender, EventArgs e)
         {
             upperLeft.Probability = (float)upperLeftBar.Value / 1000f;
-            upperLeftProbabilityGiven.Text = ((float)upperLeftBar.Value / 1000).ToString();
 
             List<Brick> bri = coupling[upperLeft.CouplingColor];
             foreach (Brick brick in bri)
             {
                 if (!(brick is UpperLeft))
+                {
                     brick.Bar.Value = noneBar.Value;
+                    brick.Probability = none.Probability;
+                }
+
             }
         }
 
         private void upperRightBar_Scroll(object sender, EventArgs e)
         {
             upperRight.Probability = (float)upperRightBar.Value / 1000f;
-            upperRightProbabilityGiven.Text = ((float)upperRightBar.Value / 1000).ToString();
 
             List<Brick> bri = coupling[upperRight.CouplingColor];
             foreach (Brick brick in bri)
             {
                 if (!(brick is UpperRight))
+                {
                     brick.Bar.Value = noneBar.Value;
+                    brick.Probability = none.Probability;
+                }
             }
         }
 
         private void downLeftBar_Scroll(object sender, EventArgs e)
         {
             downLeft.Probability = (float)downLeftBar.Value / 1000f;
-            downLeftProbabilityGiven.Text = ((float)downLeftBar.Value / 1000).ToString();
 
             List<Brick> bri = coupling[downLeft.CouplingColor];
             foreach (Brick brick in bri)
             {
                 if (!(brick is DownLeft))
+                {
                     brick.Bar.Value = noneBar.Value;
+                    brick.Probability = none.Probability;
+                }
+
             }
         }
 
         private void downRightBar_Scroll(object sender, EventArgs e)
         {
             downRight.Probability = (float)downRightBar.Value / 1000f;
-            downRightProbabilityGiven.Text = ((float)downRightBar.Value / 1000).ToString();
 
             List<Brick> bri = coupling[downRight.CouplingColor];
             foreach (Brick brick in bri)
             {
                 if (!(brick is DownRight))
+                {
                     brick.Bar.Value = noneBar.Value;
+                    brick.Probability = none.Probability;
+                }
+
             }
         }
 
@@ -763,12 +783,20 @@ namespace Simulation
  
         }
 
+        private void thermalisation_Click(object sender, EventArgs e)
+        {
+            thermalize = true;
+            Thread.Sleep(3000);
+            thermalize = false;
+        }
+
 
         //click the vertices and change back color
         private void pictureNone_Click(object sender, EventArgs e)
         {
             coupling.remove(pictureNone.BackColor, none);
             pictureNone.BackColor = nextColor(pictureNone.BackColor);
+            none.CouplingColor = pictureNone.BackColor;
             coupling.Add(pictureNone.BackColor, none);
 
         }
@@ -777,6 +805,7 @@ namespace Simulation
         {
             coupling.remove(pictureFull.BackColor, full);
             pictureFull.BackColor = nextColor(pictureFull.BackColor);
+            full.CouplingColor = pictureFull.BackColor;
             coupling.Add(pictureFull.BackColor, full);
         }
 
@@ -784,6 +813,7 @@ namespace Simulation
         {
             coupling.remove(pictureVertical.BackColor, vertical);
             pictureVertical.BackColor = nextColor(pictureVertical.BackColor);
+            vertical.CouplingColor = pictureVertical.BackColor;
             coupling.Add(pictureVertical.BackColor, vertical);
         }
 
@@ -791,6 +821,7 @@ namespace Simulation
         {
             coupling.remove(pictureHorizontal.BackColor, horizontal);
             pictureHorizontal.BackColor = nextColor(pictureHorizontal.BackColor);
+            horizontal.CouplingColor = pictureHorizontal.BackColor;
             coupling.Add(pictureHorizontal.BackColor, horizontal);
         }
 
@@ -798,6 +829,7 @@ namespace Simulation
         {
             coupling.remove(pictureUpperLeft.BackColor, upperLeft);
             pictureUpperLeft.BackColor = nextColor(pictureUpperLeft.BackColor);
+            upperLeft.CouplingColor = pictureUpperLeft.BackColor;
             coupling.Add(pictureUpperLeft.BackColor, upperLeft);
         }
 
@@ -805,6 +837,7 @@ namespace Simulation
         {
             coupling.remove(pictureUpperRight.BackColor, upperRight);
             pictureUpperRight.BackColor = nextColor(pictureUpperRight.BackColor);
+            upperRight.CouplingColor = pictureUpperRight.BackColor;
             coupling.Add(pictureUpperRight.BackColor, upperRight);
         }
 
@@ -812,6 +845,7 @@ namespace Simulation
         {
             coupling.remove(pictureDownLeft.BackColor, downLeft);
             pictureDownLeft.BackColor = nextColor(pictureDownLeft.BackColor);
+            downLeft.CouplingColor = pictureDownLeft.BackColor;
             coupling.Add(pictureDownLeft.BackColor, downLeft);
         }
 
@@ -819,8 +853,13 @@ namespace Simulation
         {
             coupling.remove(pictureDownRight.BackColor, downRight);
             pictureDownRight.BackColor = nextColor(pictureDownRight.BackColor);
+            downRight.CouplingColor = pictureDownRight.BackColor;
             coupling.Add(pictureDownRight.BackColor, downRight);
         }
+
+        
+
+
 
  
     }

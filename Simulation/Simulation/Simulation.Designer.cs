@@ -62,14 +62,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.serial = new System.Windows.Forms.Button();
             this.rand = new System.Windows.Forms.Button();
-            this.noneProbabilityGiven = new System.Windows.Forms.TextBox();
-            this.fullProbabilityGiven = new System.Windows.Forms.TextBox();
-            this.downRightProbabilityGiven = new System.Windows.Forms.TextBox();
-            this.downLeftProbabilityGiven = new System.Windows.Forms.TextBox();
-            this.upperRightProbabilityGiven = new System.Windows.Forms.TextBox();
-            this.upperLeftProbabilityGiven = new System.Windows.Forms.TextBox();
-            this.horizontalProbabilityGiven = new System.Windows.Forms.TextBox();
-            this.verticalProbabilityGiven = new System.Windows.Forms.TextBox();
+            this.noneWeight = new System.Windows.Forms.TextBox();
+            this.fullWeight = new System.Windows.Forms.TextBox();
+            this.downRightWeight = new System.Windows.Forms.TextBox();
+            this.downLeftWeight = new System.Windows.Forms.TextBox();
+            this.upperRightWeight = new System.Windows.Forms.TextBox();
+            this.upperLeftWeight = new System.Windows.Forms.TextBox();
+            this.horizontalWeight = new System.Windows.Forms.TextBox();
+            this.verticalWeight = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -100,6 +100,7 @@
             this.massMaximum = new System.Windows.Forms.Label();
             this.massMinimum = new System.Windows.Forms.Label();
             this.massNull = new System.Windows.Forms.Label();
+            this.thermalisation = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.graphicsPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureNone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFull)).BeginInit();
@@ -469,85 +470,85 @@
             this.rand.UseVisualStyleBackColor = true;
             this.rand.Click += new System.EventHandler(this.rand_Click);
             // 
-            // noneProbabilityGiven
+            // noneWeight
             // 
-            this.noneProbabilityGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noneProbabilityGiven.Location = new System.Drawing.Point(370, 292);
-            this.noneProbabilityGiven.Name = "noneProbabilityGiven";
-            this.noneProbabilityGiven.ReadOnly = true;
-            this.noneProbabilityGiven.Size = new System.Drawing.Size(50, 24);
-            this.noneProbabilityGiven.TabIndex = 46;
-            this.noneProbabilityGiven.Text = "0";
+            this.noneWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noneWeight.Location = new System.Drawing.Point(370, 292);
+            this.noneWeight.Name = "noneWeight";
+            this.noneWeight.ReadOnly = true;
+            this.noneWeight.Size = new System.Drawing.Size(50, 24);
+            this.noneWeight.TabIndex = 46;
+            this.noneWeight.Text = "0";
             // 
-            // fullProbabilityGiven
+            // fullWeight
             // 
-            this.fullProbabilityGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fullProbabilityGiven.Location = new System.Drawing.Point(370, 331);
-            this.fullProbabilityGiven.Name = "fullProbabilityGiven";
-            this.fullProbabilityGiven.ReadOnly = true;
-            this.fullProbabilityGiven.Size = new System.Drawing.Size(50, 24);
-            this.fullProbabilityGiven.TabIndex = 47;
-            this.fullProbabilityGiven.Text = "0";
+            this.fullWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fullWeight.Location = new System.Drawing.Point(370, 331);
+            this.fullWeight.Name = "fullWeight";
+            this.fullWeight.ReadOnly = true;
+            this.fullWeight.Size = new System.Drawing.Size(50, 24);
+            this.fullWeight.TabIndex = 47;
+            this.fullWeight.Text = "0";
             // 
-            // downRightProbabilityGiven
+            // downRightWeight
             // 
-            this.downRightProbabilityGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downRightProbabilityGiven.Location = new System.Drawing.Point(370, 571);
-            this.downRightProbabilityGiven.Name = "downRightProbabilityGiven";
-            this.downRightProbabilityGiven.ReadOnly = true;
-            this.downRightProbabilityGiven.Size = new System.Drawing.Size(50, 24);
-            this.downRightProbabilityGiven.TabIndex = 48;
-            this.downRightProbabilityGiven.Text = "0";
+            this.downRightWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.downRightWeight.Location = new System.Drawing.Point(370, 571);
+            this.downRightWeight.Name = "downRightWeight";
+            this.downRightWeight.ReadOnly = true;
+            this.downRightWeight.Size = new System.Drawing.Size(50, 24);
+            this.downRightWeight.TabIndex = 48;
+            this.downRightWeight.Text = "0";
             // 
-            // downLeftProbabilityGiven
+            // downLeftWeight
             // 
-            this.downLeftProbabilityGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downLeftProbabilityGiven.Location = new System.Drawing.Point(370, 531);
-            this.downLeftProbabilityGiven.Name = "downLeftProbabilityGiven";
-            this.downLeftProbabilityGiven.ReadOnly = true;
-            this.downLeftProbabilityGiven.Size = new System.Drawing.Size(50, 24);
-            this.downLeftProbabilityGiven.TabIndex = 49;
-            this.downLeftProbabilityGiven.Text = "0";
+            this.downLeftWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.downLeftWeight.Location = new System.Drawing.Point(370, 531);
+            this.downLeftWeight.Name = "downLeftWeight";
+            this.downLeftWeight.ReadOnly = true;
+            this.downLeftWeight.Size = new System.Drawing.Size(50, 24);
+            this.downLeftWeight.TabIndex = 49;
+            this.downLeftWeight.Text = "0";
             // 
-            // upperRightProbabilityGiven
+            // upperRightWeight
             // 
-            this.upperRightProbabilityGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.upperRightProbabilityGiven.Location = new System.Drawing.Point(370, 490);
-            this.upperRightProbabilityGiven.Name = "upperRightProbabilityGiven";
-            this.upperRightProbabilityGiven.ReadOnly = true;
-            this.upperRightProbabilityGiven.Size = new System.Drawing.Size(50, 24);
-            this.upperRightProbabilityGiven.TabIndex = 50;
-            this.upperRightProbabilityGiven.Text = "0";
+            this.upperRightWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.upperRightWeight.Location = new System.Drawing.Point(370, 490);
+            this.upperRightWeight.Name = "upperRightWeight";
+            this.upperRightWeight.ReadOnly = true;
+            this.upperRightWeight.Size = new System.Drawing.Size(50, 24);
+            this.upperRightWeight.TabIndex = 50;
+            this.upperRightWeight.Text = "0";
             // 
-            // upperLeftProbabilityGiven
+            // upperLeftWeight
             // 
-            this.upperLeftProbabilityGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.upperLeftProbabilityGiven.Location = new System.Drawing.Point(370, 449);
-            this.upperLeftProbabilityGiven.Name = "upperLeftProbabilityGiven";
-            this.upperLeftProbabilityGiven.ReadOnly = true;
-            this.upperLeftProbabilityGiven.Size = new System.Drawing.Size(50, 24);
-            this.upperLeftProbabilityGiven.TabIndex = 51;
-            this.upperLeftProbabilityGiven.Text = "0";
+            this.upperLeftWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.upperLeftWeight.Location = new System.Drawing.Point(370, 449);
+            this.upperLeftWeight.Name = "upperLeftWeight";
+            this.upperLeftWeight.ReadOnly = true;
+            this.upperLeftWeight.Size = new System.Drawing.Size(50, 24);
+            this.upperLeftWeight.TabIndex = 51;
+            this.upperLeftWeight.Text = "0";
             // 
-            // horizontalProbabilityGiven
+            // horizontalWeight
             // 
-            this.horizontalProbabilityGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.horizontalProbabilityGiven.Location = new System.Drawing.Point(370, 407);
-            this.horizontalProbabilityGiven.Name = "horizontalProbabilityGiven";
-            this.horizontalProbabilityGiven.ReadOnly = true;
-            this.horizontalProbabilityGiven.Size = new System.Drawing.Size(50, 24);
-            this.horizontalProbabilityGiven.TabIndex = 52;
-            this.horizontalProbabilityGiven.Text = "0";
+            this.horizontalWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.horizontalWeight.Location = new System.Drawing.Point(370, 407);
+            this.horizontalWeight.Name = "horizontalWeight";
+            this.horizontalWeight.ReadOnly = true;
+            this.horizontalWeight.Size = new System.Drawing.Size(50, 24);
+            this.horizontalWeight.TabIndex = 52;
+            this.horizontalWeight.Text = "0";
             // 
-            // verticalProbabilityGiven
+            // verticalWeight
             // 
-            this.verticalProbabilityGiven.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.verticalProbabilityGiven.Location = new System.Drawing.Point(370, 365);
-            this.verticalProbabilityGiven.Name = "verticalProbabilityGiven";
-            this.verticalProbabilityGiven.ReadOnly = true;
-            this.verticalProbabilityGiven.Size = new System.Drawing.Size(50, 24);
-            this.verticalProbabilityGiven.TabIndex = 53;
-            this.verticalProbabilityGiven.Text = "0";
+            this.verticalWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.verticalWeight.Location = new System.Drawing.Point(370, 365);
+            this.verticalWeight.Name = "verticalWeight";
+            this.verticalWeight.ReadOnly = true;
+            this.verticalWeight.Size = new System.Drawing.Size(50, 24);
+            this.verticalWeight.TabIndex = 53;
+            this.verticalWeight.Text = "0";
             // 
             // label8
             // 
@@ -831,12 +832,23 @@
             this.massNull.TabIndex = 92;
             this.massNull.Text = "0";
             // 
+            // thermalisation
+            // 
+            this.thermalisation.Location = new System.Drawing.Point(426, 292);
+            this.thermalisation.Name = "thermalisation";
+            this.thermalisation.Size = new System.Drawing.Size(66, 42);
+            this.thermalisation.TabIndex = 93;
+            this.thermalisation.Text = "Thermalize";
+            this.thermalisation.UseVisualStyleBackColor = true;
+            this.thermalisation.Click += new System.EventHandler(this.thermalisation_Click);
+            // 
             // simulation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1118, 622);
+            this.Controls.Add(this.thermalisation);
             this.Controls.Add(this.massNull);
             this.Controls.Add(this.massMinimum);
             this.Controls.Add(this.massMaximum);
@@ -867,14 +879,14 @@
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.verticalProbabilityGiven);
-            this.Controls.Add(this.horizontalProbabilityGiven);
-            this.Controls.Add(this.upperLeftProbabilityGiven);
-            this.Controls.Add(this.upperRightProbabilityGiven);
-            this.Controls.Add(this.downLeftProbabilityGiven);
-            this.Controls.Add(this.downRightProbabilityGiven);
-            this.Controls.Add(this.fullProbabilityGiven);
-            this.Controls.Add(this.noneProbabilityGiven);
+            this.Controls.Add(this.verticalWeight);
+            this.Controls.Add(this.horizontalWeight);
+            this.Controls.Add(this.upperLeftWeight);
+            this.Controls.Add(this.upperRightWeight);
+            this.Controls.Add(this.downLeftWeight);
+            this.Controls.Add(this.downRightWeight);
+            this.Controls.Add(this.fullWeight);
+            this.Controls.Add(this.noneWeight);
             this.Controls.Add(this.rand);
             this.Controls.Add(this.serial);
             this.Controls.Add(this.label7);
@@ -973,14 +985,14 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button serial;
         private System.Windows.Forms.Button rand;
-        private System.Windows.Forms.TextBox noneProbabilityGiven;
-        private System.Windows.Forms.TextBox fullProbabilityGiven;
-        private System.Windows.Forms.TextBox downRightProbabilityGiven;
-        private System.Windows.Forms.TextBox downLeftProbabilityGiven;
-        private System.Windows.Forms.TextBox upperRightProbabilityGiven;
-        private System.Windows.Forms.TextBox upperLeftProbabilityGiven;
-        private System.Windows.Forms.TextBox horizontalProbabilityGiven;
-        private System.Windows.Forms.TextBox verticalProbabilityGiven;
+        private System.Windows.Forms.TextBox noneWeight;
+        private System.Windows.Forms.TextBox fullWeight;
+        private System.Windows.Forms.TextBox downRightWeight;
+        private System.Windows.Forms.TextBox downLeftWeight;
+        private System.Windows.Forms.TextBox upperRightWeight;
+        private System.Windows.Forms.TextBox upperLeftWeight;
+        private System.Windows.Forms.TextBox horizontalWeight;
+        private System.Windows.Forms.TextBox verticalWeight;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
@@ -1011,6 +1023,7 @@
         private System.Windows.Forms.Label massMaximum;
         private System.Windows.Forms.Label massMinimum;
         private System.Windows.Forms.Label massNull;
+        private System.Windows.Forms.Button thermalisation;
     }
 }
 

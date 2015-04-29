@@ -72,5 +72,17 @@ namespace Simulation
                 throw new NotImplementedException();
             }
         }
+
+
+        public System.Windows.Forms.Label Display
+        {
+            set { throw new NotImplementedException(); }
+        }
+
+
+        System.Windows.Forms.TextBox Brick.Display
+        {
+            set { throw new NotImplementedException(); }
+        }
     }
 }
