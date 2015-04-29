@@ -924,6 +924,7 @@
             this.MaximizeBox = false;
             this.Name = "simulation";
             this.Text = "Simulation";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.simulation_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.graphicsPanel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureNone)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFull)).EndInit();

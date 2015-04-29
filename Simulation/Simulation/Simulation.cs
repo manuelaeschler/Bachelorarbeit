@@ -144,9 +144,9 @@ namespace Simulation
 
         private void fillField(Brick[,] fields)
         {
-            for (int i = 0; i < fields.GetLength(0); i++)
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j < fields.GetLength(1); j++)
+                for (int j = 0; j < size; j++)
                 {
                     fields[i, j] = none;
                 }
@@ -189,7 +189,6 @@ namespace Simulation
             calculateIsingNormal();
 
             setProbabilityBars();
-            setProbabilityValues();
         }
 
         private void fermionFree_Click(object sender, EventArgs e)
@@ -217,7 +216,6 @@ namespace Simulation
             downRight.Probability = (float)(1 / Math.Sqrt(2));
 
             setProbabilityBars();
-            setProbabilityValues();
         }
 
         private void isingDual_Click(object sender, EventArgs e)
@@ -237,7 +235,7 @@ namespace Simulation
             calculateIsingDual();
 
             setProbabilityBars();
-            setProbabilityValues();
+
         }
 
         private void fermionBound_Click(object sender, EventArgs e)
@@ -265,7 +263,6 @@ namespace Simulation
             downRight.Probability = 0.5f;
 
             setProbabilityBars();
-            setProbabilityValues();
         }
 
 
@@ -296,17 +293,6 @@ namespace Simulation
 
 
         //set the values
-        private void setProbabilityValues()
-        {
-            noneWeight.Text = none.Probability.ToString();
-            fullWeight.Text = ((float)fullBar.Value/1000).ToString();
-            verticalWeight.Text = ((float)verticalBar.Value/1000).ToString();
-            horizontalWeight.Text = ((float)horizontalBar.Value/1000).ToString();
-            upperLeftWeight.Text = ((float)upperLeftBar.Value/1000).ToString();
-            upperRightWeight.Text = ((float)upperRightBar.Value/1000).ToString();
-            downLeftWeight.Text = ((float)downLeftBar.Value/1000).ToString();
-            downRightWeight.Text = ((float)downRightBar.Value/1000).ToString();
-        }
 
         private void setProbabilityBars()
         {
@@ -373,13 +359,14 @@ namespace Simulation
                         else
                             didchange = current.change(col, row);
 
-                        subtractFields();
+                        
 
                         y = j;
                         x = i;
                         
                         if (didchange && !thermalize)
                         {
+                            subtractFields();
                             graphicsPanel.Invalidate();
                             if(velocity != 0)
                                 Thread.Sleep(velocity);
@@ -430,9 +417,9 @@ namespace Simulation
         //calculate changes
         private void subtractFields()
         {
-            for (int i = 0; i < change.GetLength(0); i++)
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j < change.GetLength(1); j++)
+                for (int j = 0; j < size; j++)
                 {
                     change[i, j] = currentField[i, j].subtract(field[i, j]);
                 }
@@ -790,6 +777,11 @@ namespace Simulation
             thermalize = false;
         }
 
+        private void simulation_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            startthread.Abort();
+        }
+
 
         //click the vertices and change back color
         private void pictureNone_Click(object sender, EventArgs e)
@@ -856,10 +848,6 @@ namespace Simulation
             downRight.CouplingColor = pictureDownRight.BackColor;
             coupling.Add(pictureDownRight.BackColor, downRight);
         }
-
-        
-
-
 
  
     }
