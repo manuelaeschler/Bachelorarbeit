@@ -101,6 +101,7 @@
             this.massMinimum = new System.Windows.Forms.Label();
             this.massNull = new System.Windows.Forms.Label();
             this.thermalisation = new System.Windows.Forms.Button();
+            this.criticalValue = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.graphicsPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureNone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFull)).BeginInit();
@@ -834,7 +835,7 @@
             // 
             // thermalisation
             // 
-            this.thermalisation.Location = new System.Drawing.Point(426, 292);
+            this.thermalisation.Location = new System.Drawing.Point(429, 292);
             this.thermalisation.Name = "thermalisation";
             this.thermalisation.Size = new System.Drawing.Size(66, 42);
             this.thermalisation.TabIndex = 93;
@@ -842,12 +843,23 @@
             this.thermalisation.UseVisualStyleBackColor = true;
             this.thermalisation.Click += new System.EventHandler(this.thermalisation_Click);
             // 
+            // criticalValue
+            // 
+            this.criticalValue.Location = new System.Drawing.Point(429, 340);
+            this.criticalValue.Name = "criticalValue";
+            this.criticalValue.Size = new System.Drawing.Size(66, 42);
+            this.criticalValue.TabIndex = 94;
+            this.criticalValue.Text = "Critical Value";
+            this.criticalValue.UseVisualStyleBackColor = true;
+            this.criticalValue.Click += new System.EventHandler(this.criticalValue_Click);
+            // 
             // simulation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1118, 622);
+            this.Controls.Add(this.criticalValue);
             this.Controls.Add(this.thermalisation);
             this.Controls.Add(this.massNull);
             this.Controls.Add(this.massMinimum);
@@ -1025,6 +1037,7 @@
         private System.Windows.Forms.Label massMinimum;
         private System.Windows.Forms.Label massNull;
         private System.Windows.Forms.Button thermalisation;
+        private System.Windows.Forms.Button criticalValue;
     }
 }
 

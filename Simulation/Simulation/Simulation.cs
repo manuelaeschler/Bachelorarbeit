@@ -849,6 +849,40 @@ namespace Simulation
             coupling.Add(pictureDownRight.BackColor, downRight);
         }
 
+        private void criticalValue_Click(object sender, EventArgs e)
+        {
+            switch(currentModel){
+                case "isingNormal":
+                    {
+                        temperaturBar.Value = 42;
+                        isingNormal_Click(new Object(), new EventArgs());
+                        break;
+                    }
+
+                case "isingDudal":
+                    {
+                        temperaturBar.Value = 44;
+                        isingDual_Click(new Object(), new EventArgs());
+                        break;
+                    }
+
+                case "fermionFree":
+                    {
+                        temperaturBar.Value = 0;
+                        fermionFree_Click(new Object(), new EventArgs());
+                        break;
+                    }
+
+                case "fermionBound":
+                    {
+                        temperaturBar.Value = (int)(100f * (1.5f - 0.6865f));
+                        fermionBound_Click(new Object(), new EventArgs());
+                        break;
+                    }
+
+            }
+        }
+
  
     }
 }
