@@ -16,6 +16,7 @@ namespace Simulation
     {
         int size;
         int velocity;
+        int currentPoint;
         List<Algorithm> algorithm = new List<Algorithm>();
         Brick[,] field;
         Brick[,] currentField;
@@ -41,9 +42,6 @@ namespace Simulation
         Brick downLeft;
         Brick downRight;
 
-        int x = 0;
-        int y = 0;
-
         Thread startthread;
 
         public simulation()
@@ -60,6 +58,7 @@ namespace Simulation
             downRight = new DownRight(Color.White, pictureDownRight, downRightBar, downRightWeight);
 
             size = 10;
+            currentPoint = 0;
 
             bricks[0] = none;
             bricks[1] = full;
@@ -91,7 +90,8 @@ namespace Simulation
             field = new Brick[size, size];
             change = new Brick[size, size];
             currentField = new Brick[size, size];
-            algorithm.Add(new Flip(field, probabilities));
+            algorithm.Add(new Worm(field));
+            algorithm.Add(new Flip(field));
             run = false;
             random = false;
             thermalize = false;
@@ -104,6 +104,7 @@ namespace Simulation
             fillField(currentField);
 
             sizeOfLattice.Text = size.ToString();
+            startthread = new Thread(startThread);
 
             pictureNone.Refresh();
             pictureFull.Invalidate();
@@ -157,12 +158,33 @@ namespace Simulation
         //Algorithm
         private void flip_Click(object sender, EventArgs e)
         {
+            flip.BackColor = Color.LightSkyBlue;
+            worm.BackColor = Color.Empty;
+
             field = algorithm.Last().Field;
             Algorithm al = null;
 
             foreach (Algorithm algo in algorithm)
             {
                 if (algo is Flip)
+                    al = algo;
+            }
+            algorithm.Remove(al);
+            al.Field = field;
+            algorithm.Add(al);
+        }
+
+        private void worm_Click(object sender, EventArgs e)
+        {
+            flip.BackColor = Color.Empty;
+            worm.BackColor = Color.LightSkyBlue;
+
+            field = algorithm.Last().Field;
+            Algorithm al = null;
+
+            foreach (Algorithm algo in algorithm)
+            {
+                if (algo is Worm)
                     al = algo;
             }
             algorithm.Remove(al);
@@ -317,7 +339,6 @@ namespace Simulation
             if (!run)
             {
                 sizeOfLattice.ReadOnly = true;
-                startthread = new Thread(startThread);
                 run = true;
                 startthread.Start();
             }
@@ -325,69 +346,49 @@ namespace Simulation
 
         private void startThread()
         {
-            int changeDirection = 1;
             Random rand = new Random();
+
+            int row;
+            int col;
 
             Algorithm current;
             while (run)
             {
                 current = algorithm.Last();
                 graphicsPanel.Invalidate();
-                //changeDirection = 1;
 
-                for (int i = x; i < field.GetLength(0); i++)
+                if (random)
                 {
-                    for (int j = y; j < field.GetLength(1); j++)
-                    {
-                        int row;
-                        int col;
+                     row= (int)(rand.NextDouble() * size);
+                     col = (int)(rand.NextDouble() * size);
+                }
+                     else
+                {
+                     row = currentPoint%size;
+                     col = currentPoint/size;
+                }
 
-                        if (random)
-                        {
-                            row= (int)(rand.NextDouble() * field.GetLength(0));
-                            col = (int)(rand.NextDouble() * field.GetLength(1));
-                        }
-                        else
-                        {
-                            row = i;
-                            col = j;
-                        }
-
-
-                        if (changeDirection % 2 == 0)
-                            didchange = current.change(row, col);
-                        else
-                            didchange = current.change(col, row);
+                if ((currentPoint/size) % 2 == 0)
+                     didchange = current.change(row, col);
+                else
+                     didchange = current.change(col, row);
 
                         
-
-                        y = j;
-                        x = i;
-                        
-                        if (didchange && !thermalize)
-                        {
-                            subtractFields();
-                            graphicsPanel.Invalidate();
-                            if(velocity != 0)
-                                Thread.Sleep(velocity);
-                        }
+                if (didchange && !thermalize)
+                {
+                     subtractFields();
+                     graphicsPanel.Invalidate();
+                     if(velocity != 0)
+                         Thread.Sleep(velocity);
+                }
                            
-                        
-                        if (!run)
-                            return;
-                    }       
-                    y = 0;
-                }
 
-                changeDirection++;
-                x = 0;
-                for (int i = 0; i < size; i++)
-                {
-                    for (int j = 0; j < size; j++)
-                    {
-                        currentField[i, j] = field[i, j];
-                    }
-                }
+                if (!run)
+                     return;
+
+                currentPoint = (++currentPoint)%(size*size);
+                if(currentPoint == (size*size)-1)
+                    currentField = (Brick[,])field.Clone();
             } 
         }
 
@@ -407,8 +408,7 @@ namespace Simulation
                 fillField(change);
                 fillField(currentField);
 
-                x = 0;
-                y = 0;
+                currentPoint = 0;
             }
 
         }
@@ -779,7 +779,8 @@ namespace Simulation
 
         private void simulation_FormClosing(object sender, FormClosingEventArgs e)
         {
-            startthread.Abort();
+            if(startthread.IsAlive)
+                startthread.Abort();
         }
 
 
@@ -855,20 +856,24 @@ namespace Simulation
                 case "isingNormal":
                     {
                         temperaturBar.Value = 42;
+                        beta = 0.42f;
                         isingNormal_Click(new Object(), new EventArgs());
                         break;
                     }
 
-                case "isingDudal":
+                case "isingDual":
                     {
                         temperaturBar.Value = 44;
+                        beta = 0.44f;
                         isingDual_Click(new Object(), new EventArgs());
                         break;
                     }
 
                 case "fermionFree":
                     {
-                        temperaturBar.Value = 0;
+                        temperaturBar.Value = 150;
+                        beta = 1.5f;
+                        //betaTextBox.Text = beta.ToString();
                         fermionFree_Click(new Object(), new EventArgs());
                         break;
                     }
@@ -876,9 +881,13 @@ namespace Simulation
                 case "fermionBound":
                     {
                         temperaturBar.Value = (int)(100f * (1.5f - 0.6865f));
+                        beta = ((float)temperaturBar.Value) / 100f;
                         fermionBound_Click(new Object(), new EventArgs());
                         break;
                     }
+
+                default:
+                    break;
 
             }
         }

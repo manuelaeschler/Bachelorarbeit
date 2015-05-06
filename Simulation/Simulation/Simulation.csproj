@@ -69,6 +69,7 @@
     <Compile Include="UpperLeft.cs" />
     <Compile Include="UpperRight.cs" />
     <Compile Include="Vertical.cs" />
+    <Compile Include="Worm.cs" />
     <EmbeddedResource Include="Simulation.resx">
       <DependentUpon>Simulation.cs</DependentUpon>
     </EmbeddedResource>

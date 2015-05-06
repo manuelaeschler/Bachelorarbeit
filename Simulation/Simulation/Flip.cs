@@ -9,7 +9,6 @@ namespace Simulation
     class Flip : Algorithm
     {
         private Brick[,] field;
-        private float[,] probabilities;
         Random rand;
 
         Brick old1;
@@ -22,14 +21,12 @@ namespace Simulation
         Brick new3;
         Brick new4;
 
-        public Flip(Brick[,] field, float[,] probabilities)
+        public Flip(Brick[,] field)
         {
             this.rand = new Random();
             this.field = field;
-            this.probabilities = probabilities;
         }
 
-        public float[,] Probabilities { set { probabilities = value; } }
         public Brick[,] Field { get { return field; } set { field = value; } }
 
         public Boolean change(int x, int y)

@@ -9,7 +9,6 @@ namespace Simulation
     interface Algorithm
     {
         Brick[,] Field { get; set; }
-        float[,] Probabilities {set; }
 
         Boolean change(int x, int y);
 

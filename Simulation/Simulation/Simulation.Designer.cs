@@ -102,6 +102,7 @@
             this.massNull = new System.Windows.Forms.Label();
             this.thermalisation = new System.Windows.Forms.Button();
             this.criticalValue = new System.Windows.Forms.Button();
+            this.worm = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.graphicsPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureNone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFull)).BeginInit();
@@ -853,12 +854,26 @@
             this.criticalValue.UseVisualStyleBackColor = true;
             this.criticalValue.Click += new System.EventHandler(this.criticalValue_Click);
             // 
+            // worm
+            // 
+            this.worm.BackColor = System.Drawing.SystemColors.Control;
+            this.worm.Cursor = System.Windows.Forms.Cursors.Default;
+            this.worm.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.worm.Location = new System.Drawing.Point(776, 25);
+            this.worm.Name = "worm";
+            this.worm.Size = new System.Drawing.Size(178, 57);
+            this.worm.TabIndex = 95;
+            this.worm.Text = "Worm Algorithm";
+            this.worm.UseVisualStyleBackColor = true;
+            this.worm.Click += new System.EventHandler(this.worm_Click);
+            // 
             // simulation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1118, 622);
+            this.Controls.Add(this.worm);
             this.Controls.Add(this.criticalValue);
             this.Controls.Add(this.thermalisation);
             this.Controls.Add(this.massNull);
@@ -1038,6 +1053,7 @@
         private System.Windows.Forms.Label massNull;
         private System.Windows.Forms.Button thermalisation;
         private System.Windows.Forms.Button criticalValue;
+        private System.Windows.Forms.Button worm;
     }
 }
 
