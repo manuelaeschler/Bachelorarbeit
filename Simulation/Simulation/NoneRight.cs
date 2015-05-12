@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Simulation
 {
@@ -17,7 +18,7 @@ namespace Simulation
 
         }
 
-        public void draw(float x, float y, float brickSizeX, float brickSizeY, System.Drawing.Pen pen, System.Windows.Forms.PaintEventArgs e, float size)
+        public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
             pen.Width = size;
 
@@ -32,56 +33,51 @@ namespace Simulation
             return null;
         }
 
+        //TO DO
         public Brick subtract(Brick brick)
-        {
+        {/*
+            if (brick is Full)
+                return none;
+
+            if (brick is None)
+                return this;
+
+            if (brick is Vertical)
+                return horizontal;
+
+            if (brick is Horizontal)
+                return vertical;
+
+            if (brick is UpperLeft)
+                return downRight;
+
+            if (brick is UpperRight)
+                return downLeft;
+
+            if (brick is DownLeft)
+                return upperRight;
+
+            if (brick is DownRight)
+                return upperLeft;
+ */
             return null;
+
         }
 
-        public float Probability { get { return probability; } set { probability = value; } }
-
-
+        //TO DO
         public void setBricks(Brick[] bricks)
         {
             throw new NotImplementedException();
         }
 
+        public float Probability { get { return probability; } set { probability = value; } }
+
         public Color CouplingColor { get { return backColor; } set { backColor = value; } }
 
+        public PictureBox Picture { get { return null; } set { } }
 
-        public System.Windows.Forms.PictureBox Picture
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public TrackBar Bar { get { return null; } set { } }
 
-        public System.Windows.Forms.TrackBar Bar
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-
-        public System.Windows.Forms.Label Display
-        {
-            set { throw new NotImplementedException(); }
-        }
-
-
-        System.Windows.Forms.TextBox Brick.Display
-        {
-            set { throw new NotImplementedException(); }
-        }
+        public TextBox Display { set { } }
     }
 }

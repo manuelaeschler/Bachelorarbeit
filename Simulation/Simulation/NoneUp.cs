@@ -4,20 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Simulation
 {
     class NoneUp : Brick
     {
         private float probability;
-        private Color backColor;
+
+        Brick none;
+        Brick full;
+        Brick horizontal;
+        Brick vertical;
+        Brick upperLeft;
+        Brick upperRight;
+        Brick downLeft;
+        Brick downRight;
+        //Brick noneUp;
+        Brick noneDown;
+        Brick noneLeft;
+        Brick noneRight;
+        Brick up;
+        Brick down;
+        Brick left;
+        Brick right;
 
         public NoneUp()
         {
 
         }
 
-        public void draw(float x, float y, float brickSizeX, float brickSizeY, System.Drawing.Pen pen, System.Windows.Forms.PaintEventArgs e, float size)
+        public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
             pen.Width = size;
 
@@ -27,62 +44,81 @@ namespace Simulation
 
         }
 
+        
         public Brick getOpposite(int inCase)
         {
             return null;
         }
 
+        
         public Brick subtract(Brick brick)
         {
+            if (brick is Full)
+                return up;
+
+            if (brick is None)
+                return this;
+
+            if (brick is Vertical)
+                return noneDown;
+
+            if (brick is Horizontal)
+                return down;
+
+            if (brick is UpperLeft)
+                return noneLeft;
+
+            if (brick is UpperRight)
+                return noneRight;
+
+            if (brick is DownLeft)
+                return right;
+
+            if (brick is DownRight)
+                return left;
+
+            if (brick is NoneUp)
+                return none;
+
+            if (brick is NoneDown)
+                return vertical;
+
+            if (brick is NoneLeft)
+                return upperLeft;
+
+            if (brick is NoneRight)
+                return upperRight;
+
+            if (brick is Up)
+                return full;
+
+            if (brick is Down)
+                return horizontal;
+
+            if (brick is Left)
+                return downRight;
+
+            if (brick is Right)
+                return downLeft;
+ 
             return null;
+         
         }
 
-        public float Probability { get { return probability; } set { probability = value; } }
-
-
-
+        //TO DO
         public void setBricks(Brick[] bricks)
         {
             throw new NotImplementedException();
         }
 
-        public Color CouplingColor { get { return backColor; } set { backColor = value; } }
+        public float Probability { get { return probability; } set { probability = value; } }
 
+        public Color CouplingColor { get { return Color.Empty; } set { } }
 
-        public System.Windows.Forms.PictureBox Picture
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public PictureBox Picture { get { return null; } set{ } }
 
-        public System.Windows.Forms.TrackBar Bar
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public TrackBar Bar { get { return null; } set { } }
 
-
-        public System.Windows.Forms.Label Display
-        {
-            set { throw new NotImplementedException(); }
-        }
-
-
-        System.Windows.Forms.TextBox Brick.Display
-        {
-            set { throw new NotImplementedException(); }
-        }
+        public TextBox Display { set { } }
     }
 }

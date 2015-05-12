@@ -99,6 +99,7 @@ namespace Simulation
             beta = (float)temperaturBar.Value/100;
 
             velocity = velocityBar.Value;
+            flip.BackColor = Color.LightSkyBlue;
             fillField(field);
             fillField(change);
             fillField(currentField);
@@ -498,7 +499,6 @@ namespace Simulation
             pen.Width = 3f;
 
             e.Graphics.DrawLine(pen, 0, 15, 31, 15);
-;
         }
 
         private void pictureUpperLeft_Paint(object sender, PaintEventArgs e)
@@ -585,8 +585,8 @@ namespace Simulation
             {
                 if (!(brick is Full))
                 {
-                    brick.Bar.Value = noneBar.Value;
-                    brick.Probability = none.Probability;
+                    brick.Bar.Value = fullBar.Value;
+                    brick.Probability = full.Probability;
                 }
             }
         }
@@ -600,8 +600,8 @@ namespace Simulation
             {
                 if (!(brick is Vertical))
                 {
-                    brick.Bar.Value = noneBar.Value;
-                    brick.Probability = none.Probability;
+                    brick.Bar.Value = verticalBar.Value;
+                    brick.Probability = vertical.Probability;
                 }
 
             }
@@ -616,8 +616,8 @@ namespace Simulation
             {
                 if (!(brick is Horizontal))
                 {
-                    brick.Bar.Value = noneBar.Value;
-                    brick.Probability = none.Probability;
+                    brick.Bar.Value = horizontalBar.Value;
+                    brick.Probability = horizontal.Probability;
                 }
             }
         }
@@ -631,8 +631,8 @@ namespace Simulation
             {
                 if (!(brick is UpperLeft))
                 {
-                    brick.Bar.Value = noneBar.Value;
-                    brick.Probability = none.Probability;
+                    brick.Bar.Value = upperLeftBar.Value;
+                    brick.Probability = upperLeft.Probability;
                 }
 
             }
@@ -647,8 +647,8 @@ namespace Simulation
             {
                 if (!(brick is UpperRight))
                 {
-                    brick.Bar.Value = noneBar.Value;
-                    brick.Probability = none.Probability;
+                    brick.Bar.Value = upperRightBar.Value;
+                    brick.Probability = upperRight.Probability;
                 }
             }
         }
@@ -662,8 +662,8 @@ namespace Simulation
             {
                 if (!(brick is DownLeft))
                 {
-                    brick.Bar.Value = noneBar.Value;
-                    brick.Probability = none.Probability;
+                    brick.Bar.Value = downLeftBar.Value;
+                    brick.Probability = downLeft.Probability;
                 }
 
             }
@@ -678,8 +678,8 @@ namespace Simulation
             {
                 if (!(brick is DownRight))
                 {
-                    brick.Bar.Value = noneBar.Value;
-                    brick.Probability = none.Probability;
+                    brick.Bar.Value = downRightBar.Value;
+                    brick.Probability = downRight.Probability;
                 }
 
             }

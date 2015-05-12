@@ -47,14 +47,17 @@
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
     <Compile Include="Bricks.cs" />
+    <Compile Include="Down.cs" />
     <Compile Include="DownLeft.cs" />
     <Compile Include="DownRight.cs" />
     <Compile Include="Flip.cs" />
+    <Compile Include="Left.cs" />
     <Compile Include="ListDictionary.cs" />
     <Compile Include="NoneDown.cs" />
     <Compile Include="NoneLeft.cs" />
     <Compile Include="NoneRight.cs" />
     <Compile Include="NoneUp.cs" />
+    <Compile Include="Right.cs" />
     <Compile Include="Simulation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +69,7 @@
     <Compile Include="None.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Up.cs" />
     <Compile Include="UpperLeft.cs" />
     <Compile Include="UpperRight.cs" />
     <Compile Include="Vertical.cs" />

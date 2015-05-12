@@ -10,6 +10,7 @@ namespace Simulation
     {
         private Brick[,] field;
         Random rand;
+        int size;
 
         Brick old1;
         Brick old2;
@@ -25,22 +26,23 @@ namespace Simulation
         {
             this.rand = new Random();
             this.field = field;
+            this.size = field.GetLength(0);
         }
 
-        public Brick[,] Field { get { return field; } set { field = value; } }
+        public Brick[,] Field { get { return field; } set { field = value; size = field.GetLength(0); } }
 
         public Boolean change(int x, int y)
         {
-            if (x + 1 != field.GetLength(0))
+            if (x + 1 != size)
             {
-                if(y + 1 != field.GetLength(1))
+                if(y + 1 != size)
                     return ifPossible(x, x + 1, y, y + 1);
                 else
                     return ifPossible(x, x + 1, y, 0);
             }
             else
             {
-                if (y + 1 != field.GetLength(1))
+                if (y + 1 != size)
                     return ifPossible(x, 0, y, y + 1);
                 else
                     return ifPossible(x, 0, y, 0);
