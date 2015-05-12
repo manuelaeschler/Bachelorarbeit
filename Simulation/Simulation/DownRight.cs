@@ -15,6 +15,7 @@ namespace Simulation
         private PictureBox picture;
         private TrackBar bar;
         private TextBox display;
+
         Brick none;
         Brick full;
         Brick horizontal;
@@ -22,6 +23,15 @@ namespace Simulation
         Brick upperLeft;
         Brick upperRight;
         Brick downLeft;
+
+        Brick noneUp;
+        Brick noneDown;
+        Brick noneLeft;
+        Brick noneRight;
+        Brick up;
+        Brick down;
+        Brick left;
+        Brick right;
 
         public DownRight(Color color, PictureBox picture, TrackBar bar, TextBox display)
         {
@@ -82,6 +92,30 @@ namespace Simulation
             if (brick is DownRight)
                 return none;
 
+            if (brick is NoneUp)
+                return left;
+
+            if (brick is NoneDown)
+                return noneRight;
+
+            if (brick is NoneLeft)
+                return up;
+
+            if (brick is NoneRight)
+                return noneDown;
+
+            if (brick is Up)
+                return noneLeft;
+
+            if (brick is Down)
+                return right;
+
+            if (brick is Left)
+                return noneUp;
+
+            if (brick is Right)
+                return down;
+
             return null;
         }
 
@@ -112,6 +146,33 @@ namespace Simulation
             upperLeft = bricks[4];
             upperRight = bricks[5];
             downLeft = bricks[6];
+
+            noneUp = bricks[8];
+            noneDown = bricks[9];
+            noneLeft = bricks[10];
+            noneRight = bricks[11];
+            up = bricks[12];
+            down = bricks[13];
+            left = bricks[14];
+            right = bricks[15];
+        }
+
+        public Brick bondInOut(string inCase)
+        {
+            switch (inCase)
+            {
+                case "up":
+                    return noneLeft;
+                case "down":
+                    return right;
+                case "left":
+                    return noneUp;
+                case "right":
+                    return down;
+                default:
+                    return this;
+
+            }
         }
 
     }

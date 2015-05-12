@@ -13,6 +13,9 @@ namespace Simulation
         void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size);
         Brick getOpposite(int inCase);
         Brick subtract(Brick brick);
+        Brick bondInOut(String inCase);
+
+
         PictureBox Picture { get; set; }
         TrackBar Bar { get; set; }
         float Probability { get;  set; }

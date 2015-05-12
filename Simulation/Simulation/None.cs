@@ -23,6 +23,15 @@ namespace Simulation
         Brick downLeft;
         Brick downRight;
 
+        Brick noneUp;
+        Brick noneDown;
+        Brick noneLeft;
+        Brick noneRight;
+        Brick up;
+        Brick down;
+        Brick left;
+        Brick right;
+
         public None(Color color, PictureBox picture, TrackBar bar, TextBox display)
         {
             this.CouplingColor = color;
@@ -87,7 +96,37 @@ namespace Simulation
             upperRight = bricks[5];
             downLeft = bricks[6];
             downRight = bricks[7];
+
+            noneUp = bricks[8];
+            noneDown = bricks[9];
+            noneLeft = bricks[10];
+            noneRight = bricks[11];
+            up = bricks[12];
+            down = bricks[13];
+            left = bricks[14];
+            right = bricks[15];
         }
+
+
+
+        public Brick bondInOut(String inCase)
+        {
+            switch (inCase)
+            {
+                case "up":
+                    return up;
+                case "down":
+                    return down;
+                case "left":
+                    return left;
+                case "right":
+                    return right;
+                default:
+                    return this;
+
+            }
+        }
+
 
     }
 }

@@ -11,7 +11,23 @@ namespace Simulation
     class NoneRight : Brick
     {
         private float probability;
-        private Color backColor;
+
+        Brick none;
+        Brick full;
+        Brick horizontal;
+        Brick vertical;
+        Brick upperLeft;
+        Brick upperRight;
+        Brick downLeft;
+        Brick downRight;
+
+        Brick noneUp;
+        Brick noneDown;
+        Brick noneLeft;
+        Brick up;
+        Brick down;
+        Brick left;
+        Brick right;
 
         public NoneRight()
         {
@@ -35,49 +51,106 @@ namespace Simulation
 
         //TO DO
         public Brick subtract(Brick brick)
-        {/*
+        {
             if (brick is Full)
-                return none;
+                return right;
 
             if (brick is None)
                 return this;
 
             if (brick is Vertical)
-                return horizontal;
+                return left;
 
             if (brick is Horizontal)
-                return vertical;
+                return noneLeft;
 
             if (brick is UpperLeft)
-                return downRight;
+                return down;
 
             if (brick is UpperRight)
-                return downLeft;
+                return noneUp;
 
             if (brick is DownLeft)
-                return upperRight;
+                return up;
 
             if (brick is DownRight)
+                return noneDown;
+
+            if (brick is NoneUp)
+                return upperRight;
+
+            if (brick is NoneDown)
+                return downRight;
+
+            if (brick is NoneLeft)
+                return horizontal;
+
+            if (brick is NoneRight)
+                return none;
+
+            if (brick is Up)
+                return downLeft;
+
+            if (brick is Down)
                 return upperLeft;
- */
+
+            if (brick is Left)
+                return vertical;
+
+            if (brick is Right)
+                return full;
+ 
             return null;
 
         }
 
-        //TO DO
+        
         public void setBricks(Brick[] bricks)
         {
-            throw new NotImplementedException();
+            none = bricks[0];
+            full = bricks[1];
+            horizontal = bricks[2];
+            vertical = bricks[3];
+            upperLeft = bricks[4];
+            upperRight = bricks[5];
+            downLeft = bricks[6];
+            downRight = bricks[7];
+
+            noneUp = bricks[8];
+            noneDown = bricks[9];
+            noneLeft = bricks[10];
+            up = bricks[12];
+            down = bricks[13];
+            left = bricks[14];
+            right = bricks[15];
         }
 
         public float Probability { get { return probability; } set { probability = value; } }
 
-        public Color CouplingColor { get { return backColor; } set { backColor = value; } }
+        public Color CouplingColor { get { return Color.Empty; } set { } }
 
         public PictureBox Picture { get { return null; } set { } }
 
         public TrackBar Bar { get { return null; } set { } }
 
         public TextBox Display { set { } }
+
+        public Brick bondInOut(string inCase)
+        {
+            switch (inCase)
+            {
+                case "up":
+                    return downLeft;
+                case "down":
+                    return upperLeft;
+                case "left":
+                    return vertical;
+                case "right":
+                    return full;
+                default:
+                    return this;
+
+            }
+        }
     }
 }

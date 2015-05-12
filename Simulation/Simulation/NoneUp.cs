@@ -20,7 +20,7 @@ namespace Simulation
         Brick upperRight;
         Brick downLeft;
         Brick downRight;
-        //Brick noneUp;
+        
         Brick noneDown;
         Brick noneLeft;
         Brick noneRight;
@@ -105,10 +105,25 @@ namespace Simulation
          
         }
 
-        //TO DO
+
         public void setBricks(Brick[] bricks)
         {
-            throw new NotImplementedException();
+            none = bricks[0];
+            full = bricks[1];
+            horizontal = bricks[2];
+            vertical = bricks[3];
+            upperLeft = bricks[4];
+            upperRight = bricks[5];
+            downLeft = bricks[6];
+            downRight = bricks[7];
+
+            noneDown = bricks[9];
+            noneLeft = bricks[10];
+            noneRight = bricks[11];
+            up = bricks[12];
+            down = bricks[13];
+            left = bricks[14];
+            right = bricks[15];
         }
 
         public float Probability { get { return probability; } set { probability = value; } }

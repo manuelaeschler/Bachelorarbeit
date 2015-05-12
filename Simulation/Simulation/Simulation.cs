@@ -21,7 +21,7 @@ namespace Simulation
         Brick[,] field;
         Brick[,] currentField;
         Brick[,] change;
-        Brick[] bricks = new Brick[8];
+        Brick[] bricks;
         float[,] probabilities = new float[8,8];
         ListDictionary<Color, Brick> coupling = new ListDictionary<Color, Brick>();
         
@@ -42,6 +42,15 @@ namespace Simulation
         Brick downLeft;
         Brick downRight;
 
+        Brick noneUp;
+        Brick noneDown;
+        Brick noneLeft;
+        Brick noneRight;
+        Brick up;
+        Brick down;
+        Brick left;
+        Brick right;
+
         Thread startthread;
 
         public simulation()
@@ -60,6 +69,8 @@ namespace Simulation
             size = 10;
             currentPoint = 0;
 
+            bricks = new Brick[16];
+
             bricks[0] = none;
             bricks[1] = full;
             bricks[2] = horizontal;
@@ -68,6 +79,15 @@ namespace Simulation
             bricks[5] = upperRight;
             bricks[6] = downLeft;
             bricks[7] = downRight;
+
+            bricks[8] = noneUp;
+            bricks[9] = noneDown;
+            bricks[10] = noneLeft;
+            bricks[11] = noneRight;
+            bricks[12] = up;
+            bricks[13] = down;
+            bricks[14] = left;
+            bricks[15] = right;
 
             coupling.Add(Color.Red, none);
             coupling.Add(Color.Orange, full);
@@ -86,6 +106,15 @@ namespace Simulation
             upperRight.setBricks(bricks);
             downLeft.setBricks(bricks);
             downRight.setBricks(bricks);
+
+            noneUp.setBricks(bricks);
+            noneDown.setBricks(bricks);
+            noneLeft.setBricks(bricks);
+            noneRight.setBricks(bricks);
+            up.setBricks(bricks);
+            down.setBricks(bricks);
+            left.setBricks(bricks);
+            right.setBricks(bricks);
             
             field = new Brick[size, size];
             change = new Brick[size, size];
