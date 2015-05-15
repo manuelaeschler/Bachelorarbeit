@@ -66,6 +66,15 @@ namespace Simulation
             downLeft = new DownLeft(Color.Violet, pictureDownLeft, downLeftBar, downLeftWeight);
             downRight = new DownRight(Color.White, pictureDownRight, downRightBar, downRightWeight);
 
+            noneUp = new NoneUp();
+            noneDown = new NoneDown();
+            noneLeft = new NoneLeft();
+            noneRight = new NoneRight();
+            up = new Up();
+            down = new Down();
+            left = new Left();
+            right = new Right();
+
             size = 10;
             currentPoint = 0;
 
@@ -220,6 +229,15 @@ namespace Simulation
             algorithm.Remove(al);
             al.Field = field;
             algorithm.Add(al);
+
+            calculateUnevenWeights(noneUp);
+            calculateUnevenWeights(noneDown);
+            calculateUnevenWeights(noneLeft);
+            calculateUnevenWeights(noneRight);
+            calculateUnevenWeights(up);
+            calculateUnevenWeights(down);
+            calculateUnevenWeights(left);
+            calculateUnevenWeights(right);
         }
        
 
@@ -266,6 +284,15 @@ namespace Simulation
             upperRight.Probability = (float)(1 / Math.Sqrt(2));
             downLeft.Probability = (float)(1 / Math.Sqrt(2));
             downRight.Probability = (float)(1 / Math.Sqrt(2));
+
+            calculateUnevenWeights(noneUp);
+            calculateUnevenWeights(noneDown);
+            calculateUnevenWeights(noneLeft);
+            calculateUnevenWeights(noneRight);
+            calculateUnevenWeights(up);
+            calculateUnevenWeights(down);
+            calculateUnevenWeights(left);
+            calculateUnevenWeights(right);
 
             setProbabilityBars();
         }
@@ -314,6 +341,15 @@ namespace Simulation
             downLeft.Probability = 0.5f;
             downRight.Probability = 0.5f;
 
+            calculateUnevenWeights(noneUp);
+            calculateUnevenWeights(noneDown);
+            calculateUnevenWeights(noneLeft);
+            calculateUnevenWeights(noneRight);
+            calculateUnevenWeights(up);
+            calculateUnevenWeights(down);
+            calculateUnevenWeights(left);
+            calculateUnevenWeights(right);
+
             setProbabilityBars();
         }
 
@@ -329,6 +365,15 @@ namespace Simulation
             upperRight.Probability = (float)(Math.Tanh(beta));
             downLeft.Probability = (float)(Math.Tanh(beta));
             downRight.Probability = (float)(Math.Tanh(beta));
+
+            calculateUnevenWeights(noneUp);
+            calculateUnevenWeights(noneDown);
+            calculateUnevenWeights(noneLeft);
+            calculateUnevenWeights(noneRight);
+            calculateUnevenWeights(up);
+            calculateUnevenWeights(down);
+            calculateUnevenWeights(left);
+            calculateUnevenWeights(right);
         }
 
         private void calculateIsingDual()
@@ -341,6 +386,15 @@ namespace Simulation
             upperRight.Probability = (float)(Math.Exp(-2 * beta));
             downLeft.Probability = (float)(Math.Exp(-2 * beta));
             downRight.Probability = (float)(Math.Exp(-2 * beta));
+
+            calculateUnevenWeights(noneUp);
+            calculateUnevenWeights(noneDown);
+            calculateUnevenWeights(noneLeft);
+            calculateUnevenWeights(noneRight);
+            calculateUnevenWeights(up);
+            calculateUnevenWeights(down);
+            calculateUnevenWeights(left);
+            calculateUnevenWeights(right);
         }
 
 
@@ -577,6 +631,14 @@ namespace Simulation
         {
             none.Probability = (float)noneBar.Value/1000f;
 
+            if (algorithm.Last() is Worm)
+            {
+                calculateUnevenWeights(up);
+                calculateUnevenWeights(down);
+                calculateUnevenWeights(left);
+                calculateUnevenWeights(right);
+            }
+
             List<Brick> bri = coupling[none.CouplingColor];
             foreach (Brick brick in bri)
             {
@@ -603,11 +665,21 @@ namespace Simulation
                     temperaturBar.Value = (int)Math.Sqrt((float)(noneBar.Value) - 500f);
                 betaTextBox.Text = ((float)Math.Sqrt((float)(noneBar.Value) - 500f)/1000f).ToString();
             }
+
+
         }
 
         private void fullBar_Scroll(object sender, EventArgs e)
         {
             full.Probability = (float)fullBar.Value/1000f;
+
+            if (algorithm.Last() is Worm)
+            {
+                calculateUnevenWeights(noneUp);
+                calculateUnevenWeights(noneDown);
+                calculateUnevenWeights(noneLeft);
+                calculateUnevenWeights(noneRight);
+            }
 
             List<Brick> bri = coupling[full.CouplingColor];
             foreach (Brick brick in bri)
@@ -623,6 +695,14 @@ namespace Simulation
         private void verticalBar_Scroll(object sender, EventArgs e)
         {
             vertical.Probability = (float)verticalBar.Value/1000f;
+
+            if (algorithm.Last() is Worm)
+            {
+                calculateUnevenWeights(up);
+                calculateUnevenWeights(down);
+                calculateUnevenWeights(noneUp);
+                calculateUnevenWeights(noneDown);
+            }
 
             List<Brick> bri = coupling[vertical.CouplingColor];
             foreach (Brick brick in bri)
@@ -640,6 +720,14 @@ namespace Simulation
         {
             horizontal.Probability = (float)horizontalBar.Value / 1000f;
 
+            if (algorithm.Last() is Worm)
+            {
+                calculateUnevenWeights(left);
+                calculateUnevenWeights(right);
+                calculateUnevenWeights(noneLeft);
+                calculateUnevenWeights(noneRight);
+            }
+
             List<Brick> bri = coupling[horizontal.CouplingColor];
             foreach (Brick brick in bri)
             {
@@ -654,6 +742,14 @@ namespace Simulation
         private void upperLeftBar_Scroll(object sender, EventArgs e)
         {
             upperLeft.Probability = (float)upperLeftBar.Value / 1000f;
+
+            if (algorithm.Last() is Worm)
+            {
+                calculateUnevenWeights(up);
+                calculateUnevenWeights(noneDown);
+                calculateUnevenWeights(left);
+                calculateUnevenWeights(noneRight);
+            }
 
             List<Brick> bri = coupling[upperLeft.CouplingColor];
             foreach (Brick brick in bri)
@@ -671,6 +767,14 @@ namespace Simulation
         {
             upperRight.Probability = (float)upperRightBar.Value / 1000f;
 
+            if (algorithm.Last() is Worm)
+            {
+                calculateUnevenWeights(up);
+                calculateUnevenWeights(noneDown);
+                calculateUnevenWeights(noneLeft);
+                calculateUnevenWeights(right);
+            }
+
             List<Brick> bri = coupling[upperRight.CouplingColor];
             foreach (Brick brick in bri)
             {
@@ -685,6 +789,14 @@ namespace Simulation
         private void downLeftBar_Scroll(object sender, EventArgs e)
         {
             downLeft.Probability = (float)downLeftBar.Value / 1000f;
+
+            if (algorithm.Last() is Worm)
+            {
+                calculateUnevenWeights(noneUp);
+                calculateUnevenWeights(down);
+                calculateUnevenWeights(left);
+                calculateUnevenWeights(noneRight);
+            }
 
             List<Brick> bri = coupling[downLeft.CouplingColor];
             foreach (Brick brick in bri)
@@ -701,6 +813,14 @@ namespace Simulation
         private void downRightBar_Scroll(object sender, EventArgs e)
         {
             downRight.Probability = (float)downRightBar.Value / 1000f;
+
+            if (algorithm.Last() is Worm)
+            {
+                calculateUnevenWeights(noneUp);
+                calculateUnevenWeights(down);
+                calculateUnevenWeights(noneLeft);
+                calculateUnevenWeights(right);
+            }
 
             List<Brick> bri = coupling[downRight.CouplingColor];
             foreach (Brick brick in bri)
@@ -920,6 +1040,19 @@ namespace Simulation
 
             }
         }
+
+
+        //claculate probabilities of the uneven vertices
+        private void calculateUnevenWeights(Brick brick)
+        {
+            double mix = brick.bondInOut("up").Probability;
+            mix *= brick.bondInOut("down").Probability;
+            mix *= brick.bondInOut("left").Probability;
+            mix *= brick.bondInOut("right").Probability;
+
+            brick.Probability = (float)Math.Pow(mix, .25f);
+        }
+
 
  
     }

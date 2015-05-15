@@ -135,5 +135,24 @@ namespace Simulation
         public TrackBar Bar { get { return null; } set { } }
 
         public TextBox Display { set { } }
+
+
+        public Brick bondInOut(string inCase)
+        {
+            switch (inCase)
+            {
+                case "up":
+                    return full;
+                case "down":
+                    return horizontal;
+                case "left":
+                    return downRight;
+                case "right":
+                    return downLeft;
+                default:
+                    return this;
+
+            }
+        }
     }
 }
