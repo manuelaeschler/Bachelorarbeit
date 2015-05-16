@@ -29,9 +29,11 @@ namespace Simulation
         Brick left;
         Brick right;
 
+        Pen penRed;
+
         public NoneLeft()
         {
-
+            penRed = new Pen(Color.Red);
         }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
@@ -40,8 +42,8 @@ namespace Simulation
 
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y - brickSizeY / 2));
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);
-            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y + brickSizeY / 2)); 
-
+            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y + brickSizeY / 2));
+            e.Graphics.DrawEllipse(penRed, (int)x - 2, (int)y - 2, 4f, 4f);
         }
 
         public Brick getOpposite(int inCase)

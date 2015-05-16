@@ -17,7 +17,6 @@ namespace Simulation
         int size;
         int velocity;
         int currentPoint;
-        List<Algorithm> algorithm = new List<Algorithm>();
         Brick[,] field;
         Brick[,] currentField;
         Brick[,] change;
@@ -27,11 +26,13 @@ namespace Simulation
         
 
         Boolean run;
-        Boolean random;
         Boolean didchange;
         Boolean thermalize;
         float beta;
         string currentModel;
+        Algorithm currentAlgorithm;
+        Algorithm flipAlgo;
+        Algorithm wormAlgo;
 
         Brick none;
         Brick full;
@@ -128,13 +129,13 @@ namespace Simulation
             field = new Brick[size, size];
             change = new Brick[size, size];
             currentField = new Brick[size, size];
-            algorithm.Add(new Worm(field));
-            algorithm.Add(new Flip(field));
+            wormAlgo = new Worm(field);
+            flipAlgo = new Flip(field);
             run = false;
-            random = false;
             thermalize = false;
-            serial.BackColor = Color.LightSkyBlue;
             beta = (float)temperaturBar.Value/100;
+
+            currentAlgorithm = flipAlgo;
 
             velocity = velocityBar.Value;
             flip.BackColor = Color.LightSkyBlue;
@@ -143,7 +144,6 @@ namespace Simulation
             fillField(currentField);
 
             sizeOfLattice.Text = size.ToString();
-            startthread = new Thread(startThread);
 
             pictureNone.Refresh();
             pictureFull.Invalidate();
@@ -200,17 +200,12 @@ namespace Simulation
             flip.BackColor = Color.LightSkyBlue;
             worm.BackColor = Color.Empty;
 
-            field = algorithm.Last().Field;
-            Algorithm al = null;
+            field = currentAlgorithm.Field;
 
-            foreach (Algorithm algo in algorithm)
-            {
-                if (algo is Flip)
-                    al = algo;
-            }
-            algorithm.Remove(al);
-            al.Field = field;
-            algorithm.Add(al);
+            flipAlgo.Field = field;
+
+            currentAlgorithm = flipAlgo;
+
         }
 
         private void worm_Click(object sender, EventArgs e)
@@ -218,17 +213,11 @@ namespace Simulation
             flip.BackColor = Color.Empty;
             worm.BackColor = Color.LightSkyBlue;
 
-            field = algorithm.Last().Field;
-            Algorithm al = null;
+            field = currentAlgorithm.Field;
 
-            foreach (Algorithm algo in algorithm)
-            {
-                if (algo is Worm)
-                    al = algo;
-            }
-            algorithm.Remove(al);
-            al.Field = field;
-            algorithm.Add(al);
+            wormAlgo.Field = field;
+
+            currentAlgorithm = wormAlgo;
 
             calculateUnevenWeights(noneUp);
             calculateUnevenWeights(noneDown);
@@ -238,6 +227,7 @@ namespace Simulation
             calculateUnevenWeights(down);
             calculateUnevenWeights(left);
             calculateUnevenWeights(right);
+
         }
        
 
@@ -399,7 +389,6 @@ namespace Simulation
 
 
         //set the values
-
         private void setProbabilityBars()
         {
             if (none.Probability >= 1)
@@ -424,7 +413,12 @@ namespace Simulation
             {
                 sizeOfLattice.ReadOnly = true;
                 run = true;
+
+                startthread = new Thread(startThread);
                 startthread.Start();
+
+                flip.Enabled = false;
+                worm.Enabled = false;
             }
         }
 
@@ -432,31 +426,15 @@ namespace Simulation
         {
             Random rand = new Random();
 
-            int row;
-            int col;
+            int x;
+            int y;
 
-            Algorithm current;
             while (run)
             {
-                current = algorithm.Last();
-                graphicsPanel.Invalidate();
+                x= (int)(rand.NextDouble() * size);
+                y = (int)(rand.NextDouble() * size);
 
-                if (random)
-                {
-                     row= (int)(rand.NextDouble() * size);
-                     col = (int)(rand.NextDouble() * size);
-                }
-                     else
-                {
-                     row = currentPoint%size;
-                     col = currentPoint/size;
-                }
-
-                if ((currentPoint/size) % 2 == 0)
-                     didchange = current.change(row, col);
-                else
-                     didchange = current.change(col, row);
-
+                didchange = currentAlgorithm.change(x, y);
                         
                 if (didchange && !thermalize)
                 {
@@ -465,10 +443,6 @@ namespace Simulation
                      if(velocity != 0)
                          Thread.Sleep(velocity);
                 }
-                           
-
-                if (!run)
-                     return;
 
                 currentPoint = (++currentPoint)%(size*size);
                 if(currentPoint == (size*size)-1)
@@ -479,6 +453,8 @@ namespace Simulation
         private void pause_Click(object sender, EventArgs e)
         {
             run = false;
+            startthread.Abort();
+            worm.Enabled = true;
         }
 
         private void stop_Click(object sender, EventArgs e)
@@ -493,6 +469,10 @@ namespace Simulation
                 fillField(currentField);
 
                 currentPoint = 0;
+                flip.Enabled = true;
+                worm.Enabled = true;
+
+                startthread.Abort();
             }
 
         }
@@ -631,7 +611,7 @@ namespace Simulation
         {
             none.Probability = (float)noneBar.Value/1000f;
 
-            if (algorithm.Last() is Worm)
+            if (currentAlgorithm is Worm)
             {
                 calculateUnevenWeights(up);
                 calculateUnevenWeights(down);
@@ -673,7 +653,7 @@ namespace Simulation
         {
             full.Probability = (float)fullBar.Value/1000f;
 
-            if (algorithm.Last() is Worm)
+            if (currentAlgorithm is Worm)
             {
                 calculateUnevenWeights(noneUp);
                 calculateUnevenWeights(noneDown);
@@ -696,7 +676,7 @@ namespace Simulation
         {
             vertical.Probability = (float)verticalBar.Value/1000f;
 
-            if (algorithm.Last() is Worm)
+            if (currentAlgorithm is Worm)
             {
                 calculateUnevenWeights(up);
                 calculateUnevenWeights(down);
@@ -720,7 +700,7 @@ namespace Simulation
         {
             horizontal.Probability = (float)horizontalBar.Value / 1000f;
 
-            if (algorithm.Last() is Worm)
+            if (currentAlgorithm is Worm)
             {
                 calculateUnevenWeights(left);
                 calculateUnevenWeights(right);
@@ -743,7 +723,7 @@ namespace Simulation
         {
             upperLeft.Probability = (float)upperLeftBar.Value / 1000f;
 
-            if (algorithm.Last() is Worm)
+            if (currentAlgorithm is Worm)
             {
                 calculateUnevenWeights(up);
                 calculateUnevenWeights(noneDown);
@@ -767,7 +747,7 @@ namespace Simulation
         {
             upperRight.Probability = (float)upperRightBar.Value / 1000f;
 
-            if (algorithm.Last() is Worm)
+            if (currentAlgorithm is Worm)
             {
                 calculateUnevenWeights(up);
                 calculateUnevenWeights(noneDown);
@@ -790,7 +770,7 @@ namespace Simulation
         {
             downLeft.Probability = (float)downLeftBar.Value / 1000f;
 
-            if (algorithm.Last() is Worm)
+            if (currentAlgorithm is Worm)
             {
                 calculateUnevenWeights(noneUp);
                 calculateUnevenWeights(down);
@@ -814,7 +794,7 @@ namespace Simulation
         {
             downRight.Probability = (float)downRightBar.Value / 1000f;
 
-            if (algorithm.Last() is Worm)
+            if (currentAlgorithm is Worm)
             {
                 calculateUnevenWeights(noneUp);
                 calculateUnevenWeights(down);
@@ -853,29 +833,11 @@ namespace Simulation
                 fillField(field);
                 fillField(change);
                 fillField(currentField);
-                foreach (Algorithm al in algorithm)
-                {
-                    al.Field = field;
-                }
+                wormAlgo.Field = field;
+                flipAlgo.Field = field;
                 
             }
 
-        }
-
-        private void serial_Click(object sender, EventArgs e)
-        {
-            rand.BackColor = Color.Empty;
-            serial.BackColor = Color.LightSkyBlue;
-
-            random = false;
-        }
-
-        private void rand_Click(object sender, EventArgs e)
-        {
-            rand.BackColor = Color.LightSkyBlue;
-            serial.BackColor = Color.Empty;
-
-            random = true;
         }
 
         private void temperaturBar_Scroll(object sender, EventArgs e)

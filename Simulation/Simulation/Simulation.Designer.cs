@@ -60,8 +60,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.serial = new System.Windows.Forms.Button();
-            this.rand = new System.Windows.Forms.Button();
             this.noneWeight = new System.Windows.Forms.TextBox();
             this.fullWeight = new System.Windows.Forms.TextBox();
             this.downRightWeight = new System.Windows.Forms.TextBox();
@@ -451,26 +449,6 @@
             this.label7.Size = new System.Drawing.Size(13, 13);
             this.label7.TabIndex = 43;
             this.label7.Text = "1";
-            // 
-            // serial
-            // 
-            this.serial.Location = new System.Drawing.Point(273, 21);
-            this.serial.Name = "serial";
-            this.serial.Size = new System.Drawing.Size(90, 20);
-            this.serial.TabIndex = 44;
-            this.serial.Text = "Serial";
-            this.serial.UseVisualStyleBackColor = true;
-            this.serial.Click += new System.EventHandler(this.serial_Click);
-            // 
-            // rand
-            // 
-            this.rand.Location = new System.Drawing.Point(273, 45);
-            this.rand.Name = "rand";
-            this.rand.Size = new System.Drawing.Size(90, 20);
-            this.rand.TabIndex = 45;
-            this.rand.Text = "Random";
-            this.rand.UseVisualStyleBackColor = true;
-            this.rand.Click += new System.EventHandler(this.rand_Click);
             // 
             // noneWeight
             // 
@@ -914,8 +892,6 @@
             this.Controls.Add(this.downRightWeight);
             this.Controls.Add(this.fullWeight);
             this.Controls.Add(this.noneWeight);
-            this.Controls.Add(this.rand);
-            this.Controls.Add(this.serial);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -1011,8 +987,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button serial;
-        private System.Windows.Forms.Button rand;
         private System.Windows.Forms.TextBox noneWeight;
         private System.Windows.Forms.TextBox fullWeight;
         private System.Windows.Forms.TextBox downRightWeight;

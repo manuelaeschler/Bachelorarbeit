@@ -29,8 +29,11 @@ namespace Simulation
         Brick left;
         Brick right;
 
+        Pen penRed;
+
         public NoneUp()
         {
+            penRed = new Pen(Color.Red);
 
         }
 
@@ -38,10 +41,11 @@ namespace Simulation
         {
             pen.Width = size;
 
-            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y - brickSizeY / 2));
+            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y + brickSizeY / 2));
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x - brickSizeX / 2), (int)y);
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);
 
+            e.Graphics.DrawEllipse(penRed, (int)x - 2, (int)y - 2, 4f, 4f);
         }
 
         

@@ -199,7 +199,7 @@ namespace Simulation
             else
                 y--;
 
-            field[x, y] = field[x, y].bondInOut("up");
+            field[x, y] = field[x, y].bondInOut("down");
 
             if (inCase == "head")
             {

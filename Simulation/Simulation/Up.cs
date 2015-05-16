@@ -29,16 +29,20 @@ namespace Simulation
         Brick left;
         Brick right;
 
+        Pen penRed;
+
         public Up()
         {
-
+            penRed = new Pen(Color.Red);
         }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
             pen.Width = size;
 
-            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y + brickSizeY / 2)); 
+            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y - brickSizeY / 2));
+
+            e.Graphics.DrawEllipse(penRed, (int)x-2, (int)y-2, 4f, 4f);
 
         }
 

@@ -29,9 +29,11 @@ private float probability;
         Brick down;
         Brick left;
 
+        Pen penRed;
+
         public Right()
         {
-
+            penRed = new Pen(Color.Red);
         }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
@@ -39,7 +41,7 @@ private float probability;
             pen.Width = size;
 
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);
-
+            e.Graphics.DrawEllipse(penRed, (int)x - 2, (int)y - 2, 4f, 4f);
         }
 
         public Brick getOpposite(int inCase)
@@ -138,9 +140,9 @@ private float probability;
             switch (inCase)
             {
                 case "up":
-                    return upperLeft;
+                    return upperRight;
                 case "down":
-                    return downLeft;
+                    return downRight;
                 case "left":
                     return horizontal;
                 case "right":
