@@ -6,230 +6,237 @@ using System.Threading.Tasks;
 
 namespace Simulation
 {
-    class Worm : Algorithm
-    {
-        private Brick[,] field;
-        Random rand;
-        int size;
-        float alpha;
-        static bool start;
+	class Worm : Algorithm
+	{
+		private Brick[,] field;
+		Random rand;
+		int size;
+		float alpha;
+		static bool start;
 
-        static int headX;
-        static int headY;
-        static int tailX;
-        static int tailY;
+		static int headX;
+		static int headY;
+		static int tailX;
+		static int tailY;
 
-        public Worm(Brick[,] field)
-        {
-            this.Field = field;
-            this.size = field.GetLength(0);
-            rand = new Random();
-            alpha = .9f;
-            start = true;
-        }
+		public Worm(Brick[,] field)
+		{
+			this.Field = field;
+			this.size = field.GetLength(0);
+			rand = new Random();
+			alpha = .9f;
+			start = true;
+		}
 
-        public Brick[,] Field { get { return field; } set { field = value; size = field.GetLength(0); } }
+		public Brick[,] Field { get { return field; } set { field = value; size = field.GetLength(0); } }
 
-        public bool change(int x, int y)
-        {
-            if (start)
-            {
-                if(alpha >= rand.NextDouble())
-                {
-                    headX = x;
-                    headY = y;
-                    tailX = x;
-                    tailY = y;
-                    return moveStart();
-                }
-                else
-                    return false; 
-            }
-            else
-            {
-                return move();
-            }
-        }
+		public bool change(int x, int y)
+		{
+			if (start)
+			{
+				if (alpha >= rand.NextDouble())
+				{
+					headX = x;
+					headY = y;
+					tailX = x;
+					tailY = y;
+					start = false;
+					return moveStart();
+				}
+				else
+					return false;
+			}
+			else
+			{
+				return move();
+			}
+		}
 
-        private bool moveStart()
-        {
-            
-            return move();
-        }
+		private bool moveStart()
+		{
 
-        private bool move()
-        {
-            bool changedHead = headOrTail(headX, headY, "head");
-            bool changedTail = headOrTail(tailX, tailY, "tail");
+			return move();
+		}
 
-            start = false;
+		private bool move()
+		{
+			bool changedHead = headOrTail(headX, headY, "head");
+			bool changedTail = headOrTail(tailX, tailY, "tail");
 
-            if (headX == tailX && headY == tailY)
-                start = true;
+			//Console.Write("headX: " + headX + "	headY: " + headY + "	brick: " + field[headX, headY] + "\n");
+			//Console.Write("tailX: " + tailX + "	tailY: " + tailY + "	brick: " + field[tailX, tailY] + "\n");
 
-            if (changedHead)
-                return true;
+			if (headX == tailX && headY == tailY)
+				start = true;
 
-            return changedTail;
-        }
+			if (changedHead)
+				return true;
 
-        private bool headOrTail(int x, int y, String inCase)
-        {
-            Brick oldBrick = field[x, y];
-            String direc = direction();
-            Brick newBrick = oldBrick.bondInOut(direc);
+			return changedTail;
+		}
 
-            double oldPos = oldBrick.Probability;
-            double newPos = newBrick.Probability;
-            double realPos;
+		private bool headOrTail(int x, int y, String inCase)
+		{
+			String direc = direction();
 
+			int neighbourX = getNeighbourCoordX(x, direc);
+			int neighbourY = getNeighbourCoordY(y, direc);
 
-            if (oldPos != 0)
-                realPos = newPos / oldPos;
-            else
-            {
-                if (newPos != 0)
-                    realPos = 1;
-                else
-                    realPos = 0;
-            }
+			Brick oldBrick = field[x, y];
+			Brick newBrick = oldBrick.bondInOut(direc);
+			Brick oldNeighbour = field[neighbourX, neighbourY];
+			Brick newNeighbour = oldNeighbour.bondInOut(getOppositeDirection(direc));
 
-            if (rand.NextDouble() <= Math.Min(1, realPos))
-            {
-                field[x, y] = newBrick;
-                changeNextVertex(direc, x, y, inCase);
-                return true;
-            }
+			double oldPos = oldBrick.Probability * oldNeighbour.Probability;
+			double newPos = newBrick.Probability * newNeighbour.Probability;
+			double realPos;
 
 
-            return false;
-        }
+			if (oldPos != 0)
+				realPos = newPos / oldPos;
+			else
+			{
+				if (newPos != 0)
+					realPos = 1;
+				else
+					realPos = 0;
+			}
 
-        private void changeNextVertex(String direction, int x, int y, String inCase)
-        {
-            switch (direction)
-            {
-                case "up":
-                    changeUp(x, y, inCase);
-                    break;
+			if (rand.NextDouble() <= Math.Min(1, realPos))
+			{
+				field[x, y] = newBrick;
+				field[neighbourX, neighbourY] = newNeighbour;
+				if (inCase == "head")
+				{
+					headX = neighbourX;
+					headY = neighbourY;
+				}
+				else
+				{
+					tailX = neighbourX;
+					tailY = neighbourY;
+				}
 
-                case "down":
-                    changeDown(x, y, inCase);
-                    break;
-
-                case "left":
-                    changeLeft(x, y, inCase);
-                    break;
-
-                case "right":
-                    changeRight(x, y, inCase);
-                    break;
-
-            }
-        }
-
-        private void changeRight(int x, int y, String inCase)
-        {
-            if (x == size - 1)
-                x = 0;
-            else
-                x++;
-
-            field[x, y] = field[x, y].bondInOut("left");
-
-            if (inCase == "head")
-            {
-                headX = x;
-                headY = y;
-            }
-            else
-            {
-                tailX = x;
-                tailY = y;
-            }
-
-        }
-
-        private void changeLeft(int x, int y, String inCase)
-        {
-            if (x == 0)
-                x = size - 1;
-            else
-                x--;
-
-            field[x, y] = field[x, y].bondInOut("right");
-
-            if (inCase == "head")
-            {
-                headX = x;
-                headY = y;
-            }
-            else
-            {
-                tailX = x;
-                tailY = y;
-            }
-        }
-
-        private void changeDown(int x, int y, String inCase)
-        {
-            if (y == size - 1)
-                y = 0;
-            else
-                y++;
-
-            field[x, y] = field[x, y].bondInOut("up");
-
-            if (inCase == "head")
-            {
-                headX = x;
-                headY = y;
-            }
-            else
-            {
-                tailX = x;
-                tailY = y;
-            }
-        }
-
-        private void changeUp(int x, int y, String inCase)
-        {
-            if (y == 0)
-                y = size - 1;
-            else
-                y--;
-
-            field[x, y] = field[x, y].bondInOut("down");
-
-            if (inCase == "head")
-            {
-                headX = x;
-                headY = y;
-            }
-            else
-            {
-                tailX = x;
-                tailY = y;
-            }
-        }
+				return true;
+			}
 
 
-        private String direction()
-        {
-            double random = rand.NextDouble();
+			return false;
+		}
 
-            if (random <= 0.25)
-                return "up";
 
-            if (random <= 0.5)
-                return "down";
+		private int getNeighbourCoordX(int x, String direc)
+		{
+			switch (direc)
+			{
 
-            if (random <= 0.75)
-                return "left";
+				case "left":
+					{
+						if (x == 0)
+							return size - 1;
+						else
+							return (x - 1);
+					}
+						
 
-            return "right";
+				case "right":
+					{
+						if (x == size - 1)
+							return 0;
+						else
+							return (x + 1);
+					}
 
-        }
+				default:
+						return x;
+					
+			}
 
-    }
+		}
+
+		private int getNeighbourCoordY(int y, String direc)
+		{
+			switch (direc)
+			{
+
+				case "up":
+					{
+						if (y == 0)
+							return size - 1;
+						else
+							return (y - 1);
+					}
+
+
+				case "down":
+					{
+						if (y == size - 1)
+							return 0;
+						else
+							return (y + 1);
+					}
+
+				default:
+					return y;
+
+			}
+
+		}
+
+		private String getOppositeDirection(String direc)
+		{
+			switch (direc)
+			{
+				case "up":
+					return "down";
+
+				case "down":
+					return "up";
+
+				case "left":
+					return "right";
+
+				case "right":
+					return "left";
+
+				default:
+					return direc;
+			}
+		}
+
+		private String direction()
+		{
+			double random = rand.NextDouble();
+
+			if (random <= 0.25)
+				return "up";
+
+			if (random <= 0.5)
+				return "down";
+
+			if (random <= 0.75)
+				return "left";
+
+			return "right";
+
+		}
+
+		private void calculateUnevenWeightsStart(Brick brick)
+		{
+			double mix = 1;
+
+			mix *= brick.bondInOut("up").Probability;
+
+			mix *= brick.bondInOut("down").Probability;
+
+			mix *= brick.bondInOut("left").Probability;
+
+			mix *= brick.bondInOut("right").Probability;
+
+			brick.Probability = (float)Math.Pow(mix, 1 / .25f);
+
+		}
+
+
+	}
 }
