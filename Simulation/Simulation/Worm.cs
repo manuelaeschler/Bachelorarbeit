@@ -54,25 +54,81 @@ namespace Simulation
 
 		private bool moveStart()
 		{
-
-			return move();
-		}
-
-		private bool move()
-		{
-			bool changedHead = headOrTail(headX, headY, "head");
-			bool changedTail = headOrTail(tailX, tailY, "tail");
-
-			//Console.Write("headX: " + headX + "	headY: " + headY + "	brick: " + field[headX, headY] + "\n");
-			//Console.Write("tailX: " + tailX + "	tailY: " + tailY + "	brick: " + field[tailX, tailY] + "\n");
+			//bool changedHead = headOrTailStart(headX, headY, "head");
+			bool changedTail = headOrTailStart(tailX, tailY, "tail");
 
 			if (headX == tailX && headY == tailY)
 				start = true;
 
-			if (changedHead)
-				return true;
+			//if (changedHead)
+			//return true;
 
 			return changedTail;
+		}
+
+		private bool move()
+		{
+			//bool changedHead = headOrTail(headX, headY, "head");
+			bool changedTail = headOrTail(tailX, tailY, "tail");
+
+			if (headX == tailX && headY == tailY)
+				start = true;
+
+			//if (changedHead)
+				//return true;
+
+			return changedTail;
+		}
+
+		private bool headOrTailStart(int x, int y, String inCase)
+		{
+			String direc = direction();
+
+			int neighbourX = getNeighbourCoordX(x, direc);
+			int neighbourY = getNeighbourCoordY(y, direc);
+
+			Brick oldBrick = field[x, y];
+			Brick newBrick = oldBrick.bondInOut(direc);
+			Brick oldNeighbour = field[neighbourX, neighbourY];
+			Brick newNeighbour = oldNeighbour.bondInOut(getOppositeDirection(direc));
+
+			double oldPos = 1;
+			double newPos = 1;
+
+			oldPos = oldBrick.Probability * oldNeighbour.Probability;
+			newPos = newBrick.Probability * newNeighbour.Probability;
+			double realPos;
+
+
+			if (oldPos != 0)
+				realPos = newPos / oldPos;
+			else
+			{
+				if (newPos != 0)
+					realPos = 1;
+				else
+					realPos = 0;
+			}
+
+			if (rand.NextDouble() <= Math.Min(1, realPos))
+			{
+				field[x, y] = newBrick;
+				field[neighbourX, neighbourY] = newNeighbour;
+				if (inCase == "head")
+				{
+					headX = neighbourX;
+					headY = neighbourY;
+				}
+				else
+				{
+					tailX = neighbourX;
+					tailY = neighbourY;
+				}
+
+				return true;
+			}
+
+			return false;
 		}
 
 		private bool headOrTail(int x, int y, String inCase)
@@ -119,7 +175,6 @@ namespace Simulation
 
 				return true;
 			}
-
 
 			return false;
 		}
@@ -237,6 +292,10 @@ namespace Simulation
 
 		}
 
+		public bool getStart()
+		{
+			return start;
+		}
 
 	}
 }

@@ -445,7 +445,10 @@ namespace Simulation
 				}
 
 				currentPoint = (++currentPoint) % (size * size);
-				if (currentPoint == (size * size) - 1)
+
+				if (currentAlgorithm is Flip && currentPoint == (size * size) - 1)
+					currentField = (Brick[,])field.Clone();
+				if(currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
 					currentField = (Brick[,])field.Clone();
 			}
 		}
@@ -615,13 +618,6 @@ namespace Simulation
 		{
 			none.Probability = (float)noneBar.Value / 1000f;
 
-			if (currentAlgorithm is Worm)
-			{
-				calculateUnevenWeights(up);
-				calculateUnevenWeights(down);
-				calculateUnevenWeights(left);
-				calculateUnevenWeights(right);
-			}
 
 			List<Brick> bri = coupling[none.CouplingColor];
 			foreach (Brick brick in bri)
@@ -650,20 +646,12 @@ namespace Simulation
 				betaTextBox.Text = ((float)Math.Sqrt((float)(noneBar.Value) - 500f) / 1000f).ToString();
 			}
 
-
+			updateAllUnevenWeights();
 		}
 
 		private void fullBar_Scroll(object sender, EventArgs e)
 		{
 			full.Probability = (float)fullBar.Value / 1000f;
-
-			if (currentAlgorithm is Worm)
-			{
-				calculateUnevenWeights(noneUp);
-				calculateUnevenWeights(noneDown);
-				calculateUnevenWeights(noneLeft);
-				calculateUnevenWeights(noneRight);
-			}
 
 			List<Brick> bri = coupling[full.CouplingColor];
 			foreach (Brick brick in bri)
@@ -674,19 +662,14 @@ namespace Simulation
 					brick.Probability = full.Probability;
 				}
 			}
+
+			updateAllUnevenWeights();
 		}
 
 		private void verticalBar_Scroll(object sender, EventArgs e)
 		{
 			vertical.Probability = (float)verticalBar.Value / 1000f;
 
-			if (currentAlgorithm is Worm)
-			{
-				calculateUnevenWeights(up);
-				calculateUnevenWeights(down);
-				calculateUnevenWeights(noneUp);
-				calculateUnevenWeights(noneDown);
-			}
 
 			List<Brick> bri = coupling[vertical.CouplingColor];
 			foreach (Brick brick in bri)
@@ -698,19 +681,14 @@ namespace Simulation
 				}
 
 			}
+
+			updateAllUnevenWeights();
 		}
 
 		private void horizontalBar_Scroll(object sender, EventArgs e)
 		{
 			horizontal.Probability = (float)horizontalBar.Value / 1000f;
 
-			if (currentAlgorithm is Worm)
-			{
-				calculateUnevenWeights(left);
-				calculateUnevenWeights(right);
-				calculateUnevenWeights(noneLeft);
-				calculateUnevenWeights(noneRight);
-			}
 
 			List<Brick> bri = coupling[horizontal.CouplingColor];
 			foreach (Brick brick in bri)
@@ -721,19 +699,14 @@ namespace Simulation
 					brick.Probability = horizontal.Probability;
 				}
 			}
+
+			updateAllUnevenWeights();
 		}
 
 		private void upperLeftBar_Scroll(object sender, EventArgs e)
 		{
 			upperLeft.Probability = (float)upperLeftBar.Value / 1000f;
 
-			if (currentAlgorithm is Worm)
-			{
-				calculateUnevenWeights(up);
-				calculateUnevenWeights(noneDown);
-				calculateUnevenWeights(left);
-				calculateUnevenWeights(noneRight);
-			}
 
 			List<Brick> bri = coupling[upperLeft.CouplingColor];
 			foreach (Brick brick in bri)
@@ -745,19 +718,14 @@ namespace Simulation
 				}
 
 			}
+
+			updateAllUnevenWeights();
 		}
 
 		private void upperRightBar_Scroll(object sender, EventArgs e)
 		{
 			upperRight.Probability = (float)upperRightBar.Value / 1000f;
 
-			if (currentAlgorithm is Worm)
-			{
-				calculateUnevenWeights(up);
-				calculateUnevenWeights(noneDown);
-				calculateUnevenWeights(noneLeft);
-				calculateUnevenWeights(right);
-			}
 
 			List<Brick> bri = coupling[upperRight.CouplingColor];
 			foreach (Brick brick in bri)
@@ -768,19 +736,14 @@ namespace Simulation
 					brick.Probability = upperRight.Probability;
 				}
 			}
+
+			updateAllUnevenWeights();
 		}
 
 		private void downLeftBar_Scroll(object sender, EventArgs e)
 		{
 			downLeft.Probability = (float)downLeftBar.Value / 1000f;
 
-			if (currentAlgorithm is Worm)
-			{
-				calculateUnevenWeights(noneUp);
-				calculateUnevenWeights(down);
-				calculateUnevenWeights(left);
-				calculateUnevenWeights(noneRight);
-			}
 
 			List<Brick> bri = coupling[downLeft.CouplingColor];
 			foreach (Brick brick in bri)
@@ -792,19 +755,13 @@ namespace Simulation
 				}
 
 			}
+
+			updateAllUnevenWeights();
 		}
 
 		private void downRightBar_Scroll(object sender, EventArgs e)
 		{
 			downRight.Probability = (float)downRightBar.Value / 1000f;
-
-			if (currentAlgorithm is Worm)
-			{
-				calculateUnevenWeights(noneUp);
-				calculateUnevenWeights(down);
-				calculateUnevenWeights(noneLeft);
-				calculateUnevenWeights(right);
-			}
 
 			List<Brick> bri = coupling[downRight.CouplingColor];
 			foreach (Brick brick in bri)
@@ -816,6 +773,8 @@ namespace Simulation
 				}
 
 			}
+
+			updateAllUnevenWeights();
 		}
 
 
@@ -898,6 +857,62 @@ namespace Simulation
 				startthread.Abort();
 		}
 
+		private void criticalValue_Click(object sender, EventArgs e)
+		{
+			switch (currentModel)
+			{
+				case "isingNormal":
+					{
+						temperaturBar.Value = 42;
+						beta = 0.42f;
+						isingNormal_Click(new Object(), new EventArgs());
+						break;
+					}
+
+				case "isingDual":
+					{
+						temperaturBar.Value = 44;
+						beta = 0.440686f;
+						isingDual_Click(new Object(), new EventArgs());
+						break;
+					}
+
+				case "fermionFree":
+					{
+						temperaturBar.Value = 150;
+						beta = 1.5f;
+						fermionFree_Click(new Object(), new EventArgs());
+						break;
+					}
+
+				case "fermionBound":
+					{
+						temperaturBar.Value = (int)(100f * (1.5f - 0.68650627f));
+						beta = ((float)temperaturBar.Value) / 100f;
+						fermionBound_Click(new Object(), new EventArgs());
+						break;
+					}
+
+				default:
+					break;
+
+			}
+		}
+
+		private void updateAllUnevenWeights()
+		{
+			calculateUnevenWeights(up);
+			calculateUnevenWeights(down);
+			calculateUnevenWeights(left);
+			calculateUnevenWeights(right);
+
+			calculateUnevenWeights(noneUp);
+			calculateUnevenWeights(noneDown);
+			calculateUnevenWeights(noneLeft);
+			calculateUnevenWeights(noneRight);
+
+		}
+
 
 		//click the vertices and change back color
 		private void pictureNone_Click(object sender, EventArgs e)
@@ -965,48 +980,6 @@ namespace Simulation
 			coupling.Add(pictureDownRight.BackColor, downRight);
 		}
 
-		private void criticalValue_Click(object sender, EventArgs e)
-		{
-			switch (currentModel)
-			{
-				case "isingNormal":
-					{
-						temperaturBar.Value = 42;
-						beta = 0.42f;
-						isingNormal_Click(new Object(), new EventArgs());
-						break;
-					}
-
-				case "isingDual":
-					{
-						temperaturBar.Value = 44;
-						beta = 0.44f;
-						isingDual_Click(new Object(), new EventArgs());
-						break;
-					}
-
-				case "fermionFree":
-					{
-						temperaturBar.Value = 150;
-						beta = 1.5f;
-						//betaTextBox.Text = beta.ToString();
-						fermionFree_Click(new Object(), new EventArgs());
-						break;
-					}
-
-				case "fermionBound":
-					{
-						temperaturBar.Value = (int)(100f * (1.5f - 0.6865f));
-						beta = ((float)temperaturBar.Value) / 100f;
-						fermionBound_Click(new Object(), new EventArgs());
-						break;
-					}
-
-				default:
-					break;
-
-			}
-		}
 
 
 		//claculate probabilities of the uneven vertices

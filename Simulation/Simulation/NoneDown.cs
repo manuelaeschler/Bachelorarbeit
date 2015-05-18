@@ -44,7 +44,7 @@ namespace Simulation
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x - brickSizeX / 2), (int)y);
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);
             e.Graphics.DrawEllipse(penRed, (int)x - 2, (int)y - 2, 4f, 4f);
-
+			e.Graphics.FillEllipse(new SolidBrush(Color.Red), (int)x - 2, (int)y - 2, 4f, 4f);
         }
 
         public Brick getOpposite(int inCase)
