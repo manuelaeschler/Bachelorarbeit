@@ -95,8 +95,8 @@ namespace Simulation
 			double oldPos = 1;
 			double newPos = 1;
 
-			oldPos = oldBrick.Probability * oldNeighbour.Probability;
-			newPos = newBrick.Probability * newNeighbour.Probability;
+			oldPos = oldBrick.StartProbability * oldNeighbour.StartProbability;
+			newPos = newBrick.StartProbability * newNeighbour.StartProbability;
 			double realPos;
 
 

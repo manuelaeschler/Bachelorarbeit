@@ -8,9 +8,10 @@ using System.Windows.Forms;
 
 namespace Simulation
 {
-    class NoneUp : Brick
+    class Up : Brick
     {
         private float probability;
+		private float startProbability;
 
         Brick none;
         Brick full;
@@ -20,97 +21,93 @@ namespace Simulation
         Brick upperRight;
         Brick downLeft;
         Brick downRight;
-        
+
+        Brick noneUp;
         Brick noneDown;
         Brick noneLeft;
         Brick noneRight;
-        Brick up;
         Brick down;
         Brick left;
         Brick right;
 
         Pen penRed;
 
-        public NoneUp()
+        public Up()
         {
             penRed = new Pen(Color.Red);
-
         }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
             pen.Width = size;
 
-            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y + brickSizeY / 2));
-            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x - brickSizeX / 2), (int)y);
-            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);
+            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y - brickSizeY / 2));
 
-            e.Graphics.DrawEllipse(penRed, (int)x - 2, (int)y - 2, 4f, 4f);
+            e.Graphics.DrawEllipse(penRed, (int)x-2, (int)y-2, 4f, 4f);
 			e.Graphics.FillEllipse(new SolidBrush(Color.Red), (int)x - 2, (int)y - 2, 4f, 4f);
         }
 
-        
         public Brick getOpposite(int inCase)
         {
             return null;
         }
 
-        
+        //TO DO
         public Brick subtract(Brick brick)
         {
             if (brick is Full)
-                return up;
+                return noneUp;
 
             if (brick is None)
                 return this;
 
             if (brick is Vertical)
-                return noneDown;
-
-            if (brick is Horizontal)
                 return down;
 
+            if (brick is Horizontal)
+                return noneDown;
+
             if (brick is UpperLeft)
-                return noneLeft;
-
-            if (brick is UpperRight)
-                return noneRight;
-
-            if (brick is DownLeft)
-                return right;
-
-            if (brick is DownRight)
                 return left;
 
+            if (brick is UpperRight)
+                return right;
+
+            if (brick is DownLeft)
+                return noneRight;
+
+            if (brick is DownRight)
+                return noneLeft;
+
             if (brick is NoneUp)
-                return none;
-
-            if (brick is NoneDown)
-                return vertical;
-
-            if (brick is NoneLeft)
-                return upperLeft;
-
-            if (brick is NoneRight)
-                return upperRight;
-
-            if (brick is Up)
                 return full;
 
-            if (brick is Down)
+            if (brick is NoneDown)
                 return horizontal;
 
-            if (brick is Left)
+            if (brick is NoneLeft)
                 return downRight;
 
-            if (brick is Right)
+            if (brick is NoneRight)
                 return downLeft;
+
+            if (brick is Up)
+                return none;
+
+            if (brick is Down)
+                return vertical;
+
+            if (brick is Left)
+                return upperLeft;
+
+            if (brick is Right)
+                return upperRight;
  
             return null;
-         
+
         }
 
-
+        
         public void setBricks(Brick[] bricks)
         {
             none = bricks[0];
@@ -122,10 +119,10 @@ namespace Simulation
             downLeft = bricks[6];
             downRight = bricks[7];
 
+            noneUp = bricks[8];
             noneDown = bricks[9];
             noneLeft = bricks[10];
             noneRight = bricks[11];
-            up = bricks[12];
             down = bricks[13];
             left = bricks[14];
             right = bricks[15];
@@ -135,25 +132,26 @@ namespace Simulation
 
         public Color CouplingColor { get { return Color.Empty; } set { } }
 
-        public PictureBox Picture { get { return null; } set{ } }
+        public PictureBox Picture { get { return null; } set { } }
 
         public TrackBar Bar { get { return null; } set { } }
 
         public TextBox Display { set { } }
 
+		public float StartProbability { get { return startProbability; } set { startProbability = value; } }
 
         public Brick bondInOut(string inCase)
         {
             switch (inCase)
             {
                 case "up":
-                    return full;
+                    return none;
                 case "down":
-                    return horizontal;
+                    return vertical;
                 case "left":
-                    return downRight;
+                    return upperLeft;
                 case "right":
-                    return downLeft;
+                    return upperRight;
                 default:
                     return this;
 

@@ -45,35 +45,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm.cs" />
-    <Compile Include="Bricks.cs" />
-    <Compile Include="Down.cs" />
-    <Compile Include="DownLeft.cs" />
-    <Compile Include="DownRight.cs" />
-    <Compile Include="Flip.cs" />
-    <Compile Include="Left.cs" />
+    <Compile Include="Algorithm\Algorithm.cs" />
+    <Compile Include="Brick\Bricks.cs" />
+    <Compile Include="Brick\Odd\Down.cs" />
+    <Compile Include="Brick\Even\DownLeft.cs" />
+    <Compile Include="Brick\Even\DownRight.cs" />
+    <Compile Include="Algorithm\Flip.cs" />
+    <Compile Include="Brick\Odd\Left.cs" />
     <Compile Include="ListDictionary.cs" />
-    <Compile Include="NoneDown.cs" />
-    <Compile Include="NoneLeft.cs" />
-    <Compile Include="NoneRight.cs" />
-    <Compile Include="NoneUp.cs" />
-    <Compile Include="Right.cs" />
+    <Compile Include="Brick\Odd\NoneDown.cs" />
+    <Compile Include="Brick\Odd\NoneLeft.cs" />
+    <Compile Include="Brick\Odd\NoneRight.cs" />
+    <Compile Include="Brick\Odd\NoneUp.cs" />
+    <Compile Include="Brick\Odd\Right.cs" />
     <Compile Include="Simulation.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Simulation.Designer.cs">
       <DependentUpon>Simulation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Full.cs" />
-    <Compile Include="Horizontal.cs" />
-    <Compile Include="None.cs" />
+    <Compile Include="Brick\Even\Full.cs" />
+    <Compile Include="Brick\Even\Horizontal.cs" />
+    <Compile Include="Brick\Even\None.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Up.cs" />
-    <Compile Include="UpperLeft.cs" />
-    <Compile Include="UpperRight.cs" />
-    <Compile Include="Vertical.cs" />
-    <Compile Include="Worm.cs" />
+    <Compile Include="Brick\Odd\Up.cs" />
+    <Compile Include="Brick\Even\UpperLeft.cs" />
+    <Compile Include="Brick\Even\UpperRight.cs" />
+    <Compile Include="Brick\Even\Vertical.cs" />
+    <Compile Include="Algorithm\Worm.cs" />
     <EmbeddedResource Include="Simulation.resx">
       <DependentUpon>Simulation.cs</DependentUpon>
     </EmbeddedResource>

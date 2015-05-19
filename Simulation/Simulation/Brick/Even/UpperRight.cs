@@ -58,6 +58,8 @@ namespace Simulation
 
         public TextBox Display { set { display = value; } }
 
+		public float StartProbability { get { return 0; } set { } }
+
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
             pen.Width = size;

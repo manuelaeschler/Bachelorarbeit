@@ -8,9 +8,10 @@ using System.Windows.Forms;
 
 namespace Simulation
 {
-    class Up : Brick
+    class Right : Brick
     {
-        private float probability;
+		private float probability;
+		private float startProbability;
 
         Brick none;
         Brick full;
@@ -25,13 +26,13 @@ namespace Simulation
         Brick noneDown;
         Brick noneLeft;
         Brick noneRight;
+        Brick up;
         Brick down;
         Brick left;
-        Brick right;
 
         Pen penRed;
 
-        public Up()
+        public Right()
         {
             penRed = new Pen(Color.Red);
         }
@@ -40,9 +41,8 @@ namespace Simulation
         {
             pen.Width = size;
 
-            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y - brickSizeY / 2));
-
-            e.Graphics.DrawEllipse(penRed, (int)x-2, (int)y-2, 4f, 4f);
+            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);
+            e.Graphics.DrawEllipse(penRed, (int)x - 2, (int)y - 2, 4f, 4f);
 			e.Graphics.FillEllipse(new SolidBrush(Color.Red), (int)x - 2, (int)y - 2, 4f, 4f);
         }
 
@@ -51,56 +51,56 @@ namespace Simulation
             return null;
         }
 
-        //TO DO
+        
         public Brick subtract(Brick brick)
         {
             if (brick is Full)
-                return noneUp;
+                return noneRight;
 
             if (brick is None)
                 return this;
 
             if (brick is Vertical)
-                return down;
-
-            if (brick is Horizontal)
-                return noneDown;
-
-            if (brick is UpperLeft)
-                return left;
-
-            if (brick is UpperRight)
-                return right;
-
-            if (brick is DownLeft)
-                return noneRight;
-
-            if (brick is DownRight)
                 return noneLeft;
 
+            if (brick is Horizontal)
+                return left;
+
+            if (brick is UpperLeft)
+                return down;
+
+            if (brick is UpperRight)
+                return up;
+
+            if (brick is DownLeft)
+                return noneUp;
+
+            if (brick is DownRight)
+                return down;
+
             if (brick is NoneUp)
-                return full;
-
-            if (brick is NoneDown)
-                return horizontal;
-
-            if (brick is NoneLeft)
-                return downRight;
-
-            if (brick is NoneRight)
                 return downLeft;
 
-            if (brick is Up)
-                return none;
-
-            if (brick is Down)
-                return vertical;
-
-            if (brick is Left)
+            if (brick is NoneDown)
                 return upperLeft;
 
-            if (brick is Right)
+            if (brick is NoneLeft)
+                return vertical;
+
+            if (brick is NoneRight)
+                return full;
+
+            if (brick is Up)
                 return upperRight;
+
+            if (brick is Down)
+                return downRight;
+
+            if (brick is Left)
+                return horizontal;
+
+            if (brick is Right)
+                return none;
  
             return null;
 
@@ -122,9 +122,9 @@ namespace Simulation
             noneDown = bricks[9];
             noneLeft = bricks[10];
             noneRight = bricks[11];
+            up = bricks[12];
             down = bricks[13];
             left = bricks[14];
-            right = bricks[15];
         }
 
         public float Probability { get { return probability; } set { probability = value; } }
@@ -137,18 +137,20 @@ namespace Simulation
 
         public TextBox Display { set { } }
 
+		public float StartProbability { get { return startProbability; } set { startProbability = value; } }
+
         public Brick bondInOut(string inCase)
         {
             switch (inCase)
             {
                 case "up":
-                    return none;
-                case "down":
-                    return vertical;
-                case "left":
-                    return upperLeft;
-                case "right":
                     return upperRight;
+                case "down":
+                    return downRight;
+                case "left":
+                    return horizontal;
+                case "right":
+                    return none;
                 default:
                     return this;
 

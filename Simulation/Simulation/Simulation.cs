@@ -1016,8 +1016,22 @@ namespace Simulation
 				brick.Probability = (float)Math.Pow(mix, 1 / (float)i);
 			else
 				brick.Probability = 0;
+
+			calculateUnevenStartWeights(brick);
+
 		}
 
+		private void calculateUnevenStartWeights(Brick brick)
+		{
+			double mix = 1;
+
+			mix *= brick.bondInOut("left").Probability;
+			mix *= brick.bondInOut("right").Probability;
+			mix *= brick.bondInOut("down").Probability;
+			mix *= brick.bondInOut("up").Probability;
+
+			brick.StartProbability = (float)Math.Pow(mix, .25f);
+		}
 
 
 	}

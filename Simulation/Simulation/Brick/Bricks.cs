@@ -14,14 +14,15 @@ namespace Simulation
         Brick getOpposite(int inCase);
         Brick subtract(Brick brick);
         Brick bondInOut(String inCase);
-
+		void setBricks(Brick[] bricks);
 
         PictureBox Picture { get; set; }
         TrackBar Bar { get; set; }
         float Probability { get;  set; }
         Color CouplingColor { get; set; }
         TextBox Display { set; }
-        void setBricks(Brick[] bricks);
+		float StartProbability { get; set; }
+        
 
     }
 }

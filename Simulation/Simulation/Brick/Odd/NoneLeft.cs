@@ -8,9 +8,10 @@ using System.Windows.Forms;
 
 namespace Simulation
 {
-    class NoneDown : Brick
+    class NoneLeft : Brick
     {
         private float probability;
+		private float startProbability;
 
         Brick none;
         Brick full;
@@ -22,7 +23,7 @@ namespace Simulation
         Brick downRight;
 
         Brick noneUp;
-        Brick noneLeft;
+        Brick noneDown;
         Brick noneRight;
         Brick up;
         Brick down;
@@ -31,7 +32,7 @@ namespace Simulation
 
         Pen penRed;
 
-        public NoneDown()
+        public NoneLeft()
         {
             penRed = new Pen(Color.Red);
         }
@@ -41,8 +42,8 @@ namespace Simulation
             pen.Width = size;
 
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y - brickSizeY / 2));
-            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x - brickSizeX / 2), (int)y);
             e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);
+            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x), (int)(y + brickSizeY / 2));
             e.Graphics.DrawEllipse(penRed, (int)x - 2, (int)y - 2, 4f, 4f);
 			e.Graphics.FillEllipse(new SolidBrush(Color.Red), (int)x - 2, (int)y - 2, 4f, 4f);
         }
@@ -56,52 +57,52 @@ namespace Simulation
         public Brick subtract(Brick brick)
         {
             if (brick is Full)
-                return down;
+                return left;
 
             if (brick is None)
                 return this;
 
             if (brick is Vertical)
-                return noneUp;
-
-            if (brick is Horizontal)
-                return up;
-
-            if (brick is UpperLeft)
                 return right;
 
-            if (brick is UpperRight)
-                return left;
-
-            if (brick is DownLeft)
-                return noneLeft;
-
-            if (brick is DownRight)
+            if (brick is Horizontal)
                 return noneRight;
 
+            if (brick is UpperLeft)
+                return noneUp;
+
+            if (brick is UpperRight)
+                return down;
+
+            if (brick is DownLeft)
+                return noneDown;
+
+            if (brick is DownRight)
+                return up;
+
             if (brick is NoneUp)
-                return vertical;
+                return upperLeft;
 
             if (brick is NoneDown)
-                return none;
-
-            if (brick is NoneLeft)
                 return downLeft;
 
-            if (brick is NoneRight)
-                return downRight;
+            if (brick is NoneLeft)
+                return none;
 
-            if (brick is Up)
+            if (brick is NoneRight)
                 return horizontal;
 
-            if (brick is Down)
-                return full;
+            if (brick is Up)
+                return downRight;
 
-            if (brick is Left)
+            if (brick is Down)
                 return upperRight;
 
+            if (brick is Left)
+                return full;
+
             if (brick is Right)
-                return upperLeft;
+                return vertical;
  
             return null;
 
@@ -120,7 +121,7 @@ namespace Simulation
             downRight = bricks[7];
 
             noneUp = bricks[8];
-            noneLeft = bricks[10];
+            noneDown = bricks[9];
             noneRight = bricks[11];
             up = bricks[12];
             down = bricks[13];
@@ -138,19 +139,20 @@ namespace Simulation
 
         public TextBox Display { set { } }
 
+		public float StartProbability { get { return startProbability; } set { startProbability = value; } }
 
         public Brick bondInOut(string inCase)
         {
             switch (inCase)
             {
                 case "up":
-                    return horizontal;
+                    return downRight;
                 case "down":
-                    return full;
-                case "left":
                     return upperRight;
+                case "left":
+                    return full;
                 case "right":
-                    return upperLeft;
+                    return vertical;
                 default:
                     return this;
 

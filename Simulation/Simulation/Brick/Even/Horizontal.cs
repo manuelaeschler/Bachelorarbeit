@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,16 @@ using System.Windows.Forms;
 
 namespace Simulation
 {
-    class None : Brick
+    class Horizontal : Brick
     {
         static private float probability;
         static private Color couplingColor;
         private PictureBox picture;
         private TrackBar bar;
         private TextBox display;
+
+        Brick none;
         Brick full;
-        Brick horizontal;
         Brick vertical;
         Brick upperLeft;
         Brick upperRight;
@@ -32,7 +34,7 @@ namespace Simulation
         Brick left;
         Brick right;
 
-        public None(Color color, PictureBox picture, TrackBar bar, TextBox display)
+        public Horizontal(Color color, PictureBox picture, TrackBar bar, TextBox display)
         {
             this.CouplingColor = color;
             this.Bar = bar;
@@ -58,14 +60,68 @@ namespace Simulation
 
         public TextBox Display { set { display = value; } }
 
+		public float StartProbability { get { return 0; } set { } }
+
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {
+            pen.Width = size;
+
+            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x - brickSizeX / 2), (int)y);
+            e.Graphics.DrawLine(pen, (int)x, (int)y, (int)(x + brickSizeX / 2), (int)y);
 
         }
 
         public Brick subtract(Brick brick)
         {
-            return brick;
+            if (brick is Full)
+                return vertical;
+
+            if (brick is None)
+                return this;
+
+            if (brick is Vertical)
+                return full;
+
+            if (brick is Horizontal)
+                return none;
+
+            if (brick is UpperLeft)
+                return upperRight;
+
+            if (brick is UpperRight)
+                return upperLeft;
+
+            if (brick is DownLeft)
+                return downRight;
+
+            if (brick is DownRight)
+                return downLeft;
+
+            if (brick is NoneUp)
+                return down;
+
+            if (brick is NoneDown)
+                return up;
+
+            if (brick is NoneLeft)
+                return noneRight;
+
+            if (brick is NoneRight)
+                return noneLeft;
+
+            if (brick is Up)
+                return noneDown;
+
+            if (brick is Down)
+                return noneUp;
+
+            if (brick is Left)
+                return right;
+
+            if (brick is Right)
+                return left;
+
+            return null;
         }
 
         public Brick getOpposite(int inCase)
@@ -73,24 +129,23 @@ namespace Simulation
             switch (inCase)
             {
                 case 1:
-                    return downRight;
-                case 2:
                     return downLeft;
+                case 2:
+                    return downRight;
                 case 3:
-                    return upperRight;
-                case 4:
                     return upperLeft;
+                case 4:
+                    return upperRight;
                 default:
                     return this;
 
             }
         }
 
-
         public void setBricks(Brick[] bricks)
         {
+            none = bricks[0];
             full = bricks[1];
-            horizontal = bricks[2];
             vertical = bricks[3];
             upperLeft = bricks[4];
             upperRight = bricks[5];
@@ -109,24 +164,22 @@ namespace Simulation
 
 
 
-        public Brick bondInOut(String inCase)
+        public Brick bondInOut(string inCase)
         {
             switch (inCase)
             {
                 case "up":
-                    return up;
+                    return noneDown;
                 case "down":
-                    return down;
+                    return noneUp;
                 case "left":
-                    return left;
-                case "right":
                     return right;
+                case "right":
+                    return left;
                 default:
                     return this;
 
             }
         }
-
-
     }
 }

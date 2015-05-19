@@ -11,6 +11,7 @@ namespace Simulation
     class Down : Brick
     {
         private float probability;
+		private float startProbability;
 
         Brick none;
         Brick full;
@@ -139,6 +140,8 @@ namespace Simulation
         public TrackBar Bar { get { return null; } set { } }
 
         public TextBox Display { set { } }
+
+		public float StartProbability { get { return startProbability; } set { startProbability = value; } }
 
         public Brick bondInOut(string inCase)
         {
