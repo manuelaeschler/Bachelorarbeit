@@ -13,6 +13,11 @@ namespace Simulation
         private float probability;
 		private float startProbability;
 
+		private readonly bool upBond;
+		private readonly bool downBond;
+		private readonly bool leftBond;
+		private readonly bool rightBond;
+
         Brick none;
         Brick full;
         Brick horizontal;
@@ -35,6 +40,11 @@ namespace Simulation
         public Left()
         {
             penRed = new Pen(Color.Red);
+
+			this.upBond = false;
+			this.downBond = false;
+			this.leftBond = true;
+			this.rightBond = false;
 
         }
 
@@ -140,6 +150,14 @@ namespace Simulation
         public TextBox Display { set { } }
 
 		public float StartProbability { get { return startProbability; } set { startProbability = value; } }
+
+		public bool UpBond { get { return upBond; } }
+
+		public bool DownBond { get { return downBond; } }
+
+		public bool LeftBond { get { return leftBond; } }
+
+		public bool RightBond { get { return rightBond; } }
 
         public Brick bondInOut(string inCase)
         {

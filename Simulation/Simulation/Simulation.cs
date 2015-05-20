@@ -20,10 +20,11 @@ namespace Simulation
 		Brick[,] field;
 		Brick[,] currentField;
 		Brick[,] change;
+		Color[,] track;
 		Brick[] bricks;
 		float[,] probabilities = new float[8, 8];
 		ListDictionary<Color, Brick> coupling = new ListDictionary<Color, Brick>();
-
+		Track trackObj;
 
 		Boolean run;
 		Boolean didchange;
@@ -129,11 +130,14 @@ namespace Simulation
 			field = new Brick[size, size];
 			change = new Brick[size, size];
 			currentField = new Brick[size, size];
+			track = new Color[size, size];
 			wormAlgo = new Worm(field);
 			flipAlgo = new Flip(field);
 			run = false;
 			thermalize = false;
 			beta = (float)temperaturBar.Value / 100;
+
+			trackObj = new Track(field);
 
 			currentAlgorithm = flipAlgo;
 
@@ -448,8 +452,12 @@ namespace Simulation
 
 				if (currentAlgorithm is Flip && currentPoint == (size * size) - 1)
 					currentField = (Brick[,])field.Clone();
-				if(currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
+				if (currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
+				{
 					currentField = (Brick[,])field.Clone();
+					trackObj.resetColor();
+				}
+
 			}
 		}
 
@@ -503,10 +511,21 @@ namespace Simulation
 		{
 			Pen pen = new Pen(Brushes.Black);
 
+			if (currentAlgorithm is Worm)
+			{
+				trackObj.Field = field;
+				trackObj.resetColor();
+
+				track = trackObj.findTrack(((Worm)wormAlgo).TailX, ((Worm)wormAlgo).TailY);
+			}
+
+
 			for (int i = 0; i < field.GetLength(0); i++)
 			{
 				for (int j = 0; j < field.GetLength(1); j++)
 				{
+					pen.Color = track[i, j];
+
 					float brickSizeX = graphicsPanel.Size.Width / (float)field.GetLength(0);
 					float brickSizeY = graphicsPanel.Size.Height / (float)field.GetLength(1);
 
@@ -539,7 +558,7 @@ namespace Simulation
 		}
 
 
-		//illustration of the vertices
+		//illustrations of the vertices
 		private void pictureNone_Paint(object sender, PaintEventArgs e)
 		{
 
@@ -793,11 +812,13 @@ namespace Simulation
 				field = new Brick[size, size];
 				change = new Brick[size, size];
 				currentField = new Brick[size, size];
+				track = new Color[size, size];
 				fillField(field);
 				fillField(change);
 				fillField(currentField);
 				wormAlgo.Field = field;
 				flipAlgo.Field = field;
+				trackObj.Field = field;
 
 			}
 

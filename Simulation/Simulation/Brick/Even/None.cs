@@ -15,6 +15,12 @@ namespace Simulation
         private PictureBox picture;
         private TrackBar bar;
         private TextBox display;
+
+		private readonly bool upBond;
+		private readonly bool downBond;
+		private readonly bool leftBond;
+		private readonly bool rightBond;
+
         Brick full;
         Brick horizontal;
         Brick vertical;
@@ -38,6 +44,11 @@ namespace Simulation
             this.Bar = bar;
             this.Picture = picture;
             this.Display = display;
+
+			this.upBond = false;
+			this.downBond = false;
+			this.leftBond = false;
+			this.rightBond = false;
         }
 
         public float Probability
@@ -59,6 +70,14 @@ namespace Simulation
         public TextBox Display { set { display = value; } }
 
 		public float StartProbability { get { return 0; } set { } }
+
+		public bool UpBond { get { return upBond; } }
+
+		public bool DownBond { get { return downBond; } }
+
+		public bool LeftBond { get { return leftBond; } }
+
+		public bool RightBond { get { return rightBond; } }
 
         public void draw(float x, float y, float brickSizeX, float brickSizeY, Pen pen, PaintEventArgs e, float size)
         {

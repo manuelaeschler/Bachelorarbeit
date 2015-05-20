@@ -22,6 +22,10 @@ namespace Simulation
         Color CouplingColor { get; set; }
         TextBox Display { set; }
 		float StartProbability { get; set; }
+		bool UpBond { get; }
+		bool DownBond { get; }
+		bool LeftBond { get; }
+		bool RightBond { get; }
         
 
     }

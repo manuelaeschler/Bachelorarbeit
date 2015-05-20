@@ -30,6 +30,10 @@ namespace Simulation
 
 		public Brick[,] Field { get { return field; } set { field = value; size = field.GetLength(0); } }
 
+		public int TailX { get { return tailX; } }
+
+		public int TailY { get { return tailY; } }
+
 		public bool change(int x, int y)
 		{
 			if (start)

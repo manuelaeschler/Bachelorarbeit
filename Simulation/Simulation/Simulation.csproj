@@ -74,6 +74,7 @@
     <Compile Include="Brick\Even\UpperRight.cs" />
     <Compile Include="Brick\Even\Vertical.cs" />
     <Compile Include="Algorithm\Worm.cs" />
+    <Compile Include="Track.cs" />
     <EmbeddedResource Include="Simulation.resx">
       <DependentUpon>Simulation.cs</DependentUpon>
     </EmbeddedResource>
