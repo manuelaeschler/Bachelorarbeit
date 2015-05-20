@@ -158,6 +158,7 @@ namespace Simulation
 			pictureDownLeft.Invalidate();
 			pictureDownRight.Invalidate();
 
+			startthread = new Thread(startThread);
 		}
 
 		private Color nextColor(Color color)
