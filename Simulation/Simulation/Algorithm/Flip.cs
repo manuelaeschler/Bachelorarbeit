@@ -92,5 +92,10 @@ namespace Simulation
             }
             return false;
         }
+
+		public override String ToString()
+		{
+			return "Flip";
+		}
     }
 }

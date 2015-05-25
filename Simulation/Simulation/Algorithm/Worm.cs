@@ -301,5 +301,11 @@ namespace Simulation
 			return start;
 		}
 
+		
+		public override String ToString()
+		{
+			return "Worm";
+		}
+
 	}
 }

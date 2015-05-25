@@ -12,5 +12,7 @@ namespace Simulation
 
         Boolean change(int x, int y);
 
+		String ToString();
+
     }
 }

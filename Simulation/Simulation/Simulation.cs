@@ -55,6 +55,10 @@ namespace Simulation
 
 		Thread startthread;
 
+		String text = "";
+		static int meassurement = 0;
+		bool measure = false;
+
 		public simulation()
 		{
 			InitializeComponent();
@@ -77,7 +81,8 @@ namespace Simulation
 			left = new Left();
 			right = new Right();
 
-			size = 10;
+			//Validaiton
+			size = 32;
 			currentPoint = 0;
 
 			bricks = new Brick[16];
@@ -157,6 +162,8 @@ namespace Simulation
 			pictureUpperRight.Invalidate();
 			pictureDownLeft.Invalidate();
 			pictureDownRight.Invalidate();
+
+			validationCalculation();
 
 			startthread = new Thread(startThread);
 		}
@@ -441,7 +448,7 @@ namespace Simulation
 
 				didchange = currentAlgorithm.change(x, y);
 
-				if (didchange && !thermalize)
+				if (!thermalize && didchange)
 				{
 					subtractFields();
 					graphicsPanel.Invalidate();
@@ -452,12 +459,16 @@ namespace Simulation
 				currentPoint = (++currentPoint) % (size * size);
 
 				if (currentAlgorithm is Flip && currentPoint == (size * size) - 1)
+				{
 					currentField = (Brick[,])field.Clone();
-				if (currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
+					if(measure)
+						validationFlip();
+				}
+				/*if (currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
 				{
 					currentField = (Brick[,])field.Clone();
 					trackObj.resetColor();
-				}
+				}*/
 
 			}
 		}
@@ -1053,6 +1064,98 @@ namespace Simulation
 			mix *= brick.bondInOut("up").Probability;
 
 			brick.StartProbability = (float)Math.Pow(mix, .25f);
+		}
+
+
+		//Validation
+		private void validationFlip()
+		{
+			meassurement++;
+			int bond = 0;
+
+			for(int i = 0; i < size; i++){
+				for (int j = 0; j < size; j++)
+				{
+					bond += occupationField(field[i,j]);
+				}
+			}
+
+			double occupation = (double)bond;
+
+			text += occupation.ToString() + "	";
+
+			if (meassurement % 10000 == 0)
+				Console.Write((float)meassurement/10000 + " %\n");
+
+			if (meassurement == 100000)
+			{
+				FileCreation f = new FileCreation(text, currentAlgorithm.ToString() + ","+ currentModel + ",beta=" + beta.ToString());
+				meassurement = 0;
+				measure = false;
+				thermalize = false;
+				text = "";
+			}
+		}
+
+		private int occupationField(Brick brick)
+		{
+			if (brick is Full)
+				return 4;
+			if (brick is None)
+				return 0;
+
+			return 2;
+		}
+
+		private void measureButton_Click(object sender, EventArgs e)
+		{
+			thermalize = true;
+			measure = true;
+		}
+
+		private void validationCalculation()
+		{
+			double[] energyExpect = new double[30];
+			double[] specHeat = new double[30];
+			double[] statError = new double[30];
+
+
+			Validation val = new Validation(energyExpect, specHeat, statError);
+
+			val.calculate(0, "Flip,isingNormal,beta=0.3", 0.3d);
+			val.calculate(1, "Flip,isingNormal,beta=0.31", 0.31d);
+			val.calculate(2, "Flip,isingNormal,beta=0.32", 0.32d);
+			val.calculate(3, "Flip,isingNormal,beta=0.33", 0.33d);
+			val.calculate(4, "Flip,isingNormal,beta=0.34", 0.34d);
+			val.calculate(5, "Flip,isingNormal,beta=0.35", 0.35d);
+			val.calculate(6, "Flip,isingNormal,beta=0.36", 0.36d);
+			val.calculate(7, "Flip,isingNormal,beta=0.37", 0.37d);
+			val.calculate(8, "Flip,isingNormal,beta=0.38", 0.38d);
+			val.calculate(9, "Flip,isingNormal,beta=0.39", 0.39d);
+			val.calculate(10, "Flip,isingNormal,beta=0.4", 0.4d);
+			val.calculate(11, "Flip,isingNormal,beta=0.41", 0.41d);
+			val.calculate(12, "Flip,isingNormal,beta=0.42", 0.42d);
+			val.calculate(13, "Flip,isingNormal,beta=0.43", 0.43d);
+			val.calculate(14, "Flip,isingNormal,beta=0.44", 0.44d);
+			val.calculate(15, "Flip,isingNormal,beta=0.45", 0.45d);
+			val.calculate(16, "Flip,isingNormal,beta=0.46", 0.46d);
+			val.calculate(17, "Flip,isingNormal,beta=0.47", 0.47d);
+			val.calculate(18, "Flip,isingNormal,beta=0.48", 0.48d);
+			val.calculate(19, "Flip,isingNormal,beta=0.49", 0.49d);
+			val.calculate(20, "Flip,isingNormal,beta=0.5", 0.5d);
+			val.calculate(21, "Flip,isingNormal,beta=0.51", 0.51d);
+			val.calculate(22, "Flip,isingNormal,beta=0.52", 0.52d);
+			val.calculate(23, "Flip,isingNormal,beta=0.53", 0.53d);
+			val.calculate(24, "Flip,isingNormal,beta=0.54", 0.54d);
+			val.calculate(25, "Flip,isingNormal,beta=0.55", 0.55d);
+			val.calculate(26, "Flip,isingNormal,beta=0.56", 0.56d);
+			val.calculate(27, "Flip,isingNormal,beta=0.57", 0.57d);
+			val.calculate(28, "Flip,isingNormal,beta=0.58", 0.58d);
+			val.calculate(29, "Flip,isingNormal,beta=0.59", 0.59d);
+
+			FileCreation f1 = new FileCreation(energyExpect.ToString(), "Energy Expectation");
+			FileCreation f2 = new FileCreation(specHeat.ToString(), "Specific Heat");
+			FileCreation f3 = new FileCreation(statError.ToString(), "Statistical Error");
 		}
 
 

@@ -102,6 +102,7 @@
 			this.thermalisation = new System.Windows.Forms.Button();
 			this.criticalValue = new System.Windows.Forms.Button();
 			this.worm = new System.Windows.Forms.Button();
+			this.measureButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.graphicsPanel)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureNone)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureFull)).BeginInit();
@@ -846,12 +847,24 @@
 			this.worm.UseVisualStyleBackColor = true;
 			this.worm.Click += new System.EventHandler(this.worm_Click);
 			// 
+			// measureButton
+			// 
+			this.measureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.measureButton.Location = new System.Drawing.Point(279, 21);
+			this.measureButton.Name = "measureButton";
+			this.measureButton.Size = new System.Drawing.Size(75, 42);
+			this.measureButton.TabIndex = 96;
+			this.measureButton.Text = "Measure";
+			this.measureButton.UseVisualStyleBackColor = true;
+			this.measureButton.Click += new System.EventHandler(this.measureButton_Click);
+			// 
 			// simulation
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(1118, 622);
+			this.Controls.Add(this.measureButton);
 			this.Controls.Add(this.worm);
 			this.Controls.Add(this.criticalValue);
 			this.Controls.Add(this.thermalisation);
@@ -1030,6 +1043,7 @@
         private System.Windows.Forms.Button thermalisation;
         private System.Windows.Forms.Button criticalValue;
         private System.Windows.Forms.Button worm;
+		private System.Windows.Forms.Button measureButton;
     }
 }
 
