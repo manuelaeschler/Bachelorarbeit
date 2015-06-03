@@ -11,7 +11,7 @@ namespace Simulation
 {
     class Horizontal : Brick
     {
-        static private float probability;
+        static private double probability;
         static private Color couplingColor;
         private PictureBox picture;
         private TrackBar bar;
@@ -52,7 +52,7 @@ namespace Simulation
 			this.rightBond = true;
         }
 
-        public float Probability
+        public double Probability
         {
             get { return probability; }
             set

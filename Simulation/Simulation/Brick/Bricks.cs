@@ -18,7 +18,7 @@ namespace Simulation
 
         PictureBox Picture { get; set; }
         TrackBar Bar { get; set; }
-        float Probability { get;  set; }
+        double Probability { get;  set; }
         Color CouplingColor { get; set; }
         TextBox Display { set; }
 		float StartProbability { get; set; }

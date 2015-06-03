@@ -10,7 +10,7 @@ namespace Simulation
 {
     class UpperLeft : Brick
     {
-        static private float probability;
+        static private double probability;
         static private Color couplingColor;
         private PictureBox picture;
         private TrackBar bar;
@@ -51,7 +51,7 @@ namespace Simulation
 			this.rightBond = false;
         }
 
-        public float Probability
+        public double Probability
         {
             get { return probability; }
             set

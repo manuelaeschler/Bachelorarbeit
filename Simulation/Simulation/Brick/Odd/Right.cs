@@ -10,8 +10,8 @@ namespace Simulation
 {
     class Right : Brick
     {
-		private float probability;
-		private float startProbability;
+		private double probability;
+		private double startProbability;
 
 		private readonly bool upBond;
 		private readonly bool downBond;
@@ -137,7 +137,7 @@ namespace Simulation
             left = bricks[14];
         }
 
-        public float Probability { get { return probability; } set { probability = value; } }
+        public double Probability { get { return probability; } set { probability = value; } }
 
         public Color CouplingColor { get { return Color.Empty; } set { } }
 
@@ -147,7 +147,7 @@ namespace Simulation
 
         public TextBox Display { set { } }
 
-		public float StartProbability { get { return startProbability; } set { startProbability = value; } }
+		public double StartProbability { get { return startProbability; } set { startProbability = value; } }
 
 		public bool UpBond { get { return upBond; } }
 

@@ -11,7 +11,7 @@ namespace Simulation
     class Vertical : Brick
     {
 
-        static private float probability;
+        static private double probability;
         static private Color couplingColor;
         private PictureBox picture;
         private TrackBar bar;
@@ -53,7 +53,7 @@ namespace Simulation
 
         }
 
-        public float Probability
+        public double Probability
         {
             get { return probability; }
             set

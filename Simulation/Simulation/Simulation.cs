@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
+using System.IO;
 
 namespace Simulation
 {
@@ -29,7 +30,7 @@ namespace Simulation
 		Boolean run;
 		Boolean didchange;
 		Boolean thermalize;
-		float beta;
+		double beta;
 		string currentModel;
 		Algorithm currentAlgorithm;
 		Algorithm flipAlgo;
@@ -81,8 +82,8 @@ namespace Simulation
 			left = new Left();
 			right = new Right();
 
-			//Validaiton
-			size = 32;
+			//Validaiton 8 er
+			size = 8;
 			currentPoint = 0;
 
 			bricks = new Brick[16];
@@ -140,7 +141,7 @@ namespace Simulation
 			flipAlgo = new Flip(field);
 			run = false;
 			thermalize = false;
-			beta = (float)temperaturBar.Value / 100;
+			beta = (double)temperaturBar.Value / 100;
 
 			trackObj = new Track(field);
 
@@ -163,7 +164,7 @@ namespace Simulation
 			pictureDownLeft.Invalidate();
 			pictureDownRight.Invalidate();
 
-			validationCalculation();
+			//validationCalculation();
 
 			startthread = new Thread(startThread);
 		}
@@ -272,7 +273,7 @@ namespace Simulation
 			fermionBound.BackColor = Color.Empty;
 			fermionFree.BackColor = Color.LightSkyBlue;
 
-			betaTextBox.Text = (beta - 1.5f).ToString();
+			betaTextBox.Text = (beta - 1.5d).ToString();
 			massLabel.Visible = true;
 			massMaximum.Visible = true;
 			massMinimum.Visible = true;
@@ -282,10 +283,10 @@ namespace Simulation
 			full.Probability = 0f;
 			horizontal.Probability = 1;
 			vertical.Probability = 1;
-			upperLeft.Probability = (float)(1 / Math.Sqrt(2));
-			upperRight.Probability = (float)(1 / Math.Sqrt(2));
-			downLeft.Probability = (float)(1 / Math.Sqrt(2));
-			downRight.Probability = (float)(1 / Math.Sqrt(2));
+			upperLeft.Probability = 1 / Math.Sqrt(2);
+			upperRight.Probability = 1 / Math.Sqrt(2);
+			downLeft.Probability = 1 / Math.Sqrt(2);
+			downRight.Probability = 1 / Math.Sqrt(2);
 
 			calculateUnevenWeights(noneUp);
 			calculateUnevenWeights(noneDown);
@@ -334,14 +335,14 @@ namespace Simulation
 			massMinimum.Visible = true;
 			massNull.Visible = true;
 
-			none.Probability = (float)Math.Pow((2 + beta - 1.5f), 2);
-			full.Probability = 0f;
+			none.Probability = Math.Pow((2 + beta - 1.5d), 2);
+			full.Probability = 0d;
 			horizontal.Probability = 1;
 			vertical.Probability = 1;
-			upperLeft.Probability = 0.5f;
-			upperRight.Probability = 0.5f;
-			downLeft.Probability = 0.5f;
-			downRight.Probability = 0.5f;
+			upperLeft.Probability = 0.5d;
+			upperRight.Probability = 0.5d;
+			downLeft.Probability = 0.5d;
+			downRight.Probability = 0.5d;
 
 			calculateUnevenWeights(noneUp);
 			calculateUnevenWeights(noneDown);
@@ -359,14 +360,14 @@ namespace Simulation
 		//calculating weights with beta
 		private void calculateIsingNormal()
 		{
-			none.Probability = 1f;
-			full.Probability = (float)(Math.Tanh(beta) * Math.Tanh(beta));
-			horizontal.Probability = (float)(Math.Tanh(beta));
-			vertical.Probability = (float)(Math.Tanh(beta));
-			upperLeft.Probability = (float)(Math.Tanh(beta));
-			upperRight.Probability = (float)(Math.Tanh(beta));
-			downLeft.Probability = (float)(Math.Tanh(beta));
-			downRight.Probability = (float)(Math.Tanh(beta));
+			none.Probability = 1d;
+			full.Probability = Math.Tanh(beta) * Math.Tanh(beta);
+			horizontal.Probability = Math.Tanh(beta);
+			vertical.Probability = Math.Tanh(beta);
+			upperLeft.Probability = Math.Tanh(beta);
+			upperRight.Probability = Math.Tanh(beta);
+			downLeft.Probability = Math.Tanh(beta);
+			downRight.Probability = Math.Tanh(beta);
 
 			calculateUnevenWeights(noneUp);
 			calculateUnevenWeights(noneDown);
@@ -380,14 +381,14 @@ namespace Simulation
 
 		private void calculateIsingDual()
 		{
-			none.Probability = 1f;
-			full.Probability = (float)(Math.Exp(-4 * beta));
-			horizontal.Probability = (float)(Math.Exp(-2 * beta));
-			vertical.Probability = (float)(Math.Exp(-2 * beta));
-			upperLeft.Probability = (float)(Math.Exp(-2 * beta));
-			upperRight.Probability = (float)(Math.Exp(-2 * beta));
-			downLeft.Probability = (float)(Math.Exp(-2 * beta));
-			downRight.Probability = (float)(Math.Exp(-2 * beta));
+			none.Probability = 1d;
+			full.Probability = Math.Exp(-4 * beta);
+			horizontal.Probability = Math.Exp(-2 * beta);
+			vertical.Probability = Math.Exp(-2 * beta);
+			upperLeft.Probability = Math.Exp(-2 * beta);
+			upperRight.Probability = Math.Exp(-2 * beta);
+			downLeft.Probability = Math.Exp(-2 * beta);
+			downRight.Probability = Math.Exp(-2 * beta);
 
 			calculateUnevenWeights(noneUp);
 			calculateUnevenWeights(noneDown);
@@ -462,13 +463,18 @@ namespace Simulation
 				{
 					currentField = (Brick[,])field.Clone();
 					if(measure)
-						validationFlip();
+						validationAlgo();
 				}
-				/*if (currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
+				
+
+				if (currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
 				{
+					if (measure)
+						validationAlgo();
+
 					currentField = (Brick[,])field.Clone();
 					trackObj.resetColor();
-				}*/
+				}
 
 			}
 		}
@@ -816,10 +822,20 @@ namespace Simulation
 		}
 
 		private void sizeOfLattice_TextChanged(object sender, EventArgs e)
-{
-			if (!string.IsNullOrWhiteSpace(sizeOfLattice.Text) && Convert.ToInt32(sizeOfLattice.Text) != 0)
+		{
+			int suggestSize;
+			try
 			{
-				size = Convert.ToInt32(sizeOfLattice.Text);
+				suggestSize = Convert.ToInt32(sizeOfLattice.Text);
+			}
+			catch (System.FormatException)
+			{
+				suggestSize = size;
+			}
+
+			if (!string.IsNullOrWhiteSpace(sizeOfLattice.Text) && size!= 0)
+			{
+				size = suggestSize;
 
 				field = new Brick[size, size];
 				change = new Brick[size, size];
@@ -1050,6 +1066,8 @@ namespace Simulation
 			else
 				brick.Probability = 0;
 
+			brick.Probability = 1;
+
 			calculateUnevenStartWeights(brick);
 
 		}
@@ -1067,29 +1085,60 @@ namespace Simulation
 		}
 
 
-		//Validation
-		private void validationFlip()
+		//Validation 8er Gitter
+		private void validationAlgo()
 		{
 			meassurement++;
 			int bond = 0;
+			int noneNumber = 0;
+			int row = 0;
+			int col = 0;
 
 			for(int i = 0; i < size; i++){
+
+				if (field[0, i].LeftBond)
+					col++;
+
+				if (field[i, 0].UpBond)
+					row++;
+
 				for (int j = 0; j < size; j++)
 				{
 					bond += occupationField(field[i,j]);
+
+					if(field[i,j] is None)
+						noneNumber++;
 				}
 			}
 
-			double occupation = (double)bond;
+			double occupation = (double)bond/(double)(size*size);
+			double monomerdichte = (double)noneNumber/(double)(size*size);
 
-			text += occupation.ToString() + "	";
+			if (row % 2 == 0)
+			{
+				if (col % 2 == 0)
+					text += occupation.ToString() + " " + monomerdichte + " " + "1 0 0 0\r\n";
+				else
+					text += occupation.ToString() + " " + monomerdichte + " " + "0 1 0 0\r\n";
+			}
+			else
+			{
+				if (col % 2 == 0)
+					text += occupation.ToString() + " " + monomerdichte + " " + "0 0 1 0\r\n";
+				else
+					text += occupation.ToString() + " " + monomerdichte + " " + "0 0 0 1\r\n";
+			}
+
 
 			if (meassurement % 10000 == 0)
-				Console.Write((float)meassurement/10000 + " %\n");
+			{
+				Console.Write((float)meassurement / 1000 + " %\n");
+				File.AppendAllText(@"C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Validation Worm Wenger\" + currentAlgorithm.ToString() + ","+ currentModel + ",beta=" + beta.ToString() + ".txt", text);
+				text = "";
+			}
 
 			if (meassurement == 100000)
 			{
-				FileCreation f = new FileCreation(text, currentAlgorithm.ToString() + ","+ currentModel + ",beta=" + beta.ToString());
 				meassurement = 0;
 				measure = false;
 				thermalize = false;
@@ -1097,65 +1146,75 @@ namespace Simulation
 			}
 		}
 
+
 		private int occupationField(Brick brick)
 		{
 			if (brick is Full)
-				return 4;
+				return 2;
 			if (brick is None)
 				return 0;
 
-			return 2;
+			return 1;
 		}
 
 		private void measureButton_Click(object sender, EventArgs e)
 		{
 			thermalize = true;
 			measure = true;
+			text = "";
+
+			FileCreation f = new FileCreation(text, currentAlgorithm.ToString() + "," + currentModel + ",beta=" + beta.ToString());
+
 		}
 
 		private void validationCalculation()
 		{
-			double[] energyExpect = new double[30];
-			double[] specHeat = new double[30];
-			double[] statError = new double[30];
+			double[] energyExpect = new double[31];
+
+			String mod = "Worm";
+
+			Validation val = new Validation(energyExpect);
+
+			val.readFile(mod + ",isingNormal,beta=0.30");
+			//val.readFile(mod + ",isingNormal,beta=0.31");
+			//val.readFile(mod + ",isingNormal,beta=0.32");
+			//val.readFile(mod + ",isingNormal,beta=0.33");
+			//val.readFile(mod + ",isingNormal,beta=0.34");
+			val.readFile(mod + ",isingNormal,beta=0.35");
+			//val.readFile(mod + ",isingNormal,beta=0.36");
+			//val.readFile(mod + ",isingNormal,beta=0.37");
+			//val.readFile(mod + ",isingNormal,beta=0.38");
+			//val.readFile(mod + ",isingNormal,beta=0.39");
+			val.readFile(mod + ",isingNormal,beta=0.40");
+			//val.readFile(mod + ",isingNormal,beta=0.41");
+			//val.readFile(mod + ",isingNormal,beta=0.42");
+			//val.readFile(mod + ",isingNormal,beta=0.43");
+			//val.readFile(mod + ",isingNormal,beta=0.44");
+			val.readFile(mod + ",isingNormal,beta=0.45");
+			//val.readFile(mod + ",isingNormal,beta=0.46");
+			//val.readFile(mod + ",isingNormal,beta=0.47");
+			//val.readFile(mod + ",isingNormal,beta=0.48");
+			//val.readFile(mod + ",isingNormal,beta=0.49");
+			val.readFile(mod + ",isingNormal,beta=0.50");
+			//val.readFile(mod + ",isingNormal,beta=0.51");
+			//val.readFile(mod + ",isingNormal,beta=0.52");
+			//val.readFile(mod + ",isingNormal,beta=0.53");
+			//val.readFile(mod + ",isingNormal,beta=0.54");
+			val.readFile(mod + ",isingNormal,beta=0.55");
+			//val.readFile(mod + ",isingNormal,beta=0.56");
+			//val.readFile(mod + ",isingNormal,beta=0.57");
+			//val.readFile(mod + ",isingNormal,beta=0.58");
+			//val.readFile(mod + ",isingNormal,beta=0.59");
+			val.readFile(mod + ",isingNormal,beta=0.60");
 
 
-			Validation val = new Validation(energyExpect, specHeat, statError);
+			for (int i = 0; i < 31; i++)
+			{
+				Console.WriteLine(energyExpect[i]);
+			}
 
-			val.calculate(0, "Flip,isingNormal,beta=0.3", 0.3d);
-			val.calculate(1, "Flip,isingNormal,beta=0.31", 0.31d);
-			val.calculate(2, "Flip,isingNormal,beta=0.32", 0.32d);
-			val.calculate(3, "Flip,isingNormal,beta=0.33", 0.33d);
-			val.calculate(4, "Flip,isingNormal,beta=0.34", 0.34d);
-			val.calculate(5, "Flip,isingNormal,beta=0.35", 0.35d);
-			val.calculate(6, "Flip,isingNormal,beta=0.36", 0.36d);
-			val.calculate(7, "Flip,isingNormal,beta=0.37", 0.37d);
-			val.calculate(8, "Flip,isingNormal,beta=0.38", 0.38d);
-			val.calculate(9, "Flip,isingNormal,beta=0.39", 0.39d);
-			val.calculate(10, "Flip,isingNormal,beta=0.4", 0.4d);
-			val.calculate(11, "Flip,isingNormal,beta=0.41", 0.41d);
-			val.calculate(12, "Flip,isingNormal,beta=0.42", 0.42d);
-			val.calculate(13, "Flip,isingNormal,beta=0.43", 0.43d);
-			val.calculate(14, "Flip,isingNormal,beta=0.44", 0.44d);
-			val.calculate(15, "Flip,isingNormal,beta=0.45", 0.45d);
-			val.calculate(16, "Flip,isingNormal,beta=0.46", 0.46d);
-			val.calculate(17, "Flip,isingNormal,beta=0.47", 0.47d);
-			val.calculate(18, "Flip,isingNormal,beta=0.48", 0.48d);
-			val.calculate(19, "Flip,isingNormal,beta=0.49", 0.49d);
-			val.calculate(20, "Flip,isingNormal,beta=0.5", 0.5d);
-			val.calculate(21, "Flip,isingNormal,beta=0.51", 0.51d);
-			val.calculate(22, "Flip,isingNormal,beta=0.52", 0.52d);
-			val.calculate(23, "Flip,isingNormal,beta=0.53", 0.53d);
-			val.calculate(24, "Flip,isingNormal,beta=0.54", 0.54d);
-			val.calculate(25, "Flip,isingNormal,beta=0.55", 0.55d);
-			val.calculate(26, "Flip,isingNormal,beta=0.56", 0.56d);
-			val.calculate(27, "Flip,isingNormal,beta=0.57", 0.57d);
-			val.calculate(28, "Flip,isingNormal,beta=0.58", 0.58d);
-			val.calculate(29, "Flip,isingNormal,beta=0.59", 0.59d);
-
-			FileCreation f1 = new FileCreation(energyExpect.ToString(), "Energy Expectation");
-			FileCreation f2 = new FileCreation(specHeat.ToString(), "Specific Heat");
-			FileCreation f3 = new FileCreation(statError.ToString(), "Statistical Error");
+			//FileCreation f1 = new FileCreation(energyExpect.ToString(), "Energy Expectation");
+;
 		}
 
 

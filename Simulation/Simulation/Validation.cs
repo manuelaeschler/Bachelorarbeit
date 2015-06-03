@@ -9,76 +9,64 @@ namespace Simulation
 	class Validation
 	{
 
-		private int[] values;
+		private double[] values;
 		private double expect;
 		private double[] energyExpect;
-		private double[] specHeat;
-		private double[] statError;
-		private double squaredExpect;
+
 
 		private int length = 100000;
 		private double beta;
-		private int position;
+		private static int position = 0;
 
-		public Validation(double[] energyExpect, double[] specHeat, double[] statError)
+		public Validation(double[] energyExpect)
 		{
 			this.energyExpect = energyExpect;
-			this.specHeat = specHeat;
-			this.statError = statError;
+
 
 			//Console.Write("Statistical error: " + statError + "\nEnergy expecation: " + energyExpect + "\nSpecific heat: " + specHeat);
 		}
 
-		public void calculate(int position, String fileName, double beta)
+		public void calculate(String fileName, double beta)
 		{
-			this.position = position;
+			//this.position = 0;
 			this.beta = beta;
 			readFile(fileName);
 			expectations();
-			statisticalError();
-			specificHeat();
+
 		}
 
-		private void readFile(String fileName)
+		public void readFile(String fileName)
 		{
-			String text = System.IO.File.ReadAllText(@"C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Validation Ising\" + fileName + ".txt");
+			String text = System.IO.File.ReadAllText(@"C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Validation Worm Wenger\" + fileName + ".txt");
 			 
-			String[] split = text.Split('	');
-			//length = split.GetLength(0);
-			values = new int[length];
+			String[] split = text.Split('\n');
+
+			values = new double[length];
 
 			 for (int x = 0; x < length; x++)
 			 {
-				 String s = split[x];
-				 values[x] = Convert.ToInt32(s);
+				 String s = split[x].Split(' ')[0];
+				 values[x] = Convert.ToDouble(s);
 			 }
+
+			 expectations();
 		}
 
-		private void expectations()
+		public void expectations()
 		{
-			int i = 0;
-			double j = 0;
+			double i = 0;
+			//double j = 0;
 			
 			for(int x = 0; x < length; x++)
 			{
 				i += values[x];
-				j += Math.Pow(values[x],2);
+				//j += Math.Pow(values[x],2);
 			}
 
-			expect = (double)i / (double)length;
-			energyExpect[position] = -expect / beta;
-			squaredExpect = j / (double)length;
+			expect = i / (double)length;
+			energyExpect[position++] = expect;
+			//squaredExpect = j / (double)length;
 			
-		}
-
-		private void statisticalError()
-		{
-			statError[position] = Math.Sqrt(squaredExpect - (expect*expect));
-		}
-
-		private void specificHeat()
-		{
-			specHeat[position] = Math.Pow(statError[position], 2) - expect; 
 		}
 
 
