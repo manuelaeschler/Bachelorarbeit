@@ -37,7 +37,7 @@ namespace Simulation
 
 		public void readFile(String fileName)
 		{
-			String text = System.IO.File.ReadAllText(@"C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Validation Worm Wenger\" + fileName + ".txt");
+			String text = System.IO.File.ReadAllText(@"C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Validation Flip FermionFree\" + fileName + ".txt");
 			 
 			String[] split = text.Split('\n');
 

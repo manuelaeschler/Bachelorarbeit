@@ -141,7 +141,7 @@ namespace Simulation
             right = bricks[15];
         }
 
-		public double Probability { get { return probability; } set { probability = value; } }
+		public double Probability { get { return 1; } set { } }
 
         public Color CouplingColor { get { return Color.Empty; } set { } }
 

@@ -232,14 +232,7 @@ namespace Simulation
 
 			currentAlgorithm = wormAlgo;
 
-			calculateUnevenWeights(noneUp);
-			calculateUnevenWeights(noneDown);
-			calculateUnevenWeights(noneLeft);
-			calculateUnevenWeights(noneRight);
-			calculateUnevenWeights(up);
-			calculateUnevenWeights(down);
-			calculateUnevenWeights(left);
-			calculateUnevenWeights(right);
+			updateAllUnevenWeights();
 
 		}
 
@@ -288,14 +281,7 @@ namespace Simulation
 			downLeft.Probability = 1 / Math.Sqrt(2);
 			downRight.Probability = 1 / Math.Sqrt(2);
 
-			calculateUnevenWeights(noneUp);
-			calculateUnevenWeights(noneDown);
-			calculateUnevenWeights(noneLeft);
-			calculateUnevenWeights(noneRight);
-			calculateUnevenWeights(up);
-			calculateUnevenWeights(down);
-			calculateUnevenWeights(left);
-			calculateUnevenWeights(right);
+			updateAllUnevenWeights(); ;
 
 			setProbabilityBars();
 		}
@@ -344,14 +330,7 @@ namespace Simulation
 			downLeft.Probability = 0.5d;
 			downRight.Probability = 0.5d;
 
-			calculateUnevenWeights(noneUp);
-			calculateUnevenWeights(noneDown);
-			calculateUnevenWeights(noneLeft);
-			calculateUnevenWeights(noneRight);
-			calculateUnevenWeights(up);
-			calculateUnevenWeights(down);
-			calculateUnevenWeights(left);
-			calculateUnevenWeights(right);
+			updateAllUnevenWeights();
 
 			setProbabilityBars();
 		}
@@ -369,14 +348,8 @@ namespace Simulation
 			downLeft.Probability = Math.Tanh(beta);
 			downRight.Probability = Math.Tanh(beta);
 
-			calculateUnevenWeights(noneUp);
-			calculateUnevenWeights(noneDown);
-			calculateUnevenWeights(noneLeft);
-			calculateUnevenWeights(noneRight);
-			calculateUnevenWeights(up);
-			calculateUnevenWeights(down);
-			calculateUnevenWeights(left);
-			calculateUnevenWeights(right);
+			updateAllUnevenWeights();
+
 		}
 
 		private void calculateIsingDual()
@@ -390,14 +363,7 @@ namespace Simulation
 			downLeft.Probability = Math.Exp(-2 * beta);
 			downRight.Probability = Math.Exp(-2 * beta);
 
-			calculateUnevenWeights(noneUp);
-			calculateUnevenWeights(noneDown);
-			calculateUnevenWeights(noneLeft);
-			calculateUnevenWeights(noneRight);
-			calculateUnevenWeights(up);
-			calculateUnevenWeights(down);
-			calculateUnevenWeights(left);
-			calculateUnevenWeights(right);
+			updateAllUnevenWeights();
 		}
 
 
@@ -462,15 +428,15 @@ namespace Simulation
 				if (currentAlgorithm is Flip && currentPoint == (size * size) - 1)
 				{
 					currentField = (Brick[,])field.Clone();
-					if(measure)
-						validationAlgo();
+					//if(measure)
+						//validationAlgo();
 				}
 				
 
 				if (currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
 				{
-					if (measure)
-						validationAlgo();
+					//if (measure)
+						//validationAlgo();
 
 					currentField = (Brick[,])field.Clone();
 					trackObj.resetColor();
@@ -950,15 +916,10 @@ namespace Simulation
 
 		private void updateAllUnevenWeights()
 		{
-			calculateUnevenWeights(up);
-			calculateUnevenWeights(down);
-			calculateUnevenWeights(left);
-			calculateUnevenWeights(right);
-
-			calculateUnevenWeights(noneUp);
-			calculateUnevenWeights(noneDown);
-			calculateUnevenWeights(noneLeft);
-			calculateUnevenWeights(noneRight);
+			calculateUnevenStartWeights(noneUp);
+			calculateUnevenStartWeights(noneDown);
+			calculateUnevenStartWeights(noneLeft);
+			calculateUnevenStartWeights(noneRight);
 
 		}
 
@@ -1032,56 +993,12 @@ namespace Simulation
 
 
 		//claculate probabilities of the uneven vertices
-		private void calculateUnevenWeights(Brick brick)
-		{
-			double mix = 1;
-			int i = 0;
-			if (brick.bondInOut("up").Probability != 0)
-			{
-				i++;
-				mix *= brick.bondInOut("up").Probability;
-			}
-				
-
-			if (brick.bondInOut("down").Probability != 0)
-			{
-				i++;
-				mix *= brick.bondInOut("down").Probability;
-			}
-
-			if (brick.bondInOut("left").Probability != 0)
-			{
-				i++;
-				mix *= brick.bondInOut("left").Probability;
-			}
-
-			if (brick.bondInOut("right").Probability != 0)
-			{
-				i++;
-				mix *= brick.bondInOut("right").Probability;
-			}
-
-			if (i >= 1)
-				brick.Probability = (float)Math.Pow(mix, 1 / (float)i);
-			else
-				brick.Probability = 0;
-
-			brick.Probability = 1;
-
-			calculateUnevenStartWeights(brick);
-
-		}
-
 		private void calculateUnevenStartWeights(Brick brick)
 		{
-			double mix = 1;
-
-			mix *= brick.bondInOut("left").Probability;
-			mix *= brick.bondInOut("right").Probability;
-			mix *= brick.bondInOut("down").Probability;
-			mix *= brick.bondInOut("up").Probability;
-
-			brick.StartProbability = (float)Math.Pow(mix, .25f);
+			if (brick.bondInOut("left").Probability == 0 || brick.bondInOut("right").Probability == 0 || brick.bondInOut("down").Probability == 0 || brick.bondInOut("up").Probability == 0)
+				brick.StartProbability = 0;
+			else
+				brick.StartProbability = 1;
 		}
 
 
@@ -1133,7 +1050,7 @@ namespace Simulation
 			if (meassurement % 10000 == 0)
 			{
 				Console.Write((float)meassurement / 1000 + " %\n");
-				File.AppendAllText(@"C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Validation Worm Wenger\" + currentAlgorithm.ToString() + ","+ currentModel + ",beta=" + beta.ToString() + ".txt", text);
+				File.AppendAllText(@"C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Validation Flip FermionFree\" + currentAlgorithm.ToString() + ","+ currentModel + ",beta=" + (beta-1.5d).ToString() + ".txt", text);
 				text = "";
 			}
 
@@ -1145,7 +1062,6 @@ namespace Simulation
 				text = "";
 			}
 		}
-
 
 		private int occupationField(Brick brick)
 		{
@@ -1163,52 +1079,84 @@ namespace Simulation
 			measure = true;
 			text = "";
 
-			FileCreation f = new FileCreation(text, currentAlgorithm.ToString() + "," + currentModel + ",beta=" + beta.ToString());
+			FileCreation f = new FileCreation(text, currentAlgorithm.ToString() + "," + currentModel + ",beta=" + (beta-1.5d).ToString());
 
 		}
 
 		private void validationCalculation()
 		{
-			double[] energyExpect = new double[31];
+			double[] energyExpect = new double[61];
 
-			String mod = "Worm";
+			String algo = "Worm";
+			String mod = "fermionFree";
 
 			Validation val = new Validation(energyExpect);
 
-			val.readFile(mod + ",isingNormal,beta=0.30");
-			//val.readFile(mod + ",isingNormal,beta=0.31");
-			//val.readFile(mod + ",isingNormal,beta=0.32");
-			//val.readFile(mod + ",isingNormal,beta=0.33");
-			//val.readFile(mod + ",isingNormal,beta=0.34");
-			val.readFile(mod + ",isingNormal,beta=0.35");
-			//val.readFile(mod + ",isingNormal,beta=0.36");
-			//val.readFile(mod + ",isingNormal,beta=0.37");
-			//val.readFile(mod + ",isingNormal,beta=0.38");
-			//val.readFile(mod + ",isingNormal,beta=0.39");
-			val.readFile(mod + ",isingNormal,beta=0.40");
-			//val.readFile(mod + ",isingNormal,beta=0.41");
-			//val.readFile(mod + ",isingNormal,beta=0.42");
-			//val.readFile(mod + ",isingNormal,beta=0.43");
-			//val.readFile(mod + ",isingNormal,beta=0.44");
-			val.readFile(mod + ",isingNormal,beta=0.45");
-			//val.readFile(mod + ",isingNormal,beta=0.46");
-			//val.readFile(mod + ",isingNormal,beta=0.47");
-			//val.readFile(mod + ",isingNormal,beta=0.48");
-			//val.readFile(mod + ",isingNormal,beta=0.49");
-			val.readFile(mod + ",isingNormal,beta=0.50");
-			//val.readFile(mod + ",isingNormal,beta=0.51");
-			//val.readFile(mod + ",isingNormal,beta=0.52");
-			//val.readFile(mod + ",isingNormal,beta=0.53");
-			//val.readFile(mod + ",isingNormal,beta=0.54");
-			val.readFile(mod + ",isingNormal,beta=0.55");
-			//val.readFile(mod + ",isingNormal,beta=0.56");
-			//val.readFile(mod + ",isingNormal,beta=0.57");
-			//val.readFile(mod + ",isingNormal,beta=0.58");
-			//val.readFile(mod + ",isingNormal,beta=0.59");
-			val.readFile(mod + ",isingNormal,beta=0.60");
+			val.readFile(algo + "," + mod + ",mass=-0.30");
+			val.readFile(algo + "," + mod + ",mass=-0.29");
+			val.readFile(algo + "," + mod + ",mass=-0.28");
+			val.readFile(algo + "," + mod + ",mass=-0.27");
+			val.readFile(algo + "," + mod + ",mass=-0.26");
+			val.readFile(algo + "," + mod + ",mass=-0.25");
+			val.readFile(algo + "," + mod + ",mass=-0.24");
+			val.readFile(algo + "," + mod + ",mass=-0.23");
+			val.readFile(algo + "," + mod + ",mass=-0.22");
+			val.readFile(algo + "," + mod + ",mass=-0.21");
+			val.readFile(algo + "," + mod + ",mass=-0.20");
+			val.readFile(algo + "," + mod + ",mass=-0.19");
+			val.readFile(algo + "," + mod + ",mass=-0.18");
+			val.readFile(algo + "," + mod + ",mass=-0.17");
+			val.readFile(algo + "," + mod + ",mass=-0.16");
+			val.readFile(algo + "," + mod + ",mass=-0.15");
+			val.readFile(algo + "," + mod + ",mass=-0.14");
+			val.readFile(algo + "," + mod + ",mass=-0.13");
+			val.readFile(algo + "," + mod + ",mass=-0.12");
+			val.readFile(algo + "," + mod + ",mass=-0.11");
+			val.readFile(algo + "," + mod + ",mass=-0.10");
+			val.readFile(algo + "," + mod + ",mass=-0.09");
+			val.readFile(algo + "," + mod + ",mass=-0.08");
+			val.readFile(algo + "," + mod + ",mass=-0.07");
+			val.readFile(algo + "," + mod + ",mass=-0.06");
+			val.readFile(algo + "," + mod + ",mass=-0.05");
+			val.readFile(algo + "," + mod + ",mass=-0.04");
+			val.readFile(algo + "," + mod + ",mass=-0.03");
+			val.readFile(algo + "," + mod + ",mass=-0.02");
+			val.readFile(algo + "," + mod + ",mass=-0.01");
+			val.readFile(algo + "," + mod + ",mass=0.00");
+			val.readFile(algo + "," + mod + ",mass=0.01");
+			val.readFile(algo + "," + mod + ",mass=0.02");
+			val.readFile(algo + "," + mod + ",mass=0.03");
+			val.readFile(algo + "," + mod + ",mass=0.04");
+			val.readFile(algo + "," + mod + ",mass=0.05");
+			val.readFile(algo + "," + mod + ",mass=0.06");
+			val.readFile(algo + "," + mod + ",mass=0.07");
+			val.readFile(algo + "," + mod + ",mass=0.08");
+			val.readFile(algo + "," + mod + ",mass=0.09");
+			val.readFile(algo + "," + mod + ",mass=0.10");
+			val.readFile(algo + "," + mod + ",mass=0.11");
+			val.readFile(algo + "," + mod + ",mass=0.12");
+			val.readFile(algo + "," + mod + ",mass=0.13");
+			val.readFile(algo + "," + mod + ",mass=0.14");
+			val.readFile(algo + "," + mod + ",mass=0.15");
+			val.readFile(algo + "," + mod + ",mass=0.16");
+			val.readFile(algo + "," + mod + ",mass=0.17");
+			val.readFile(algo + "," + mod + ",mass=0.18");
+			val.readFile(algo + "," + mod + ",mass=0.19");
+			val.readFile(algo + "," + mod + ",mass=0.20");
+			val.readFile(algo + "," + mod + ",mass=0.21");
+			val.readFile(algo + "," + mod + ",mass=0.22");
+			val.readFile(algo + "," + mod + ",mass=0.23");
+			val.readFile(algo + "," + mod + ",mass=0.24");
+			val.readFile(algo + "," + mod + ",mass=0.25");
+			val.readFile(algo + "," + mod + ",mass=0.26");
+			val.readFile(algo + "," + mod + ",mass=0.27");
+			val.readFile(algo + "," + mod + ",mass=0.28");
+			val.readFile(algo + "," + mod + ",mass=0.29");
+			val.readFile(algo + "," + mod + ",mass=0.30");
 
 
-			for (int i = 0; i < 31; i++)
+
+			for (int i = 0; i < 61; i++)
 			{
 				Console.WriteLine(energyExpect[i]);
 			}

@@ -69,7 +69,7 @@ namespace Simulation
 
         public TextBox Display { set { display = value; } }
 
-		public float StartProbability { get { return 0; } set { } }
+		public double StartProbability { get { return 0; } set { } }
 
 		public bool UpBond { get { return upBond; } }
 

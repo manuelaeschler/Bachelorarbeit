@@ -21,7 +21,7 @@ namespace Simulation
         double Probability { get;  set; }
         Color CouplingColor { get; set; }
         TextBox Display { set; }
-		float StartProbability { get; set; }
+		double StartProbability { get; set; }
 		bool UpBond { get; }
 		bool DownBond { get; }
 		bool LeftBond { get; }

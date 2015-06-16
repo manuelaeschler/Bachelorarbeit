@@ -137,7 +137,7 @@ namespace Simulation
             left = bricks[14];
         }
 
-        public double Probability { get { return probability; } set { probability = value; } }
+        public double Probability { get { return 1; } set { } }
 
         public Color CouplingColor { get { return Color.Empty; } set { } }
 
@@ -147,7 +147,7 @@ namespace Simulation
 
         public TextBox Display { set { } }
 
-		public double StartProbability { get { return startProbability; } set { startProbability = value; } }
+		public double StartProbability { get { return 1; } set { } }
 
 		public bool UpBond { get { return upBond; } }
 
