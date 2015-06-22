@@ -426,18 +426,12 @@ namespace Simulation
 				currentPoint = (++currentPoint) % (size * size);
 
 				if (currentAlgorithm is Flip && currentPoint == (size * size) - 1)
-				{
 					currentField = (Brick[,])field.Clone();
-					//if(measure)
-						//validationAlgo();
-				}
+
 				
 
 				if (currentAlgorithm is Worm && ((Worm)wormAlgo).getStart())
 				{
-					//if (measure)
-						//validationAlgo();
-
 					currentField = (Brick[,])field.Clone();
 					trackObj.resetColor();
 				}
@@ -999,170 +993,6 @@ namespace Simulation
 				brick.StartProbability = 0;
 			else
 				brick.StartProbability = 1;
-		}
-
-
-		//Validation 8er Gitter
-		private void validationAlgo()
-		{
-			meassurement++;
-			int bond = 0;
-			int noneNumber = 0;
-			int row = 0;
-			int col = 0;
-
-			for(int i = 0; i < size; i++){
-
-				if (field[0, i].LeftBond)
-					col++;
-
-				if (field[i, 0].UpBond)
-					row++;
-
-				for (int j = 0; j < size; j++)
-				{
-					bond += occupationField(field[i,j]);
-
-					if(field[i,j] is None)
-						noneNumber++;
-				}
-			}
-
-			double occupation = (double)bond/(double)(size*size);
-			double monomerdichte = (double)noneNumber/(double)(size*size);
-
-			if (row % 2 == 0)
-			{
-				if (col % 2 == 0)
-					text += occupation.ToString() + " " + monomerdichte + " " + "1 0 0 0\r\n";
-				else
-					text += occupation.ToString() + " " + monomerdichte + " " + "0 1 0 0\r\n";
-			}
-			else
-			{
-				if (col % 2 == 0)
-					text += occupation.ToString() + " " + monomerdichte + " " + "0 0 1 0\r\n";
-				else
-					text += occupation.ToString() + " " + monomerdichte + " " + "0 0 0 1\r\n";
-			}
-
-
-			if (meassurement % 10000 == 0)
-			{
-				Console.Write((float)meassurement / 1000 + " %\n");
-				File.AppendAllText(@"C:\Users\Hallo\Desktop\Uni\Semester 8\BA\Validation Flip FermionFree\" + currentAlgorithm.ToString() + ","+ currentModel + ",beta=" + (beta-1.5d).ToString() + ".txt", text);
-				text = "";
-			}
-
-			if (meassurement == 100000)
-			{
-				meassurement = 0;
-				measure = false;
-				thermalize = false;
-				text = "";
-			}
-		}
-
-		private int occupationField(Brick brick)
-		{
-			if (brick is Full)
-				return 2;
-			if (brick is None)
-				return 0;
-
-			return 1;
-		}
-
-		private void measureButton_Click(object sender, EventArgs e)
-		{
-			thermalize = true;
-			measure = true;
-			text = "";
-
-			FileCreation f = new FileCreation(text, currentAlgorithm.ToString() + "," + currentModel + ",beta=" + (beta-1.5d).ToString());
-
-		}
-
-		private void validationCalculation()
-		{
-			double[] energyExpect = new double[61];
-
-			String algo = "Worm";
-			String mod = "fermionFree";
-
-			Validation val = new Validation(energyExpect);
-
-			val.readFile(algo + "," + mod + ",mass=-0.30");
-			val.readFile(algo + "," + mod + ",mass=-0.29");
-			val.readFile(algo + "," + mod + ",mass=-0.28");
-			val.readFile(algo + "," + mod + ",mass=-0.27");
-			val.readFile(algo + "," + mod + ",mass=-0.26");
-			val.readFile(algo + "," + mod + ",mass=-0.25");
-			val.readFile(algo + "," + mod + ",mass=-0.24");
-			val.readFile(algo + "," + mod + ",mass=-0.23");
-			val.readFile(algo + "," + mod + ",mass=-0.22");
-			val.readFile(algo + "," + mod + ",mass=-0.21");
-			val.readFile(algo + "," + mod + ",mass=-0.20");
-			val.readFile(algo + "," + mod + ",mass=-0.19");
-			val.readFile(algo + "," + mod + ",mass=-0.18");
-			val.readFile(algo + "," + mod + ",mass=-0.17");
-			val.readFile(algo + "," + mod + ",mass=-0.16");
-			val.readFile(algo + "," + mod + ",mass=-0.15");
-			val.readFile(algo + "," + mod + ",mass=-0.14");
-			val.readFile(algo + "," + mod + ",mass=-0.13");
-			val.readFile(algo + "," + mod + ",mass=-0.12");
-			val.readFile(algo + "," + mod + ",mass=-0.11");
-			val.readFile(algo + "," + mod + ",mass=-0.10");
-			val.readFile(algo + "," + mod + ",mass=-0.09");
-			val.readFile(algo + "," + mod + ",mass=-0.08");
-			val.readFile(algo + "," + mod + ",mass=-0.07");
-			val.readFile(algo + "," + mod + ",mass=-0.06");
-			val.readFile(algo + "," + mod + ",mass=-0.05");
-			val.readFile(algo + "," + mod + ",mass=-0.04");
-			val.readFile(algo + "," + mod + ",mass=-0.03");
-			val.readFile(algo + "," + mod + ",mass=-0.02");
-			val.readFile(algo + "," + mod + ",mass=-0.01");
-			val.readFile(algo + "," + mod + ",mass=0.00");
-			val.readFile(algo + "," + mod + ",mass=0.01");
-			val.readFile(algo + "," + mod + ",mass=0.02");
-			val.readFile(algo + "," + mod + ",mass=0.03");
-			val.readFile(algo + "," + mod + ",mass=0.04");
-			val.readFile(algo + "," + mod + ",mass=0.05");
-			val.readFile(algo + "," + mod + ",mass=0.06");
-			val.readFile(algo + "," + mod + ",mass=0.07");
-			val.readFile(algo + "," + mod + ",mass=0.08");
-			val.readFile(algo + "," + mod + ",mass=0.09");
-			val.readFile(algo + "," + mod + ",mass=0.10");
-			val.readFile(algo + "," + mod + ",mass=0.11");
-			val.readFile(algo + "," + mod + ",mass=0.12");
-			val.readFile(algo + "," + mod + ",mass=0.13");
-			val.readFile(algo + "," + mod + ",mass=0.14");
-			val.readFile(algo + "," + mod + ",mass=0.15");
-			val.readFile(algo + "," + mod + ",mass=0.16");
-			val.readFile(algo + "," + mod + ",mass=0.17");
-			val.readFile(algo + "," + mod + ",mass=0.18");
-			val.readFile(algo + "," + mod + ",mass=0.19");
-			val.readFile(algo + "," + mod + ",mass=0.20");
-			val.readFile(algo + "," + mod + ",mass=0.21");
-			val.readFile(algo + "," + mod + ",mass=0.22");
-			val.readFile(algo + "," + mod + ",mass=0.23");
-			val.readFile(algo + "," + mod + ",mass=0.24");
-			val.readFile(algo + "," + mod + ",mass=0.25");
-			val.readFile(algo + "," + mod + ",mass=0.26");
-			val.readFile(algo + "," + mod + ",mass=0.27");
-			val.readFile(algo + "," + mod + ",mass=0.28");
-			val.readFile(algo + "," + mod + ",mass=0.29");
-			val.readFile(algo + "," + mod + ",mass=0.30");
-
-
-
-			for (int i = 0; i < 61; i++)
-			{
-				Console.WriteLine(energyExpect[i]);
-			}
-
-			//FileCreation f1 = new FileCreation(energyExpect.ToString(), "Energy Expectation");
-;
 		}
 
 

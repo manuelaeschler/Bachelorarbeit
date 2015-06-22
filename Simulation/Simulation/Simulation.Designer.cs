@@ -847,17 +847,6 @@
 			this.worm.UseVisualStyleBackColor = true;
 			this.worm.Click += new System.EventHandler(this.worm_Click);
 			// 
-			// measureButton
-			// 
-			this.measureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.measureButton.Location = new System.Drawing.Point(279, 21);
-			this.measureButton.Name = "measureButton";
-			this.measureButton.Size = new System.Drawing.Size(75, 42);
-			this.measureButton.TabIndex = 96;
-			this.measureButton.Text = "Measure";
-			this.measureButton.UseVisualStyleBackColor = true;
-			this.measureButton.Click += new System.EventHandler(this.measureButton_Click);
-			// 
 			// simulation
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
