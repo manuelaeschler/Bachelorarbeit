@@ -10,8 +10,6 @@ namespace Simulation
 {
     class Left : Brick
     {
-		private double probability;
-		private double startProbability;
 
 		private readonly bool upBond;
 		private readonly bool downBond;

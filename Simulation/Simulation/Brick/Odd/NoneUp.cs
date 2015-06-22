@@ -10,7 +10,6 @@ namespace Simulation
 {
     class NoneUp : Brick
     {
-        private double probability;
 		private double startProbability;
 
 		private readonly bool upBond;

@@ -56,10 +56,6 @@ namespace Simulation
 
 		Thread startthread;
 
-		String text = "";
-		static int meassurement = 0;
-		bool measure = false;
-
 		public simulation()
 		{
 			InitializeComponent();
