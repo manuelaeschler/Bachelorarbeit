@@ -160,7 +160,7 @@ namespace Simulation
 			pictureDownLeft.Invalidate();
 			pictureDownRight.Invalidate();
 
-			//validationCalculation();
+			isingNormal_Click(new Object(), new EventArgs());
 
 			startthread = new Thread(startThread);
 		}
@@ -262,7 +262,7 @@ namespace Simulation
 			fermionBound.BackColor = Color.Empty;
 			fermionFree.BackColor = Color.LightSkyBlue;
 
-			betaTextBox.Text = (beta - 1.5d).ToString();
+			betaTextBox.Text = (Math.Round(beta - 1.5d, 3)).ToString();
 			massLabel.Visible = true;
 			massMaximum.Visible = true;
 			massMinimum.Visible = true;
@@ -311,7 +311,7 @@ namespace Simulation
 			fermionBound.BackColor = Color.LightSkyBlue;
 			fermionFree.BackColor = Color.Empty;
 
-			betaTextBox.Text = (beta - 1.5f).ToString();
+			betaTextBox.Text = (Math.Round(beta - 1.5d, 3)).ToString();
 			massLabel.Visible = true;
 			massMaximum.Visible = true;
 			massMinimum.Visible = true;
@@ -829,20 +829,19 @@ namespace Simulation
 
 				case "fermionFree":
 					{
-						betaTextBox.Text = (beta - 1.5f).ToString();
 						fermionFree_Click(new Object(), new EventArgs());
 						break;
 					}
 
 				case "fermionBound":
 					{
-						betaTextBox.Text = (beta - 1.5f).ToString();
 						fermionBound_Click(new Object(), new EventArgs());
 						break;
 					}
 
 				default:
 					{
+						betaTextBox.Text = beta.ToString();
 						break;
 					}
 			}
