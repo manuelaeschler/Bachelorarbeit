@@ -490,7 +490,7 @@ namespace Simulation
 				trackObj.Field = field;
 				trackObj.resetColor();
 
-				track = trackObj.findTrack(((Worm)wormAlgo).TailX, ((Worm)wormAlgo).TailY);
+				track = trackObj.findTrack(((Worm)wormAlgo).HeadX, ((Worm)wormAlgo).HeadY);
 			}
 
 

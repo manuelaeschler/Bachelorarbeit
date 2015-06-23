@@ -30,9 +30,9 @@ namespace Simulation
 
 		public Brick[,] Field { get { return field; } set { field = value; size = field.GetLength(0); } }
 
-		public int TailX { get { return tailX; } }
+		public int HeadX { get { return headX; } }
 
-		public int TailY { get { return tailY; } }
+		public int HeadY { get { return headY; } }
 
 		public bool change(int x, int y)
 		{
@@ -58,33 +58,29 @@ namespace Simulation
 
 		private bool moveStart()
 		{
-			//bool changedHead = headOrTailStart(headX, headY, "head");
-			bool changedTail = headOrTailStart(tailX, tailY, "tail");
+			bool changedHead = headOrTailStart(headX, headY);
+
 
 			if (headX == tailX && headY == tailY)
 				start = true;
 
-			//if (changedHead)
-			//return true;
+			return changedHead;
 
-			return changedTail;
 		}
 
 		private bool move()
 		{
-			//bool changedHead = headOrTail(headX, headY, "head");
-			bool changedTail = headOrTail(tailX, tailY, "tail");
+			bool changedHead = headOrTail(headX, headY);
+
 
 			if (headX == tailX && headY == tailY)
 				start = true;
 
-			//if (changedHead)
-				//return true;
+			return changedHead;
 
-			return changedTail;
 		}
 
-		private bool headOrTailStart(int x, int y, String inCase)
+		private bool headOrTailStart(int x, int y)
 		{
 			String direc = direction();
 
@@ -118,16 +114,9 @@ namespace Simulation
 			{
 				field[x, y] = newBrick;
 				field[neighbourX, neighbourY] = newNeighbour;
-				if (inCase == "head")
-				{
-					headX = neighbourX;
-					headY = neighbourY;
-				}
-				else
-				{
-					tailX = neighbourX;
-					tailY = neighbourY;
-				}
+
+				headX = neighbourX;
+				headY = neighbourY;
 
 				return true;
 			}
@@ -135,7 +124,7 @@ namespace Simulation
 			return false;
 		}
 
-		private bool headOrTail(int x, int y, String inCase)
+		private bool headOrTail(int x, int y)
 		{
 			String direc = direction();
 
@@ -166,16 +155,10 @@ namespace Simulation
 			{
 				field[x, y] = newBrick;
 				field[neighbourX, neighbourY] = newNeighbour;
-				if (inCase == "head")
-				{
-					headX = neighbourX;
-					headY = neighbourY;
-				}
-				else
-				{
-					tailX = neighbourX;
-					tailY = neighbourY;
-				}
+
+				headX = neighbourX;
+				headY = neighbourY;
+
 
 				return true;
 			}
@@ -280,21 +263,6 @@ namespace Simulation
 
 		}
 
-		private void calculateUnevenWeightsStart(Brick brick)
-		{
-			double mix = 1;
-
-			mix *= brick.bondInOut("up").Probability;
-
-			mix *= brick.bondInOut("down").Probability;
-
-			mix *= brick.bondInOut("left").Probability;
-
-			mix *= brick.bondInOut("right").Probability;
-
-			brick.Probability = (float)Math.Pow(mix, 1 / .25f);
-
-		}
 
 		public bool getStart()
 		{

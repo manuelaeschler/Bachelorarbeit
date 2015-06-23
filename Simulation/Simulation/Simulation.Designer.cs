@@ -102,7 +102,6 @@
 			this.thermalisation = new System.Windows.Forms.Button();
 			this.criticalValue = new System.Windows.Forms.Button();
 			this.worm = new System.Windows.Forms.Button();
-			this.measureButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.graphicsPanel)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureNone)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureFull)).BeginInit();
@@ -853,7 +852,6 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(1118, 622);
-			this.Controls.Add(this.measureButton);
 			this.Controls.Add(this.worm);
 			this.Controls.Add(this.criticalValue);
 			this.Controls.Add(this.thermalisation);
@@ -1031,8 +1029,7 @@
         private System.Windows.Forms.Label massNull;
         private System.Windows.Forms.Button thermalisation;
         private System.Windows.Forms.Button criticalValue;
-        private System.Windows.Forms.Button worm;
-		private System.Windows.Forms.Button measureButton;
+		private System.Windows.Forms.Button worm;
     }
 }
 
