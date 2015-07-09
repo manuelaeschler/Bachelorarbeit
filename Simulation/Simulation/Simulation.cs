@@ -13,6 +13,9 @@ using System.IO;
 
 namespace Simulation
 {
+	/**
+	 * Coordinates all actions with the window in two differents threds
+	 */
 	public partial class simulation : Form
 	{
 		int size;
@@ -56,6 +59,9 @@ namespace Simulation
 
 		Thread startthread;
 
+		/**
+		 * Intialize all compponents for the window and makes preperations for the simulation
+		 */
 		public simulation()
 		{
 			InitializeComponent();
@@ -165,6 +171,12 @@ namespace Simulation
 			startthread = new Thread(startThread);
 		}
 
+		/**
+		 * Defines the order of the colors for the backcolor of the verties
+		 * 
+		 * @param color	the current color of a vertex
+		 * @return Color	returns the next color in order
+		 */
 		private Color nextColor(Color color)
 		{
 			if (color == Color.Red)
@@ -191,6 +203,11 @@ namespace Simulation
 			return Color.Red;
 		}
 
+		/**
+		 * resets a field
+		 * 
+		 * @param fields	field which gets reset
+		 */
 		private void fillField(Brick[,] fields)
 		{
 			for (int i = 0; i < size; i++)
@@ -203,7 +220,11 @@ namespace Simulation
 		}
 
 
-		//Algorithm
+//Algorithm
+
+		/**
+		 * Selects the flip algorithm and makes preperations
+		 */
 		private void flip_Click(object sender, EventArgs e)
 		{
 			flip.BackColor = Color.LightSkyBlue;
@@ -217,6 +238,9 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Selects the worm algorithm and makes preperations
+		 */
 		private void worm_Click(object sender, EventArgs e)
 		{
 			flip.BackColor = Color.Empty;
@@ -233,7 +257,11 @@ namespace Simulation
 		}
 
 
-		//preferences weights
+//preferences weights
+
+		/**
+		 * Selects the ising normal model and makes preperations
+		 */
 		private void isingNormal_Click(object sender, EventArgs e)
 		{
 			isingNormal.BackColor = Color.LightSkyBlue;
@@ -253,6 +281,10 @@ namespace Simulation
 			setProbabilityBars();
 		}
 
+
+		/**
+		 * Selects the fermion fre model and makes preperations
+		 */
 		private void fermionFree_Click(object sender, EventArgs e)
 		{
 			currentModel = "fermionFree";
@@ -282,6 +314,9 @@ namespace Simulation
 			setProbabilityBars();
 		}
 
+		/**
+		 * Selects the ising dual model and makes preperations
+		 */
 		private void isingDual_Click(object sender, EventArgs e)
 		{
 			isingNormal.BackColor = Color.Empty;
@@ -302,6 +337,9 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Selects the fermion bound state model and makes preperations
+		 */
 		private void fermionBound_Click(object sender, EventArgs e)
 		{
 			currentModel = "fermionBound";
@@ -332,7 +370,11 @@ namespace Simulation
 		}
 
 
-		//calculating weights with beta
+//calculating weights with beta
+
+		/**
+		 * Calculates the weights for the ising nomal model
+		 */
 		private void calculateIsingNormal()
 		{
 			none.Probability = 1d;
@@ -348,6 +390,9 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Calculates the weights for the ising dual model
+		 */
 		private void calculateIsingDual()
 		{
 			none.Probability = 1d;
@@ -362,8 +407,9 @@ namespace Simulation
 			updateAllUnevenWeights();
 		}
 
-
-		//set the values
+		/**
+		 * Sets the Scrollbars of the vertex weights
+		 */
 		private void setProbabilityBars()
 		{
 			if (none.Probability >= 1)
@@ -380,8 +426,11 @@ namespace Simulation
 			downRightBar.Value = (int)(downRight.Probability * 1000);
 		}
 
+//Start, stop and pause
 
-		//start, stop, pause
+		/**
+		 * Starts the simulations by creating a new thread
+		 */
 		private void start_Click(object sender, EventArgs e)
 		{
 			if (!run)
@@ -397,6 +446,9 @@ namespace Simulation
 			}
 		}
 
+		/**
+		 * The thread methode. Runs the simulation in a while loop
+		 */
 		private void startThread()
 		{
 			Random rand = new Random();
@@ -435,6 +487,9 @@ namespace Simulation
 			}
 		}
 
+		/**
+		 * Pauses the simulation and abort the thread
+		 */
 		private void pause_Click(object sender, EventArgs e)
 		{
 			run = false;
@@ -442,32 +497,36 @@ namespace Simulation
 			worm.Enabled = true;
 		}
 
+		/**
+		 * Stops the simulaiton and resets all fields
+		 */
 		private void stop_Click(object sender, EventArgs e)
 		{
-			if (run)
-			{
-				sizeOfLattice.ReadOnly = false;
-				run = false;
-				startthread.Join();
-				fillField(field);
-				fillField(change);
-				fillField(currentField);
 
-				currentPoint = 0;
-				flip.Enabled = true;
-				worm.Enabled = true;
+			sizeOfLattice.ReadOnly = false;
+			run = false;
+			startthread.Join();
+			fillField(field);
+			fillField(change);
+			fillField(currentField);
 
-				startthread.Abort();
+			currentPoint = 0;
+			flip.Enabled = true;
+			worm.Enabled = true;
 
-				wormAlgo = new Worm(field);
-				if (currentAlgorithm is Worm)
-					currentAlgorithm = wormAlgo;
-			}
+			startthread.Abort();
+
+			wormAlgo = new Worm(field);
+			if (currentAlgorithm is Worm)
+				currentAlgorithm = wormAlgo;
+		
 
 		}
 
 
-		//calculate changes
+		/**
+		 * Calculates the field for the change display
+		 */
 		private void subtractFields()
 		{
 			for (int i = 0; i < size; i++)
@@ -480,7 +539,11 @@ namespace Simulation
 		}
 
 
-		//painting
+//painting
+
+		/**
+		 * Paints the main display
+		 */
 		private void picture_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Black);
@@ -512,6 +575,9 @@ namespace Simulation
 			changePanel.Invalidate();
 		}
 
+		/**
+		 * Paints the change display
+		 */
 		private void changePanel_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Red);
@@ -533,11 +599,18 @@ namespace Simulation
 
 
 		//illustrations of the vertices
+
+		/**
+		 * Paints the vertex None
+		 */
 		private void pictureNone_Paint(object sender, PaintEventArgs e)
 		{
 
 		}
 
+		/**
+		 * Paints the vertex Full
+		 */
 		private void pictureFull_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Black);
@@ -547,6 +620,9 @@ namespace Simulation
 			e.Graphics.DrawLine(pen, 15, 0, 15, 31);
 		}
 
+		/**
+		 * Paints the vertex Vertical
+		 */
 		private void pictureVertical_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Black);
@@ -556,6 +632,9 @@ namespace Simulation
 			e.Graphics.DrawLine(pen, 15, 0, 15, 31);
 		}
 
+		/**
+		 * Paints the vertex Horizintal
+		 */
 		private void pictureHorizontal_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Black);
@@ -564,6 +643,9 @@ namespace Simulation
 			e.Graphics.DrawLine(pen, 0, 15, 31, 15);
 		}
 
+		/**
+		 * Paints the vertex UpperLeft
+		 */
 		private void pictureUpperLeft_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Black);
@@ -571,10 +653,11 @@ namespace Simulation
 
 			e.Graphics.DrawLine(pen, 0, 15, 16, 15);
 			e.Graphics.DrawLine(pen, 15, 0, 15, 16);
-
-
 		}
 
+		/**
+		 * Paints the vertex UpperRight
+		 */
 		private void pictureUpperRight_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Black);
@@ -585,6 +668,9 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Paints the vertex DownLeft
+		 */
 		private void pictureDownLeft_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Black);
@@ -595,6 +681,9 @@ namespace Simulation
 			e.Graphics.DrawLine(pen, 15, 14, 15, 31);
 		}
 
+		/**
+		 * Paints the vertex DownRight
+		 */
 		private void pictureDownRight_Paint(object sender, PaintEventArgs e)
 		{
 			Pen pen = new Pen(Brushes.Black);
@@ -606,7 +695,11 @@ namespace Simulation
 		}
 
 
-		//changing the weights over the scolling bars
+//changing the weights by the scolling bars
+
+		/**
+		 * Makes related changes with the new value of the None
+		 */
 		private void noneBar_Scroll(object sender, EventArgs e)
 		{
 			none.Probability = (float)noneBar.Value / 1000f;
@@ -642,6 +735,9 @@ namespace Simulation
 			updateAllUnevenWeights();
 		}
 
+		/**
+		 * Makes related changes with the new value of the Full
+		 */
 		private void fullBar_Scroll(object sender, EventArgs e)
 		{
 			full.Probability = (float)fullBar.Value / 1000f;
@@ -659,6 +755,9 @@ namespace Simulation
 			updateAllUnevenWeights();
 		}
 
+		/**
+		 * Makes related changes with the new value of the Vertical
+		 */
 		private void verticalBar_Scroll(object sender, EventArgs e)
 		{
 			vertical.Probability = (float)verticalBar.Value / 1000f;
@@ -678,6 +777,9 @@ namespace Simulation
 			updateAllUnevenWeights();
 		}
 
+		/**
+		 * Makes related changes with the new value of the Horizintal
+		 */
 		private void horizontalBar_Scroll(object sender, EventArgs e)
 		{
 			horizontal.Probability = (float)horizontalBar.Value / 1000f;
@@ -696,6 +798,9 @@ namespace Simulation
 			updateAllUnevenWeights();
 		}
 
+		/**
+		 * Makes related changes with the new value of the UpperLeft
+		 */
 		private void upperLeftBar_Scroll(object sender, EventArgs e)
 		{
 			upperLeft.Probability = (float)upperLeftBar.Value / 1000f;
@@ -715,6 +820,9 @@ namespace Simulation
 			updateAllUnevenWeights();
 		}
 
+		/**
+		 * Makes related changes with the new value of the UpperRight
+		 */
 		private void upperRightBar_Scroll(object sender, EventArgs e)
 		{
 			upperRight.Probability = (float)upperRightBar.Value / 1000f;
@@ -733,6 +841,9 @@ namespace Simulation
 			updateAllUnevenWeights();
 		}
 
+		/**
+		 * Makes related changes with the new value of the DownLeft
+		 */
 		private void downLeftBar_Scroll(object sender, EventArgs e)
 		{
 			downLeft.Probability = (float)downLeftBar.Value / 1000f;
@@ -752,6 +863,9 @@ namespace Simulation
 			updateAllUnevenWeights();
 		}
 
+		/**
+		 * Makes related changes with the new value of the DownRight
+		 */
 		private void downRightBar_Scroll(object sender, EventArgs e)
 		{
 			downRight.Probability = (float)downRightBar.Value / 1000f;
@@ -771,12 +885,21 @@ namespace Simulation
 		}
 
 
-		//rest
+//rest
+
+		/**
+		 * Sets the velocity of the simulation
+		 */
 		private void velocityBar_Scroll(object sender, EventArgs e)
 		{
 			velocity = velocityBar.Value;
 		}
 
+		/**
+		 * Changes the size of the lattice
+		 * 
+		 * @throw	cathces a format exception if the input has the wrong format
+		 */
 		private void sizeOfLattice_TextChanged(object sender, EventArgs e)
 		{
 			int suggestSize;
@@ -808,6 +931,9 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Calculates the new wights of the current model with the changed value(beta or mass)
+		 */
 		private void temperaturBar_Scroll(object sender, EventArgs e)
 		{
 			beta = (float)temperaturBar.Value / 100;
@@ -848,6 +974,9 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Sets thermalize true and pauses the main thread for 3 seconds. Sets thermalize false.
+		 */
 		private void thermalisation_Click(object sender, EventArgs e)
 		{
 			thermalize = true;
@@ -855,12 +984,18 @@ namespace Simulation
 			thermalize = false;
 		}
 
+		/**
+		 * Abort the start thred
+		 */
 		private void simulation_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (startthread.IsAlive)
 				startthread.Abort();
 		}
 
+		/**
+		 * Calculates the weights with the critical value for the current model
+		 */
 		private void criticalValue_Click(object sender, EventArgs e)
 		{
 			switch (currentModel)
@@ -903,6 +1038,9 @@ namespace Simulation
 			}
 		}
 
+		/**
+		 * Updates all weights which ar not variable by a scroll bar
+		 */
 		private void updateAllUnevenWeights()
 		{
 			calculateUnevenStartWeights(noneUp);
@@ -912,8 +1050,24 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Calculate the start weight of the brick, but only for NoneUp, NoneDown, NoneLeft and NoneRight
+		 * @param brick	the brick, which start weight should be calculated
+		 */
+		private void calculateUnevenStartWeights(Brick brick)
+		{
+			if (brick.bondInOut("left").Probability == 0 || brick.bondInOut("right").Probability == 0 || brick.bondInOut("down").Probability == 0 || brick.bondInOut("up").Probability == 0)
+				brick.StartProbability = 0;
+			else
+				brick.StartProbability = 1;
+		}
 
-		//click the vertices and change back color
+
+//click the vertices and change back color
+
+		/**
+		 * Change backcolor of the None foreward
+		 */
 		private void pictureNone_Click(object sender, EventArgs e)
 		{
 			coupling.remove(pictureNone.BackColor, none);
@@ -923,6 +1077,9 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Change backcolor of the Full foreward
+		 */
 		private void pictureFull_Click(object sender, EventArgs e)
 		{
 			coupling.remove(pictureFull.BackColor, full);
@@ -931,6 +1088,9 @@ namespace Simulation
 			coupling.Add(pictureFull.BackColor, full);
 		}
 
+		/**
+		 * Change backcolor of the Vertical foreward
+		 */
 		private void pictureVertical_Click(object sender, EventArgs e)
 		{
 			coupling.remove(pictureVertical.BackColor, vertical);
@@ -939,6 +1099,9 @@ namespace Simulation
 			coupling.Add(pictureVertical.BackColor, vertical);
 		}
 
+		/**
+		 * Change backcolor of the Horizontal foreward
+		 */
 		private void pictureHorizontal_Click(object sender, EventArgs e)
 		{
 			coupling.remove(pictureHorizontal.BackColor, horizontal);
@@ -947,6 +1110,9 @@ namespace Simulation
 			coupling.Add(pictureHorizontal.BackColor, horizontal);
 		}
 
+		/**
+		 * Change backcolor of the UpperLeft foreward
+		 */
 		private void pictureUpperLeft_Click(object sender, EventArgs e)
 		{
 			coupling.remove(pictureUpperLeft.BackColor, upperLeft);
@@ -955,6 +1121,9 @@ namespace Simulation
 			coupling.Add(pictureUpperLeft.BackColor, upperLeft);
 		}
 
+		/**
+		 * Change backcolor of the UpperRight foreward
+		 */
 		private void pictureUpperRight_Click(object sender, EventArgs e)
 		{
 			coupling.remove(pictureUpperRight.BackColor, upperRight);
@@ -963,6 +1132,10 @@ namespace Simulation
 			coupling.Add(pictureUpperRight.BackColor, upperRight);
 		}
 
+
+		/**
+		 * Change backcolor of the DownLeft foreward
+		 */
 		private void pictureDownLeft_Click(object sender, EventArgs e)
 		{
 			coupling.remove(pictureDownLeft.BackColor, downLeft);
@@ -971,23 +1144,15 @@ namespace Simulation
 			coupling.Add(pictureDownLeft.BackColor, downLeft);
 		}
 
+		/**
+		 * Change backcolor of the DownRight foreward
+		 */
 		private void pictureDownRight_Click(object sender, EventArgs e)
 		{
 			coupling.remove(pictureDownRight.BackColor, downRight);
 			pictureDownRight.BackColor = nextColor(pictureDownRight.BackColor);
 			downRight.CouplingColor = pictureDownRight.BackColor;
 			coupling.Add(pictureDownRight.BackColor, downRight);
-		}
-
-
-
-		//claculate probabilities of the uneven vertices
-		private void calculateUnevenStartWeights(Brick brick)
-		{
-			if (brick.bondInOut("left").Probability == 0 || brick.bondInOut("right").Probability == 0 || brick.bondInOut("down").Probability == 0 || brick.bondInOut("up").Probability == 0)
-				brick.StartProbability = 0;
-			else
-				brick.StartProbability = 1;
 		}
 
 

@@ -850,8 +850,10 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScroll = true;
+			this.AutoScrollMinSize = new System.Drawing.Size(1100, 620);
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(1118, 622);
+			this.ClientSize = new System.Drawing.Size(1106, 622);
 			this.Controls.Add(this.worm);
 			this.Controls.Add(this.criticalValue);
 			this.Controls.Add(this.thermalisation);

@@ -7,6 +7,9 @@ using System.Drawing;
 
 namespace Simulation
 {
+	/**
+	 * Finds the worm track and paints it red
+	 */
 	class Track
 	{
 		private Color[,] track;
@@ -29,6 +32,9 @@ namespace Simulation
 
 		public Brick[,] Field { set { field = value; size = field.GetLength(0); track = new Color[size, size]; } }
 
+		/**
+		 * Colors the colorchart black
+		 */
 		public void resetColor()
 		{
 			for (int i = 0; i < size; i++)
@@ -40,6 +46,13 @@ namespace Simulation
 			}
 		}
 
+		/**
+		 * Finds the track of the worm recursive
+		 * 
+		 * @param x	current x-coodrinate head
+		 * @param y	current y-coodrinate head
+		 * @return	returns the tracked colorchart
+		 */
 		public Color[,] findTrack(int x, int y)
 		{
 			recursiveFinding(x, y);
@@ -47,6 +60,12 @@ namespace Simulation
 			return track;
 		}
 
+		/**
+		 * Finds the track recursive with stop condition
+		 * 
+		 * @param x	current x-coordinate of the tracking
+		 * @param y	current y-coordinate of the tracking
+		 */
 		private void recursiveFinding(int x, int y)
 		{
 			x = inField(x);
@@ -69,6 +88,12 @@ namespace Simulation
 			}
 		}
 
+		/**
+		 * Evaluates the position in the field of a cooridnate, usefull for coordinates which are out of field
+		 * 
+		 * @param i	Coordinate to find its number in field
+		 * @return int	returns the indentical coordinate to i, but in field
+		 */
 		private int inField(int i)
 		{
 			if (i < 0)

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Simulation
 {
+	/**
+	 * Performs the filp algorithm step by step
+	 */
     class Flip : Algorithm
     {
         private Brick[,] field;
@@ -31,7 +34,14 @@ namespace Simulation
 
         public Brick[,] Field { get { return field; } set { field = value; size = field.GetLength(0); } }
 
-        public Boolean change(int x, int y)
+		/**
+		 * Evaluates the coordinates of the four changing vertices and returns if they changed
+		 * 
+		 * @param x x-coordinate of the inital vertex
+		 * @param y y-coordinate of the inital vertex
+		 * @return bool returns if the four vertices changed
+		 */
+		public Boolean change(int x, int y)
         {
             if (x + 1 != size)
             {
@@ -50,8 +60,13 @@ namespace Simulation
 
         }
 
-
-        private Boolean ifPossible(int x1, int x2, int y1, int y2)
+		/**
+		 * Evaluates the new state of the lattice field and changes the vertices with the probability of the metropolis condition
+		 * 
+		 * @param x1,x2,y1,y2	coodrinates of the four vertices to be changed
+		 * @return bool returns if the four vertices changed
+		 */
+		private Boolean ifPossible(int x1, int x2, int y1, int y2)
         {
             old1 = field[x1, y1];
             old2 = field[x2, y1];

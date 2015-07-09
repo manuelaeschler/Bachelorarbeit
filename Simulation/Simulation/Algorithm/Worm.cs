@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Simulation
 {
+	/**
+	 * Perform the worm algorithm step by step
+	 */
 	class Worm : Algorithm
 	{
 		private Brick[,] field;
@@ -34,6 +37,13 @@ namespace Simulation
 
 		public int HeadY { get { return headY; } }
 
+		/**
+		 * Dicides if the worm is on start state and starts the moving
+		 * 
+		 * @param x	x-coordinate of a random point
+		 * @param y y-coordinate of a random point
+		 * @return bool	if some chaeges were made
+		 */
 		public bool change(int x, int y)
 		{
 			if (start)
@@ -56,9 +66,14 @@ namespace Simulation
 			}
 		}
 
+		/**
+		 * Starts the moving of the head with start state conditions
+		 * 
+		 * @return bool	if some chaeges were made
+		 */
 		private bool moveStart()
 		{
-			bool changedHead = headOrTailStart(headX, headY);
+			bool changedHead = moveHeadStart(headX, headY);
 
 
 			if (headX == tailX && headY == tailY)
@@ -68,9 +83,14 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Starts the moving of the head
+		 * 
+		 * @return bool	if some chaeges were made
+		 */
 		private bool move()
 		{
-			bool changedHead = headOrTail(headX, headY);
+			bool changedHead = moveHead(headX, headY);
 
 
 			if (headX == tailX && headY == tailY)
@@ -80,7 +100,14 @@ namespace Simulation
 
 		}
 
-		private bool headOrTailStart(int x, int y)
+		/**
+		 * Evaluate the next state of the lattice field and changes it with the probability of the metropolis condition with start weights
+		 * 
+		 * @param x	x-coordinate of the head
+		 * @param y	y-coordinate of the head
+		 * @return bool	if some chaeges were made
+		 */
+		private bool moveHeadStart(int x, int y)
 		{
 			String direc = direction();
 
@@ -124,7 +151,14 @@ namespace Simulation
 			return false;
 		}
 
-		private bool headOrTail(int x, int y)
+		/**
+		 * Evaluate the next state of the lattice field and changes it with the probability of the metropolis condition
+		 * 
+		 * @param x	x-coordinate of the head
+		 * @param y	y-coordinate of the head
+		 * @return bool	if some chaeges were made
+		 */
+		private bool moveHead(int x, int y)
 		{
 			String direc = direction();
 
@@ -166,7 +200,13 @@ namespace Simulation
 			return false;
 		}
 
-
+		/**
+		 * Evaluates the x-coordiante of the neighbour in a certain direction
+		 * 
+		 * @param x	x-coordinate of the head
+		 * @param direc	direction to be going
+		 * @return int	returns the x-ccordinate of the neighbour
+		 */
 		private int getNeighbourCoordX(int x, String direc)
 		{
 			switch (direc)
@@ -196,6 +236,13 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Evaluates the y-coordiante of the neighbour in a certain direction
+		 * 
+		 * @param y	y-coordinate of the head
+		 * @param direc	direction to be going
+		 * @return int	returns the y-ccordinate of the neighbour
+		 */
 		private int getNeighbourCoordY(int y, String direc)
 		{
 			switch (direc)
@@ -225,6 +272,12 @@ namespace Simulation
 
 		}
 
+		/**
+		 * Evaluates the opposite direction of a certain direction
+		 * 
+		 * @param direc	a certian direction
+		 * @return String	returns the opposite direction
+		 */
 		private String getOppositeDirection(String direc)
 		{
 			switch (direc)
@@ -246,6 +299,11 @@ namespace Simulation
 			}
 		}
 
+		/**
+		 * Evaluates a random direction
+		 * 
+		 * @return String returns a random direction
+		 */
 		private String direction()
 		{
 			double random = rand.NextDouble();

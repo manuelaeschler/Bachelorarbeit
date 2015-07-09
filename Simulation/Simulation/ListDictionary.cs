@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Simulation
 {
+	/**
+	 * Extends the Dictionary by adding the performance with lists as values
+	 */
     class ListDictionary<TKey, TValue>
     {
         Dictionary<TKey, List<TValue>> dic = new Dictionary<TKey,List<TValue>>();
@@ -17,6 +20,12 @@ namespace Simulation
             }
         }
 
+		/**
+		 * Adds the value in a hashmap with lists
+		 * 
+		 * @param value	the value to be added
+		 * @param key	the key where to add the value in the hashmap
+		 */
         public void Add(TKey key, TValue value)
         {
 
@@ -33,6 +42,12 @@ namespace Simulation
                 
         }
 
+		/**
+		 * Removes the value in the hashmap
+		 * 
+		 * @param key	the key where to remove the value int the hashmap
+		 * @param value	the value to be removed 
+		 */
         public void remove(TKey key, TValue value)
         {
             List<TValue> list = dic[key];
